@@ -1,0 +1,25 @@
+# Données - jamais versionnées
+data/*
+!data/.gitkeep
+*.csv
+*.parquet
+*.zip
+*.gz
+
+# Bases locales
+*.duckdb
+*.duckdb.wal
+*.db
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# OS/ éditeur
+.DS_Store
+.vscode/
