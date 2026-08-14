@@ -1,6 +1,6 @@
 # collateral-lab
 
-Observatoire du collatéral immobilier : mini-entrepôt analytique sur les transactions immobilières françaises, construit comme le ferait une banque pour valoriser et surveiller son collatéral.
+VERSION B Observatoire du collatéral immobilier : mini-entrepôt analytique sur les transactions immobilières françaises, construit comme le ferait une banque pour valoriser et surveiller son collatéral.
 
 ## Question directrice
 
