@@ -26,3 +26,7 @@ Ces données ayant un caractère sensible, il est nécessaire de savoir qui util
 ## Stack
 
 Python, DuckDB, SQL, Git. dbt introduit en semaine 10.
+
+## Comparatif p99 lignes vs. mutations
+lignes = 12600000.0
+mutations = 955499.9999999928
