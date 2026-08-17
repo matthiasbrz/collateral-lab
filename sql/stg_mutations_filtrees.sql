@@ -1,60 +1,58 @@
--- sql/stg_mutations.sql
--- Grain : une ligne = une mutation.
--- Source : raw_mutations (geo-dvf, dept 76, millesimes 2023-2025).
+-- sql/stg_mutations_filtrees.sql
+-- Table : stg_mutations_filtrees
+-- Source : stg_mutations (jamais raw_mutations : la logique de grain
+--          n'existe qu'a un seul endroit)
+-- Grain : une ligne = une mutation retenue dans le perimetre de la
+--         question directrice (vente de logement, prix au m2 exploitable)
+-- Regles et volumes ecartes : docs/regles_filtrage.md
 
-CREATE OR REPLACE TABLE stg_mutations_filtrees AS 
+CREATE OR REPLACE TABLE stg_mutations_filtrees AS
 
-WITH entete AS (
+WITH base AS (
     SELECT
-        id_mutation,
-        min(date_mutation) AS date_mutation,
-        any_value(nature_mutation) AS nature_mutation,
-        any_value(valeur_fonciere) AS valeur_fonciere,
-        count(DISTINCT code_commune) AS nb_communes,
-        any_value(code_commune) AS code_commune,
-        any_value(nom_commune) AS nom_commune,
-        count(*) AS nb_lignes_source
-    FROM raw_mutations
-    GROUP BY id_mutation
+        *,
+        round(valeur_fonciere / surface_bati, 2) AS prix_m2
+    FROM stg_mutations
+    WHERE nature_mutation = 'Vente'          -- 1. echanges, expropriations, adjudications hors marche
+      AND nb_communes = 1                    -- 2. un prix unique sur deux communes n'est rattachable a aucune
+      AND valeur_fonciere > 0                -- 3. valeur absente ou nulle : prix non exploitable
+      AND nb_types_principaux = 1            -- 4. un prix unique sur un lot mixte n'est pas un prix au m2
+      AND type_local IN ('Maison', 'Appartement')
+      AND surface_bati > 0                   -- 5. surface manquante : prix au m2 incalculable
+      -- AND nb_locaux_principaux = 1        -- 5 bis : a activer apres mesure du volume concerne
 ),
 
---Dédoublonnage des locaux : une ligne source par (local x subdivision fiscale)
-locaux AS (
-    SELECT DISTINCT
-        id_mutation,
-        id_parcelle,
-        type_local,
-        surface_reelle_bati,
-        nombre_pieces_principales
-    FROM raw_mutations
-    WHERE type_local IS NOT NULL
-),
-
-biens AS (
+-- 6. Bornes calculees sur le perimetre DEJA filtre, jamais sur la table brute.
+bornes AS (
     SELECT
-        id_mutation,
-        count(*) AS nb_locaux,
-        count(DISTINCT type_local) AS nb_types_local,
-        min(type_local) AS type_local,
-        sum(surface_reelle_bati) AS surface_bati,
-        sum(nombre_pieces_principales) AS nb_pieces
-    FROM locaux
-    GROUP BY id_mutation
+        quantile_cont(prix_m2, 0.01) AS p1,
+        quantile_cont(prix_m2, 0.99) AS p99
+    FROM base
 )
 
+SELECT b.*
+FROM base b
+CROSS JOIN bornes
+WHERE b.prix_m2 BETWEEN bornes.p1 AND bornes.p99;
+
+
+-- Tracabilite : les bornes bougeront a chaque livraison DVF (avril / octobre).
+-- Cette table les fige avec leur date de calcul.
+CREATE OR REPLACE TABLE ref_seuils_prix_m2 AS
+WITH base AS (
+    SELECT round(valeur_fonciere / surface_bati, 2) AS prix_m2
+    FROM stg_mutations
+    WHERE nature_mutation = 'Vente'
+      AND nb_communes = 1
+      AND valeur_fonciere > 0
+      AND nb_types_principaux = 1
+      AND type_local IN ('Maison', 'Appartement')
+      AND surface_bati > 0
+)
 SELECT
-    e.*,
-    b.nb_locaux,
-    b.nb_types_local,
-    b.type_local,
-    b.surface_bati,
-    b.nb_pieces
-FROM entete e
-LEFT JOIN biens b USING (id_mutation)
-WHERE 
-    nature_mutation = 'Vente'
-    AND nb_communes = 1
-    AND valeur_fonciere > 0
-    AND nb_types_local = 1
-    AND type_local IN ('Maison', 'Appartement')
-    AND surface_bati >0
+    current_date                 AS date_calcul,
+    'p1/p99 sur perimetre filtre' AS methode,
+    quantile_cont(prix_m2, 0.01) AS seuil_bas,
+    quantile_cont(prix_m2, 0.99) AS seuil_haut,
+    count(*)                     AS mutations_perimetre
+FROM base;

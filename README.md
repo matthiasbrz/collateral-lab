@@ -28,5 +28,6 @@ Ces données ayant un caractère sensible, il est nécessaire de savoir qui util
 Python, DuckDB, SQL, Git. dbt introduit en semaine 10.
 
 ## Comparatif p99 lignes vs. mutations
-lignes = 12600000.0
-mutations = 955499.9999999928
+p99 à 12 600 000 € au grain ligne, 955 500 € au grain mutation.
+Le fait d'avoir un prix reproduit sur chaque ligne d'une même mutation faisait exploser le quantile 99%.
+Après nettoyage et définition du grain (une ligne = une mutation), une valeur cohérente est obtenue.

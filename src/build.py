@@ -3,7 +3,10 @@
 from pathlib import Path
 import duckdb
 
-SCRIPTS = ["sql/stg_mutations.sql", "sql/stg_mutations_filtrees.sql"]
+SCRIPTS = [
+    "sql/stg_mutations.sql",
+    "sql/stg_mutations_filtrees.sql"
+]
 
 
 def main() -> None:
