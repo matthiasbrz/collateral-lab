@@ -15,3 +15,9 @@
 - Fait : 1 PR ouverte (feat/staging), deux tables SQL créées (stg_mutations et stg_mutations_filtrees), fixation de la granularité, règles de filtrage explicites, documentation règles filtrage rédigée (nombre de lignes écartées par filtre), calcul prix m2 entre seuil justifié p1/p99
 - Coincé : plus de temps prévu passé sur la génération des tables SQL et le receuil des métriques (temps total de la journée = environ 120 minutes)
 - Demain : début génération tables dimensions
+
+## 2026-08-18 - J5 : La dimension qui bouge
+- Fait : 1 PR ouvert (feat/dim-commune), une table SQL créée (dim_commune), contrôle de la jointure / du grain, analyse des codes non-appariés
+- Coincé : RAS
+- Demain : 
+- Note SCD2 : Entre le 2 janvier 2024 et le 1er janvier 2025, 110 communes ont fusionné pour former 46 communes nouvelles, 8 ont changé de nom, une communne créée en 2016 à été rétablie en 5 communes distinctes. Entre le 2 janvier 2025 et le 1er janvier 2026 : aucune commune nouvelle, la loi interdisant de modifier le périmètre des circonscriptions dans l'année précédant un scrutin - les municipales tombaient en mars 2026. Mais 19 changements de nom et 40 suppressions de communes déléguées. La volatilité de cette dimension obéit au calendrier éléctoral. Une année à zéro fusion ne signifie pas une dimension stable, elle signifie une dimension sous contrainte légale temporaire - et 2027 rattrapera le retard.

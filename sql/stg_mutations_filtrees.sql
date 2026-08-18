@@ -55,4 +55,4 @@ SELECT
     quantile_cont(prix_m2, 0.01) AS seuil_bas,
     quantile_cont(prix_m2, 0.99) AS seuil_haut,
     count(*)                     AS mutations_perimetre
-FROM base;
+FROM base;  
