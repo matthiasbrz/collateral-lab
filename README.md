@@ -15,6 +15,7 @@ Licence Ouverte 2.0. Mise à jour semestrielle (avril et octobre).
 ## Schéma cible
 
 Fait : mutation. Dimensions : date, géographie, type de bien, nature de mutation.
+Le projet a détecté une fusion de communes par croisement de référentiels, huit mois avant que la source ne l'ait intégréé.
 
 ## Gouvernance : pourquoi aucune donnée n'est versionnée
 
