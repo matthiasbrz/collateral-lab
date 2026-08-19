@@ -12,6 +12,17 @@ Pour une commune et un type de bien donnés, quelle est la valeur de référence
 Demandes de valeurs foncières (DVF), DGFiP, publiée sur data.gouv.fr.
 Licence Ouverte 2.0. Mise à jour semestrielle (avril et octobre).
 
+Indicateur	            Mensuel	            Glissant 12 mois, seuil 5
+Cellules exploitables	15,1 %	            52,6 %
+Communes couvertes	    —	                79,2 % (559 / 706)
+52 % des cellules mensuelles contiennent exactement une vente. Une médiane sur une transaction, c'est la transaction.
+
+type_local    │ communes │ publiables │
+├─────────────┼──────────┼────────────┤
+│ Maison      │      706 │        423 │
+│ Appartement │      160 │         54
+
+
 ## Schéma cible
 
 Fait : mutation. Dimensions : date, géographie, type de bien, nature de mutation.
