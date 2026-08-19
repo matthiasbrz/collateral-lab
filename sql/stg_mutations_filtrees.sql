@@ -30,7 +30,12 @@ bornes AS (
     FROM base
 )
 
-SELECT b.*
+SELECT 
+    b.*,
+    date_trunc('month', date_mutation)::DATE AS mois,
+    year(date_mutation)                      AS annee,
+    quarter(date_mutation)                   AS trimestre
+    
 FROM base b
 CROSS JOIN bornes
 WHERE b.prix_m2 BETWEEN bornes.p1 AND bornes.p99;
@@ -55,4 +60,4 @@ SELECT
     quantile_cont(prix_m2, 0.01) AS seuil_bas,
     quantile_cont(prix_m2, 0.99) AS seuil_haut,
     count(*)                     AS mutations_perimetre
-FROM base;  
+FROM base;
