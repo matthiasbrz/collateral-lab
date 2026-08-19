@@ -17,7 +17,12 @@
 - Demain : début génération tables dimensions
 
 ## 2026-08-18 - J5 : La dimension qui bouge
-- Fait : 1 PR ouvert (feat/dim-commune), une table SQL créée (dim_commune), contrôle de la jointure / du grain, analyse des codes non-appariés
+- Fait : 1 PR ouverte (feat/dim-commune), une table SQL créée (dim_commune), contrôle de la jointure / du grain, analyse des codes non-appariés
 - Coincé : RAS
-- Demain : 
+- Demain : La première fenêtre
 - Note SCD2 : Entre le 2 janvier 2024 et le 1er janvier 2025, 110 communes ont fusionné pour former 46 communes nouvelles, 8 ont changé de nom, une communne créée en 2016 à été rétablie en 5 communes distinctes. Entre le 2 janvier 2025 et le 1er janvier 2026 : aucune commune nouvelle, la loi interdisant de modifier le périmètre des circonscriptions dans l'année précédant un scrutin - les municipales tombaient en mars 2026. Mais 19 changements de nom et 40 suppressions de communes déléguées. La volatilité de cette dimension obéit au calendrier éléctoral. Une année à zéro fusion ne signifie pas une dimension stable, elle signifie une dimension sous contrainte légale temporaire - et 2027 rattrapera le retard.
+
+## 2026-08-19 - J6 : La première fenêtre
+- Fait : 1 PR ouverte (feat/agregats), 4 tables SQL créées (agg_prix_m2_mensuel, glissant, evolution, mart_prix_m2_reference)
+- Coincé : Point de contrôle S1 (erreur attendue à "dim_commune", obtenue dès table "raw_mutations")
+- Demain : Début S2 (SQL analytique, toutes les fonctions de fenêtrage sortent de ce projet)
