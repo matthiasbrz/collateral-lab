@@ -13,7 +13,7 @@ from pathlib import Path
 
 DESTINATION = Path("data/raw")
 BASE_DVF = "https://files.data.gouv.fr/geo-dvf/latest/csv"
-URL_COG = "<URL copiee depuis insee.fr>"
+URL_COG = "https://www.insee.fr/fr/statistiques/fichier/8740222/v_commune_2026.csv"
 FICHIER_COG = "v_commune_2026.csv"
 
 
