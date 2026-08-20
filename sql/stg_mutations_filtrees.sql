@@ -19,6 +19,7 @@ WITH base AS (
       AND nb_types_principaux = 1            -- 4. un prix unique sur un lot mixte n'est pas un prix au m2
       AND type_local IN ('Maison', 'Appartement')
       AND surface_bati > 0                   -- 5. surface manquante : prix au m2 incalculable
+      AND nb_natures = 1
       -- AND nb_locaux_principaux = 1        -- 5 bis : a activer apres mesure du volume concerne
 ),
 
@@ -53,6 +54,7 @@ WITH base AS (
       AND nb_types_principaux = 1
       AND type_local IN ('Maison', 'Appartement')
       AND surface_bati > 0
+      AND nb_natures = 1
 )
 SELECT
     current_date                 AS date_calcul,
