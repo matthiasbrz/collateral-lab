@@ -1,31 +1,43 @@
-"""Exécute les scripts SQL de transformation dans l'ordre."""
+""" Point d'entrée unique des transformations.
 
+Execute tous les scripts sql/NN_*.sql dans l'ordre de leur prefixe.
+Prerequis : sources presentes dans data/raw (lancer src/download.py avant).
+"""
+
+import sys
 from pathlib import Path
+
 import duckdb
 
-SCRIPTS = [
-    "sql/stg_mutations.sql",
-    "sql/stg_mutations_filtrees.sql",
-    "sql/dim_commune.sql",
-    "sql/agg_prix_m2_mensuel.sql",
-    "sql/agg_prix_m2_glissant.sql",
-    "sql/agg_prix_m2_evolution.sql",
-    "sql/mart_prix_m2_reference.sql"
-]
+BASE = "collateral.duckdb"
+DOSSIER_SQL = Path("sql")
+DOSSIER_DATA = Path("data/raw")
+
+def verifier_sources() -> None:
+    """Echoue tot et clairement plutot que sur une erreur SQL incompréhensible."""
+    manquants = []
+    if not list(DOSSIER_DATA.glob("dvf_*.csv.gz")):
+        manquants.append("fichiers DVF (dvf_*.csv.gz)")
+    if not list(DOSSIER_DATA.glob("v_commune_*.csv")):
+            manquants.append("referentiel COG (v_commune_*.csv)")
+    if manquants:
+         print("Sources manquantes dans data/raw : " + ", ".join(manquants))
+         print("Lancez d'abord : python /src/download.py")
+         sys.exit(1)
 
 
 def main() -> None:
-    con = duckdb.connect("collateral.duckdb")
-    for chemin in SCRIPTS:
-        print(f"exécution : {chemin}")
-        con.execute(Path(chemin).read_text(encoding="utf-8"))
-    print(con.sql("SELECT count(*) AS mutations FROM stg_mutations"))
-    print(con.sql("SELECT count(*) AS mutations_filtrees FROM stg_mutations_filtrees"))
-    print(con.sql("SELECT count(*) AS communes FROM dim_commune"))
-    print(con.sql("SELECT count(*) AS agg_prix_m2_mensuel from agg_prix_m2_mensuel"))
-    print(con.sql("SELECT count(*) AS agg_prix_m2_glissant from agg_prix_m2_glissant"))
-    print(con.sql("SELECT count(*) AS agg_prix_m2_evolution from agg_prix_m2_evolution"))
-    print(con.sql("SELECT count(*) AS mart_prix_m2_reference from mart_prix_m2_reference"))
+    verifier_sources()
+    scripts = sorted(DOSSIER_SQL.glob("[0-9][0-9]_*.sql"))
+    if not scripts:
+         print("Aucun script SQL trouve dans sql/")
+         sys.exit(1)
+
+    con = duckdb.connect(BASE)
+    for chemin in scripts:
+         print(f"-> {chemin.name}")
+         con.execute(chemin.read_text(encoding="utf-8"))
+    print(con.sql("SELECT count(*) AS lignes FROM mart_prix_m2_reference"))
     con.close()
 
 

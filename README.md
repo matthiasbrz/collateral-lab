@@ -38,6 +38,8 @@ Ces données ayant un caractère sensible, il est nécessaire de savoir qui util
 ## Stack
 
 Python, DuckDB, SQL, Git. dbt introduit en semaine 10.
+duckdb==1.5.5
+Python 3.12.10
 
 ## Comparatif p99 lignes vs. mutations
 p99 à 12 600 000 € au grain ligne, 955 500 € au grain mutation.
