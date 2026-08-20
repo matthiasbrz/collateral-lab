@@ -26,3 +26,8 @@
 - Fait : 1 PR ouverte (feat/agregats), 4 tables SQL créées (agg_prix_m2_mensuel, glissant, evolution, mart_prix_m2_reference)
 - Coincé : Point de contrôle S1 (erreur attendue à "dim_commune", obtenue dès table "raw_mutations")
 - Demain : Début S2 (SQL analytique, toutes les fonctions de fenêtrage sortent de ce projet)
+
+## 2026-08-19 - S2-J1 : Solder la dette
+- Fait : 1 PR ouverte (chore/dette-s1), 1 table SQL créée (00_raw_mutations.sql, remplace src/load.py), 7 tables SQL renommées (01_dim_commune.sql, 02_stg_mutations.sql, 03_mutations_filtrees.sql, 04_agg_prix_m2_mensuel.sql, 05_agg_prix_m2_glissant.sql, 06_agg_prix_m2_evolution.sq, 07_mart_prix_m2_reference.sql), automatisation du téléchargement des sources
+- Coincé : Passé pas mal de temps à corriger les anomalies de la nouvelle version de src/download.py et src/build.py
+- Demain : S2-J2 (Les tests, à la main)

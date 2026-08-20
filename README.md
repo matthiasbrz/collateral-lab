@@ -39,7 +39,12 @@ Ces données ayant un caractère sensible, il est nécessaire de savoir qui util
 
 Python, DuckDB, SQL, Git. dbt introduit en semaine 10.
 duckdb==1.5.5
-Python 3.12.10
+
+## Prérequis
+Python 3.12.10,
+pip install -r requirements.txt
+python src/download.py
+python src/build.py
 
 ## Comparatif p99 lignes vs. mutations
 p99 à 12 600 000 € au grain ligne, 955 500 € au grain mutation.

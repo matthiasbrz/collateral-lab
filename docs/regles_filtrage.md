@@ -22,4 +22,4 @@ Terrains nus, dépendances seules, locaux industriels et commerciaux : hors ques
 46 655 mutations retenues sur 66 151 soit 70,5%.
 
 ## nb_natures = 1
-une mutation dont la nature juridique n'est pas unique n'est pas qualifiable comme vente.
+une mutation dont la nature juridique n'est pas unique (nb_natures > 1) n'est pas qualifiable comme vente.
