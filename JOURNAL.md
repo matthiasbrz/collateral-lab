@@ -27,7 +27,12 @@
 - Coincé : Point de contrôle S1 (erreur attendue à "dim_commune", obtenue dès table "raw_mutations")
 - Demain : Début S2 (SQL analytique, toutes les fonctions de fenêtrage sortent de ce projet)
 
-## 2026-08-19 - S2-J1 : Solder la dette
-- Fait : 1 PR ouverte (chore/dette-s1), 1 table SQL créée (00_raw_mutations.sql, remplace src/load.py), 7 tables SQL renommées (01_dim_commune.sql, 02_stg_mutations.sql, 03_mutations_filtrees.sql, 04_agg_prix_m2_mensuel.sql, 05_agg_prix_m2_glissant.sql, 06_agg_prix_m2_evolution.sq, 07_mart_prix_m2_reference.sql), automatisation du téléchargement des sources
+## 2026-08-20 - S2-J1 : Solder la dette
+- Fait : 1 PR ouverte (chore/dette-s1), 1 table SQL créée (00_raw_mutations.sql, remplace src/load.py), 7 tables SQL renommées (01_dim_commune.sql, 02_stg_mutations.sql, 03_mutations_filtrees.sql, 04_agg_prix_m2_mensuel.sql, 05_agg_prix_m2_glissant.sql, 06_agg_prix_m2_evolution.sq, 07_mart_prix_m2_reference.sql), automatisation du téléchargement des sources. Refactoring réussi : la structure change, le résultat non
 - Coincé : Passé pas mal de temps à corriger les anomalies de la nouvelle version de src/download.py et src/build.py
 - Demain : S2-J2 (Les tests, à la main)
+
+## 2026-08-21 - S2-J2 : Les tests, à la main
+- Fait : 1 PR ouverte (feat/tests), 5 tests SQL mis en place (unicité, non-nullité, plage de valeurs, cohérence de l'entonnoir, intégrité référentielle), exécution des tests puis casse volontaire pour découvrir l'effet produit. Notes : Aujourd'hui rien ne relis un test à un modèle. Une nouvelle table peut bien être ajoutée sans qu'aucun mécanisme de réclame de test. La mise en place des tests est répétitive (exemple 02_non_nullite avec IS NULL), un bloc par colonne. La convention "zero ligne" se reconstruit à la main à chaque fois (le WHERE ... > 0 externe, le IS NULL explicite, le coalesce), une règle qu'on réimplémente est une règle qu'on finira par oublier. Enfin aucun ordre de dépendance, le harnais exécute par ordre alphabétique et non selon le graphe des modèles.
+- Coincé : RAS
+- Demain : S2-J2 (Le SQL qu'on n'apprend pas en formation)
