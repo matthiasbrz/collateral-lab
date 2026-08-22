@@ -35,4 +35,9 @@
 ## 2026-08-21 - S2-J2 : Les tests, à la main
 - Fait : 1 PR ouverte (feat/tests), 5 tests SQL mis en place (unicité, non-nullité, plage de valeurs, cohérence de l'entonnoir, intégrité référentielle), exécution des tests puis casse volontaire pour découvrir l'effet produit. Notes : Aujourd'hui rien ne relis un test à un modèle. Une nouvelle table peut bien être ajoutée sans qu'aucun mécanisme de réclame de test. La mise en place des tests est répétitive (exemple 02_non_nullite avec IS NULL), un bloc par colonne. La convention "zero ligne" se reconstruit à la main à chaque fois (le WHERE ... > 0 externe, le IS NULL explicite, le coalesce), une règle qu'on réimplémente est une règle qu'on finira par oublier. Enfin aucun ordre de dépendance, le harnais exécute par ordre alphabétique et non selon le graphe des modèles.
 - Coincé : RAS
-- Demain : S2-J2 (Le SQL qu'on n'apprend pas en formation)
+- Demain : S2-J3 (Le SQL qu'on n'apprend pas en formation)
+
+## 2026-08-22 - S2-J3 : Le SQL qu'on n'apprend pas en formation
+- Fait : 1 PR ouverte (feat/analyses), 6 tests SQL mis en place, définis par une question métier et non une description technique (exemple : "Quelles communes sont les plus actives ?", et non "Requête de classement avec QUALIFY")
+- Coincé : RAS
+- Demain : S2-J4 (Repos)
