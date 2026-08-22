@@ -5,7 +5,6 @@
 -- Un segment défini par rang de population est instable ; un segment défini par des seuils fixes et stable et opposable.
 SELECT
     code_commune,
-    nom_commune,
     type_local,
     prix_m2_median_12m,
     nb_mutations_12m,
@@ -13,8 +12,8 @@ SELECT
     CASE ntile(4) OVER (PARTITION BY type_local ORDER BY prix_m2_median_12m)
         WHEN 1 THEN 'Accessible'
         WHEN 2 THEN 'Intermediaire bas'
-        WHEN 1 THEN 'Intermediaire haut'
-        WHEN 1 THEN 'Premium'
+        WHEN 3 THEN 'Intermediaire haut'
+        WHEN 4 THEN 'Premium'
     END AS segment
 FROM mart_prix_m2_reference
 WHERE mois = (SELECT max(mois) FROM mart_prix_m2_reference)
@@ -25,7 +24,6 @@ SELECT type_local, quartile, count(*) AS communes,
     max(prix_m2_median_12m) AS borne_haute
 FROM (SELECT
     code_commune,
-    nom_commune,
     type_local,
     prix_m2_median_12m,
     nb_mutations_12m,
@@ -33,10 +31,25 @@ FROM (SELECT
     CASE ntile(4) OVER (PARTITION BY type_local ORDER BY prix_m2_median_12m)
         WHEN 1 THEN 'Accessible'
         WHEN 2 THEN 'Intermediaire bas'
-        WHEN 1 THEN 'Intermediaire haut'
-        WHEN 1 THEN 'Premium'
+        WHEN 3 THEN 'Intermediaire haut'
+        WHEN 4 THEN 'Premium'
     END AS segment
 FROM mart_prix_m2_reference
 WHERE mois = (SELECT max(mois) FROM mart_prix_m2_reference)
 ORDER BY type_local, prix_m2_median_12m DESC;)
 GROUP BY 1, 2 ORDER BY 1, 2
+
+
+WITH segmente AS (
+    SELECT prix_m2_median_12m,
+           ntile(4) OVER (PARTITION BY type_local ORDER BY prix_m2_median_12m) AS quartile
+    FROM mart_prix_m2_reference
+    WHERE mois = (SELECT max(mois) FROM mart_prix_m2_reference)
+        AND type_local = 'Maison'
+)
+SELECT prix_m2_median_12m, count(*) AS communes,
+       min(quartile) AS q_min, max(quartile) AS q_max
+FROM segmente
+GROUP BY 1
+HAVING count(DISTINCT quartile) > 1
+ORDER BY 1

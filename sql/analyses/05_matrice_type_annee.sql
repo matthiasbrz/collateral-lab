@@ -5,6 +5,7 @@ ON annee
 USING count(*) AS volume,
       round(quantile_cont(prix_m2, 0.5), 0) AS median
 GROUP BY type_local
+ORDER BY type_local
 
 SELECT
     type_local,
@@ -13,3 +14,4 @@ SELECT
     count(CASE WHEN annee = 2023 THEN 1 END) AS volume_2025
 FROM stg_mutations_filtrees
 GROUP BY type_local
+ORDER BY type_local
