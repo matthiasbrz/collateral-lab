@@ -38,6 +38,6 @@
 - Demain : S2-J3 (Le SQL qu'on n'apprend pas en formation)
 
 ## 2026-08-22 - S2-J3 : Le SQL qu'on n'apprend pas en formation
-- Fait : 1 PR ouverte (feat/analyses), 6 tests SQL mis en place, définis par une question métier et non une description technique (exemple : "Quelles communes sont les plus actives ?", et non "Requête de classement avec QUALIFY")
+- Fait : 1 PR ouverte (feat/analyses), 6 tests SQL mis en place, définis par une question métier et non une description technique (exemple : "Quelles communes sont les plus actives ?", et non "Requête de classement avec QUALIFY"). Un bug de cadre de produit pas une erreur, il produit un autre indicateur.
 - Coincé : RAS
 - Demain : S2-J4 (Repos)

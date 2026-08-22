@@ -14,7 +14,6 @@ WITH entete AS (
         min(nature_mutation)            AS nature_mutation,
         min(valeur_fonciere)            AS valeur_fonciere,
         min(code_commune)               AS code_commune,
-        min(nom_commune)                AS nom_commune,
         min(code_departement)           AS code_departement,
         count(DISTINCT code_commune)    AS nb_communes,
         count(DISTINCT nature_mutation) AS nb_natures,

@@ -1,5 +1,6 @@
 -- sql/analyses/04_agregats_multiniveaux.sql
 -- Question : prix median par commune, par type de bien, et tous niveaux confondus, en une seule passe sur les donnees.
+-- Requête d'analyse interne, sortie non publiable en l'état, le seuil s'applique à mart_prix_reference_m2.
 SELECT
     coalesce(d.nom_commune, '— toutes communes —') AS commune,
     coalesce(f.type_local,  '— tous types —')      AS type_bien,
