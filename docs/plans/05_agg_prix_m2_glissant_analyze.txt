@@ -1,0 +1,255 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE WITH calendrier AS (     SELECT DISTINCT mois FROM stg_mutations_filtrees ) ,  perimetre AS (     SELECT DISTINCT code_commune, type_local FROM stg_mutations_filtrees ),  squelette AS (     SELECT p.code_commune, p.type_local, c.mois     FROM perimetre p     CROSS JOIN calendrier c ),  glissant AS (     SELECT         s.code_commune,         s.type_local,         s.mois,         count(f.id_mutation) AS nb_mutations_12m,         round(quantile_cont(f.prix_m2, 0.50), 0) AS prix_m2_median_12m,         round(quantile_cont(f.prix_m2, 0.25), 0) AS prix_m2_q1_12m,         round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3_12m     FROM squelette s     LEFT JOIN stg_mutations_filtrees f        ON f.code_commune = s.code_commune       AND f.type_local   = s.type_local       AND f.mois >= (s.mois - INTERVAL 11 MONTH)::DATE       AND f.mois <= s.mois     GROUP BY 1, 2, 3 )  SELECT     g.*,     g.mois >= (SELECT min(mois) FROM calendrier) + INTERVAL 11 MONTH AS fenetre_complete FROM glissant g
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0851s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│                           │
+│           0 rows          │
+│           0.00s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│            CTE            │
+│    ────────────────────   │
+│    CTE Name: calendrier   │
+│       Table Index: 0      │
+│                           ├──────────────┐
+│                           │              │
+│                           │              │
+│           0 rows          │              │
+│           0.00s           │              │
+└─────────────┬─────────────┘              │
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       ││         PROJECTION        │
+│    ────────────────────   ││    ────────────────────   │
+│         Groups: #0        ││        code_commune       │
+│                           ││         type_local        │
+│                           ││            mois           │
+│                           ││      nb_mutations_12m     │
+│                           ││     prix_m2_median_12m    │
+│           0.00s           ││       prix_m2_q1_12m      │
+│                           ││       prix_m2_q3_12m      │
+│                           ││      fenetre_complete     │
+│                           ││                           │
+│                           ││                           │
+│                           ││                           │
+│          36 rows          ││        31,176 rows        │
+│          (0.00s)          ││           0.00s           │
+└─────────────┬─────────────┘└─────────────┬─────────────┘
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│         PROJECTION        ││       CROSS_PRODUCT       │
+│    ────────────────────   ││    ────────────────────   │
+│            mois           ││                           │
+│                           ││                           │
+│                           ││           0.00s           ├────────────────────────────────────────────────────────────────────────┐
+│                           ││                           │                                                                        │
+│        46,655 rows        ││        31,176 rows        │                                                                        │
+│           0.00s           ││          (0.00s)          │                                                                        │
+└─────────────┬─────────────┘└─────────────┬─────────────┘                                                                        │
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+│         TABLE_SCAN        ││         PROJECTION        │                                                          │         PROJECTION        │
+│    ────────────────────   ││    ────────────────────   │                                                          │    ────────────────────   │
+│           Table:          ││             0             │                                                          │ CASE  WHEN ((#1 > 1)) THEN│
+│      collateral.main      ││             1             │                                                          │   ("error"('More than one │
+│  .stg_mutations_filtrees  ││             2             │                                                          │      row returned by a    │
+│                           ││      nb_mutations_12m     │                                                          │     subquery used as an   │
+│   Type: Sequential Scan   ││     prix_m2_median_12m    │                                                          │     expression - scalar   │
+│     Projections: mois     ││       prix_m2_q1_12m      │                                                          │     subqueries can only   │
+│                           ││       prix_m2_q3_12m      │                                                          │    return a single row.   │
+│                           ││                           │                                                          │          Use "SET         │
+│                           ││                           │                                                          │ scalar_subquery_error_on_m│
+│                           ││                           │                                                          │   ultiple_rows=false" to  │
+│           0.00s           ││                           │                                                          │     revert to previous    │
+│                           ││           0.00s           │                                                          │   behavior of returning a │
+│                           ││                           │                                                          │ random row.')) ELSE #0 END│
+│                           ││                           │                                                          │                           │
+│                           ││                           │                                                          │                           │
+│                           ││                           │                                                          │                           │
+│        46,655 rows        ││        31,176 rows        │                                                          │           1 row           │
+│          (0.00s)          ││          (0.00s)          │                                                          │           0.00s           │
+└───────────────────────────┘└─────────────┬─────────────┘                                                          └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+                             │         PROJECTION        │                                                          │    UNGROUPED_AGGREGATE    │
+                             │    ────────────────────   │                                                          │    ────────────────────   │
+                             │__internal_decompress_strin│                                                          │        Aggregates:        │
+                             │           g(#0)           │                                                          │        "first"(#0)        │
+                             │__internal_decompress_strin│                                                          │        count_star()       │
+                             │           g(#1)           │                                                          │                           │
+                             │             #2            │                                                          │                           │
+                             │             #3            │                                                          │                           │
+                             │             #4            │                                                          │                           │
+                             │             #5            │                                                          │           0.00s           │
+                             │             #6            │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │        31,176 rows        │                                                          │           1 row           │
+                             │           0.00s           │                                                          │          (0.00s)          │
+                             └─────────────┬─────────────┘                                                          └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+                             │       HASH_GROUP_BY       │                                                          │         PROJECTION        │
+                             │    ────────────────────   │                                                          │    ────────────────────   │
+                             │          Groups:          │                                                          │             #0            │
+                             │             #0            │                                                          │                           │
+                             │             #1            │                                                          │                           │
+                             │             #2            │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │        Aggregates:        │                                                          │           0.00s           │
+                             │         count(#3)         │                                                          │                           │
+                             │     quantile_cont(#4)     │                                                          │                           │
+                             │     quantile_cont(#5)     │                                                          │                           │
+                             │     quantile_cont(#6)     │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │        31,176 rows        │                                                          │           1 row           │
+                             │           0.25s           │                                                          │          (0.00s)          │
+                             └─────────────┬─────────────┘                                                          └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+                             │         PROJECTION        │                                                          │    UNGROUPED_AGGREGATE    │
+                             │    ────────────────────   │                                                          │    ────────────────────   │
+                             │        code_commune       │                                                          │    Aggregates: min(#0)    │
+                             │         type_local        │                                                          │                           │
+                             │            mois           │                                                          │                           │
+                             │        id_mutation        │                                                          │                           │
+                             │          prix_m2          │                                                          │                           │
+                             │          prix_m2          │                                                          │           0.00s           │
+                             │          prix_m2          │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │        468,775 rows       │                                                          │           1 row           │
+                             │           0.00s           │                                                          │          (0.00s)          │
+                             └─────────────┬─────────────┘                                                          └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+                             │         PROJECTION        │                                                          │         PROJECTION        │
+                             │    ────────────────────   │                                                          │    ────────────────────   │
+                             │__internal_compress_string_│                                                          │            mois           │
+                             │        ubigint(#0)        │                                                          │                           │
+                             │__internal_compress_string_│                                                          │                           │
+                             │        uhugeint(#1)       │                                                          │                           │
+                             │             #2            │                                                          │                           │
+                             │             #3            │                                                          │           0.00s           │
+                             │             #4            │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │                           │                                                          │                           │
+                             │        468,775 rows       │                                                          │          36 rows          │
+                             │           0.01s           │                                                          │          (0.00s)          │
+                             └─────────────┬─────────────┘                                                          └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐
+                             │         HASH_JOIN         │                                                          │          CTE_SCAN         │
+                             │    ────────────────────   │                                                          │    ────────────────────   │
+                             │      Join Type: LEFT      │                                                          │        CTE Index: 0       │
+                             │                           │                                                          │                           │
+                             │        Conditions:        │                                                          │                           │
+                             │code_commune = code_commune│                                                          │                           │
+                             │  type_local = type_local  │                                                          │                           │
+                             │ CAST((mois - '11 months': ├───────────────────────────────────────────┐              │           0.00s           │
+                             │:INTERVAL) AS DATE) <= mois│                                           │              │                           │
+                             │        mois >= mois       │                                           │              │                           │
+                             │                           │                                           │              │                           │
+                             │                           │                                           │              │                           │
+                             │                           │                                           │              │                           │
+                             │        468,775 rows       │                                           │              │          36 rows          │
+                             │           0.11s           │                                           │              │          (0.00s)          │
+                             └─────────────┬─────────────┘                                           │              └───────────────────────────┘
+                             ┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐
+                             │       CROSS_PRODUCT       │                             │         TABLE_SCAN        │
+                             │    ────────────────────   │                             │    ────────────────────   │
+                             │                           │                             │           Table:          │
+                             │                           │                             │      collateral.main      │
+                             │           0.00s           │                             │  .stg_mutations_filtrees  │
+                             │                           │                             │                           │
+                             │                           │                             │   Type: Sequential Scan   │
+                             │                           │                             │                           │
+                             │                           │                             │        Projections:       │
+                             │                           ├──────────────┐              │        code_commune       │
+                             │                           │              │              │         type_local        │
+                             │                           │              │              │            mois           │
+                             │                           │              │              │        id_mutation        │
+                             │                           │              │              │          prix_m2          │
+                             │                           │              │              │                           │
+                             │                           │              │              │                           │
+                             │                           │              │              │                           │
+                             │        31,176 rows        │              │              │        46,655 rows        │
+                             │          (0.00s)          │              │              │           0.00s           │
+                             └─────────────┬─────────────┘              │              └───────────────────────────┘
+                             ┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+                             │         PROJECTION        ││          CTE_SCAN         │
+                             │    ────────────────────   ││    ────────────────────   │
+                             │__internal_decompress_strin││        CTE Index: 0       │
+                             │           g(#0)           ││                           │
+                             │__internal_decompress_strin││                           │
+                             │           g(#1)           ││                           │
+                             │                           ││                           │
+                             │                           ││           0.00s           │
+                             │                           ││                           │
+                             │          866 rows         ││          36 rows          │
+                             │           0.00s           ││          (0.00s)          │
+                             └─────────────┬─────────────┘└───────────────────────────┘
+                             ┌─────────────┴─────────────┐
+                             │       HASH_GROUP_BY       │
+                             │    ────────────────────   │
+                             │          Groups:          │
+                             │             #0            │
+                             │             #1            │
+                             │                           │
+                             │                           │
+                             │                           │
+                             │          866 rows         │
+                             │           0.01s           │
+                             └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐
+                             │         PROJECTION        │
+                             │    ────────────────────   │
+                             │        code_commune       │
+                             │         type_local        │
+                             │                           │
+                             │                           │
+                             │                           │
+                             │        46,655 rows        │
+                             │           0.00s           │
+                             └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐
+                             │         PROJECTION        │
+                             │    ────────────────────   │
+                             │__internal_compress_string_│
+                             │        ubigint(#0)        │
+                             │__internal_compress_string_│
+                             │        uhugeint(#1)       │
+                             │                           │
+                             │                           │
+                             │                           │
+                             │        46,655 rows        │
+                             │           0.00s           │
+                             └─────────────┬─────────────┘
+                             ┌─────────────┴─────────────┐
+                             │         TABLE_SCAN        │
+                             │    ────────────────────   │
+                             │           Table:          │
+                             │      collateral.main      │
+                             │  .stg_mutations_filtrees  │
+                             │                           │
+                             │   Type: Sequential Scan   │
+                             │                           │
+                             │        Projections:       │
+                             │        code_commune       │
+                             │         type_local        │
+                             │                           │
+                             │                           │
+                             │                           │
+                             │        46,655 rows        │
+                             │           0.00s           │
+                             └───────────────────────────┘

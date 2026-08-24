@@ -1,9 +1,3 @@
--- sql/agg_prix_m2_glissant.sql
--- Grain : une ligne = commune x type de bien x mois de reference
--- Fenetre : 12 mois glissants, mois courant inclus
-
-CREATE OR REPLACE TABLE agg_prix_m2_glissant AS
-
 WITH calendrier AS (
     SELECT DISTINCT mois FROM stg_mutations_filtrees
 )
@@ -30,9 +24,10 @@ glissant AS (
         round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3_12m
     FROM squelette s
     LEFT JOIN stg_mutations_filtrees f
-        ON f.code_commune = s.code_commune
-        AND f.type_local = s.type_local
-        AND f.mois BETWEEN s.mois - INTERVAL 11 MONTH AND s.mois
+       ON f.code_commune = s.code_commune
+      AND f.type_local   = s.type_local
+      AND f.mois >= (s.mois - INTERVAL 11 MONTH)::DATE
+      AND f.mois <= s.mois
     GROUP BY 1, 2, 3
 )
 
