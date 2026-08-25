@@ -41,3 +41,13 @@
 - Fait : 1 PR ouverte (feat/analyses), 6 tests SQL mis en place, définis par une question métier et non une description technique (exemple : "Quelles communes sont les plus actives ?", et non "Requête de classement avec QUALIFY"). Un bug de cadre de produit pas une erreur, il produit un autre indicateur.
 - Coincé : RAS
 - Demain : S2-J4 (Repos)
+
+## 2026-08-24 - S2-J4 : Lire un plan d'exécution
+- Fait : 1 PR ouverte (feat/performance), tests de performance SQL mis en place, lecture de plans d'executions (EXPLAIN / EXPLAIN ANALYZE), analyse du cout par etape, cout estime vs. cout reel. Modification de requetes et calcul avant/apres
+- Coincé : Lecture du plan via terminal (ne pas utiliser con.sql(".."), mais print(con.execute("EXPLAIN ANALYZE <requete>").fetchone()[1]))
+- Demain : S2-J5 (Le transfert en mission)
+
+## 2026-08-25 - S2-J5 : Lire un plan d'exécution
+- Fait : Lecture uniquement. Note : Plan passé de "TABLE ACCESS FULL" à "INDEX RANGE SCAN", gain non mesuré faute d'accès aux statistiques d'exécution.
+- Coincé : Impossible d'utiliser la quasi-totalité des commandes attendues dans l'environnement client
+- Demain : S2-J6 (Fiabilité, limites, contrôle)
