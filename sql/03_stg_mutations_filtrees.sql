@@ -56,6 +56,7 @@ WITH base AS (
       AND surface_bati > 0
       AND nb_natures = 1
 )
+
 SELECT
     current_date                 AS date_calcul,
     'p1/p99 sur perimetre filtre' AS methode,
