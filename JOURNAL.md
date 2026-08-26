@@ -51,3 +51,8 @@
 - Fait : Lecture uniquement. Note : Plan passé de "TABLE ACCESS FULL" à "INDEX RANGE SCAN", gain non mesuré faute d'accès aux statistiques d'exécution.
 - Coincé : Impossible d'utiliser la quasi-totalité des commandes attendues dans l'environnement client
 - Demain : S2-J6 (Fiabilité, limites, contrôle)
+
+## 2026-08-26 - S2-J6 : Fiabilité, limites, contrôle
+- Fait : 1 PR ouverte (feat/fiabilite), génération d'indicateurs de fiabilite (écart interquartile), clone de zero du projet
+- Coincé : RAS
+- Demain : S3(Python d'ingéniere)-J1
