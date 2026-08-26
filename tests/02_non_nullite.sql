@@ -6,4 +6,8 @@ SELECT * FROM (
     UNION ALL SELECT 'mois', count(*) FROM mart_prix_m2_reference WHERE mois IS NULL
     UNION ALL SELECT 'prix_m2_median_12m', count(*) FROM mart_prix_m2_reference WHERE prix_m2_median_12m IS NULL
     UNION ALL SELECT 'nb_mutations_12m', count(*) FROM mart_prix_m2_reference WHERE nb_mutations_12m IS NULL
+    UNION ALL SELECT 'evolution_pct', count(*) FROM mart_prix_m2_reference WHERE evolution_pct IS NULL
+    UNION ALL SELECT 'dispersion_relative', count(*) FROM mart_prix_m2_reference WHERE dispersion_relative IS NULL
+    UNION ALL SELECT 'prix_m2_q1_12m', count(*) FROM mart_prix_m2_reference WHERE prix_m2_q1_12m IS NULL
+    UNION ALL SELECT 'prix_m2_q3_12m', count(*) FROM mart_prix_m2_reference WHERE prix_m2_q3_12m IS NULL
 ) WHERE lignes_nulles > 0;

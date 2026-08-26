@@ -51,6 +51,10 @@ p99 à 12 600 000 € au grain ligne, 955 500 € au grain mutation.
 Le fait d'avoir un prix reproduit sur chaque ligne d'une même mutation faisait exploser le quantile 99%.
 Après nettoyage et définition du grain (une ligne = une mutation), une valeur cohérente est obtenue.
 
+## Dispersion et instabilité
+Le volume mesure la confiance dans l'estimation. La dispersion mesure l'hétérogénéité du marché sous-jacent. Ce sont deux questions différentes, et elles peuvent pointer en sens inverse.
+Filtrer sur la dispersion supprimerait les grandes villes.
+
 ## Limites connues
 
 1. **Périmètre de la source.** DVF ne couvre ni l'Alsace-Moselle ni Mayotte. Sans effet sur la Seine-Maritime, bloquant pour toute extension nationale.
@@ -59,4 +63,5 @@ Après nettoyage et définition du grain (une ligne = une mutation), une valeur 
 4. **Aucune qualification du bien.** Ni état, ni étage, ni extérieur, ni performance énergétique. Deux biens au même prix au m² ne sont pas comparables.
 5. **Convention sur les dépendances.** Le garage entre au numérateur, pas au dénominateur. Le prix au m² d'une maison avec dépendance est donc légèrement majoré.
 6. **Référentiel géographique en retard.** Mesuré : le code 76358 porte des mutations jusqu'au 02/09/2025 alors que la commune a disparu au 01/01/2025.
-7. **Seuils recalculés à chaque exécution.** Les bornes p1/p99 dépendent des données présentes : une valeur historique peut changer après une nouvelle livraison. 
+7. **Seuils recalculés à chaque exécution.** Les bornes p1/p99 dépendent des données présentes : une valeur historique peut changer après une nouvelle livraison.
+8. 5318 cellules sur 11383, soit 47 % de la publication, reposent sur 5 à 9 transactions.
