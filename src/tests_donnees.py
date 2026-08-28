@@ -1,29 +1,33 @@
-# src/tests_donnees.py
 """Verdict binaire sur la qualite des donnees.
 
 Convention : chaque fichier tests/NN_*.sql renvoie les lignes EN FAUTE.
-Zero ligne = test reussi. Code retour 1 des qu'un test echoue.
+Zero ligne = test reussi.
+
+Sortie volontairement en print et non en logging : le verdict est le produit
+attendu du programme, pas un diagnostic sur son deroulement. Une chaine
+d'integration continue lit stdout et le code retour, elle n'a pas a filtrer
+des horodatages.
 """
 
 import sys
-from pathlib import Path
 
 import duckdb
 
-BASE = "collateral.duckdb"
-DOSSIER_TESTS = Path("tests")
-MAX_LIGNES_AFFICHEES = 5
+from config import BASE_DUCKDB, DOSSIER_TESTS
 
-CODE_OK, CODE_ECHEC, CODE_ERREUR = 0, 1, 2
+CODE_OK = 0
+CODE_ECHEC = 1
+CODE_ERREUR = 2
+MAX_LIGNES_AFFICHEES = 5
 
 
 def main() -> int:
     tests = sorted(DOSSIER_TESTS.glob("[0-9][0-9]_*.sql"))
     if not tests:
-        print("Aucun test trouve dans test/")
-        return 1
+        print("Aucun test trouve dans tests/", file=sys.stderr)
+        return CODE_ERREUR
 
-    con = duckdb.connect(BASE, read_only=True)
+    con = duckdb.connect(str(BASE_DUCKDB), read_only=True)
     echecs = 0
 
     for chemin in tests:
@@ -42,19 +46,12 @@ def main() -> int:
             if len(lignes) > MAX_LIGNES_AFFICHEES:
                 print(f"          ... et {len(lignes) - MAX_LIGNES_AFFICHEES} autre(s)")
         else:
-            print(f"[OK ] {chemin.stem}")
+            print(f"[OK    ] {chemin.stem}")
 
     con.close()
     print(f"\n{len(tests) - echecs}/{len(tests)} tests reussis")
     return CODE_ECHEC if echecs else CODE_OK
 
-
-if __name__ == "__main__":
-    try:
-        sys.exit(main())
-    except Exception as erreur:  # bug du harnais, pas echec de test
-        print(f"[HARNAIS] erreur inattendue : {erreur}", file=sys.stderr)
-        sys.exit(CODE_ERREUR)
 
 if __name__ == "__main__":
     try:

@@ -1,46 +1,63 @@
-"""Point d'entrée unique des transformations.
+"""Point d'entree unique des transformations.
 
-Execute tous les scripts sql/NN_*.sql dans l'ordre de leur prefixe.
-Prerequis : sources presentes dans data/raw (lancer src/download.py avant).
+Execute tous les scripts sql/NN_*.sql dans l'ordre de leur prefixe numerique.
+Prerequis : sources presentes dans data/raw (lancer src/download.py au prealable).
 """
 
+import logging
 import sys
-from pathlib import Path
 
 import duckdb
 
-BASE = "collateral.duckdb"
-DOSSIER_SQL = Path("sql")
-DOSSIER_DATA = Path("data/raw")
+from config import (
+    BASE_DUCKDB,
+    DOSSIER_DATA,
+    DOSSIER_SQL,
+    FICHIER_COG,
+    MOTIF_DVF,
+    configurer_journal,
+)
+
+logger = logging.getLogger(__name__)
+
+CODE_OK = 0
+CODE_ERREUR = 1
 
 
 def verifier_sources() -> None:
-    """Echoue tot et clairement plutot que sur une erreur SQL incompréhensible."""
+    """Echoue tot et clairement, plutot que sur une erreur SQL incomprehensible."""
     manquants = []
-    if not list(DOSSIER_DATA.glob("dvf_*.csv.gz")):
-        manquants.append("fichiers DVF (dvf_*.csv.gz)")
-    if not list(DOSSIER_DATA.glob("v_commune_*.csv")):
-        manquants.append("referentiel COG (v_commune_*.csv)")
+    if not list(DOSSIER_DATA.glob(MOTIF_DVF)):
+        manquants.append(f"fichiers DVF ({MOTIF_DVF})")
+    if not (DOSSIER_DATA / FICHIER_COG).exists():
+        manquants.append(f"referentiel COG ({FICHIER_COG})")
     if manquants:
-        print("Sources manquantes dans data/raw : " + ", ".join(manquants))
-        print("Lancez d'abord : python /src/download.py")
-        sys.exit(1)
+        logger.error("sources manquantes dans %s : %s", DOSSIER_DATA, ", ".join(manquants))
+        logger.error("lancez d'abord : python src/download.py")
+        sys.exit(CODE_ERREUR)
 
 
-def main() -> None:
+def main() -> int:
     verifier_sources()
     scripts = sorted(DOSSIER_SQL.glob("[0-9][0-9]_*.sql"))
     if not scripts:
-        print("Aucun script SQL trouve dans sql/")
-        sys.exit(1)
+        logger.error("aucun script SQL trouve dans %s", DOSSIER_SQL)
+        return CODE_ERREUR
 
-    con = duckdb.connect(BASE)
+    con = duckdb.connect(str(BASE_DUCKDB))
     for chemin in scripts:
-        print(f"-> {chemin.name}")
+        logger.info("execution : %s", chemin.name)
         con.execute(chemin.read_text(encoding="utf-8"))
-    print(con.sql("SELECT count(*) AS lignes FROM mart_prix_m2_reference"))
+
+    lignes, signature = con.execute(
+        "SELECT count(*), sum(hash(t)) FROM mart_prix_m2_reference t"
+    ).fetchone()
     con.close()
+
+    logger.info("mart_prix_m2_reference : %s lignes, signature %s", lignes, signature)
+    return CODE_OK
 
 
 if __name__ == "__main__":
-    main()
+    configurer_journal()
+    sys.exit(main())
