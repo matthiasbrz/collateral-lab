@@ -1,7 +1,7 @@
 # src/mesure.py
 """Chronomètre une requete SQL sur plusieurs passages.
 
-Usage: : python src/mesure.py sql/analyses/mon_fichier.sql
+Usage: : python src/mesure.py
 Le fichier doit contenir un SELECT, pas un CREATE TABLE :
 on mesure le calcul, pas l'ecriture disque.
 """
