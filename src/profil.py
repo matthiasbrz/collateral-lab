@@ -7,6 +7,7 @@ from pathlib import Path
 
 import duckdb
 
+
 def aplatir(noeud, lignes):
     info = noeud.get("extra_info")
     info = info if isinstance(info, dict) else {}
