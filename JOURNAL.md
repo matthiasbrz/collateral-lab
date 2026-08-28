@@ -56,3 +56,8 @@
 - Fait : 1 PR ouverte (feat/fiabilite), génération d'indicateurs de fiabilite (écart interquartile), clone de zero du projet
 - Coincé : RAS
 - Demain : S3(Python d'ingéniere)-J1
+
+## 2026-08-28 - S3-J1 : L'outillage qui attrape les fautes
+- Fait : Point zéro Ruff : 4 erreurs sur 12 fichiers, dont 0 de la famille F. Les règles F n'auraient attrapé aucune de mes trois fautes de la semaine dernière. Le lint garantit la forme, pas la correction. Trois colonnes ou tables orphelines découvertes en deux jours : ecart_interquartile calculée et jamais publiée, ref_seuils_dispersion que rien ne consomme, evolution_pct sans spécification de nullabilité. Un alias SQL mal orthographié survit à tous les outils Python. Cause commune : rien ne relie un modèle à ses colonnes ni à ses tests.
+- Coincé : Détecter la faute de frappe dans la génération des tables, mettre en place les modules corrigées après check ruff
+- Demain : S3-J2 (Découper le script en modules)

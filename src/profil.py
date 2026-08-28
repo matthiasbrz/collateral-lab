@@ -7,6 +7,7 @@ from pathlib import Path
 
 import duckdb
 
+
 def aplatir(noeud, lignes):
     info = noeud.get("extra_info")
     info = info if isinstance(info, dict) else {}
@@ -19,6 +20,7 @@ def aplatir(noeud, lignes):
     for enfant in noeud.get("children", []):
         aplatir(enfant, lignes)
     return lignes
+
 
 if __name__ == "__main__":
     chemin = Path(sys.argv[1])
@@ -33,10 +35,15 @@ if __name__ == "__main__":
     con.execute("PRAGMA disable_profiling")
     con.close()
 
-    lignes = sorted(aplatir(json.loads(sortie.read_text(encoding="utf-8")), []),
-                    key=lambda l: l["temps"], reverse=True)
+    lignes = sorted(
+        aplatir(json.loads(sortie.read_text(encoding="utf-8")), []),
+        key=lambda: li["temps"],
+        reverse=True,
+    )
 
     print(f"{'operateur':<24}{'temps (s)':>12}{'reel':>12}{'estime':>12}")
-    for l in lignes[:12]:
-        print(f"{l['operateur']:<24}{l['temps']:>12.4f}{l['reel']:>12}"
-              f"{str(l['estime'] if l['estime'] is not None else '-'):>12}")
+    for li in lignes[:12]:
+        print(
+            f"{li['operateur']:<24}{li['temps']:>12.4f}{li['reel']:>12}"
+            f"{li['estime'] if li['estime'] is not None else '-'!s:>12}"
+        )

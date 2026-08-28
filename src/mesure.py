@@ -1,7 +1,7 @@
 # src/mesure.py
 """Chronomètre une requete SQL sur plusieurs passages.
 
-Usage: : python src/mesure.py sql/analyses/mon_fichier.sql
+Usage: : python src/mesure.py
 Le fichier doit contenir un SELECT, pas un CREATE TABLE :
 on mesure le calcul, pas l'ecriture disque.
 """
@@ -15,13 +15,14 @@ import duckdb
 
 PASSAGES = 5
 
-def mesurer(con, requete : str, passages: int = PASSAGES, prepare: str | None = None) -> list[float]:
+
+def mesurer(con, requete: str, passages: int = PASSAGES, prepare: str | None = None) -> list[float]:
     if prepare:
         con.execute(prepare)
     temps = []
     for _ in range(passages):
         debut = time.perf_counter()
-        con.execute(requete).fetchall() # fetchall() force la materialisation
+        con.execute(requete).fetchall()  # fetchall() force la materialisation
         temps.append(time.perf_counter() - debut)
     return temps
 
