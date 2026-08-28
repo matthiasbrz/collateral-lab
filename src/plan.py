@@ -1,6 +1,6 @@
 """Affiche et enregistre le plan d'execution d'une requete.
 
-Usage : 
+Usage :
     python src/plan.py sql/perf/05_agg_prix_m2_glissant.sql
     python src/plan.py sql/perf/05_agg_prix_m2_glissant.sql --analyze
 """

@@ -50,7 +50,7 @@ def download_cog() -> Path:
     with urllib.request.urlopen(requete) as reponse:
         contenu = reponse.read()
 
-    if contenu[:4] == b"PK\x03\x04":              # signature d'une archive zip
+    if contenu[:4] == b"PK\x03\x04":  # signature d'une archive zip
         archive = zipfile.ZipFile(io.BytesIO(contenu))
         csv = [n for n in archive.namelist() if n.endswith(".csv")]
         if len(csv) != 1:
@@ -59,9 +59,7 @@ def download_cog() -> Path:
 
     entete = contenu[:200].decode("utf-8", errors="replace")
     if "TYPECOM" not in entete:
-        raise RuntimeError(
-            f"ce n'est pas le fichier COG attendu. Debut recu : {entete[:120]!r}"
-        )
+        raise RuntimeError(f"ce n'est pas le fichier COG attendu. Debut recu : {entete[:120]!r}")
 
     cible.write_bytes(contenu)
     print(f"ecrit : {cible.name} ({cible.stat().st_size / 1e6:.1f} Mo)")

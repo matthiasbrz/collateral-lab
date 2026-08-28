@@ -15,13 +15,14 @@ import duckdb
 
 PASSAGES = 5
 
-def mesurer(con, requete : str, passages: int = PASSAGES, prepare: str | None = None) -> list[float]:
+
+def mesurer(con, requete: str, passages: int = PASSAGES, prepare: str | None = None) -> list[float]:
     if prepare:
         con.execute(prepare)
     temps = []
     for _ in range(passages):
         debut = time.perf_counter()
-        con.execute(requete).fetchall() # fetchall() force la materialisation
+        con.execute(requete).fetchall()  # fetchall() force la materialisation
         temps.append(time.perf_counter() - debut)
     return temps
 

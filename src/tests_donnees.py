@@ -16,6 +16,7 @@ MAX_LIGNES_AFFICHEES = 5
 
 CODE_OK, CODE_ECHEC, CODE_ERREUR = 0, 1, 2
 
+
 def main() -> int:
     tests = sorted(DOSSIER_TESTS.glob("[0-9][0-9]_*.sql"))
     if not tests:
@@ -29,7 +30,7 @@ def main() -> int:
         try:
             lignes = con.execute(chemin.read_text(encoding="utf-8")).fetchall()
         except duckdb.Error as erreur:
-            echecs +=1
+            echecs += 1
             print(f"[ERREUR] {chemin.stem} : {erreur}")
             continue
 
@@ -51,13 +52,13 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Exception as erreur:          # bug du harnais, pas echec de test
+    except Exception as erreur:  # bug du harnais, pas echec de test
         print(f"[HARNAIS] erreur inattendue : {erreur}", file=sys.stderr)
         sys.exit(CODE_ERREUR)
 
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Exception as erreur:          # bug du harnais, pas echec de test
+    except Exception as erreur:  # bug du harnais, pas echec de test
         print(f"[HARNAIS] erreur inattendue : {erreur}", file=sys.stderr)
         sys.exit(CODE_ERREUR)
