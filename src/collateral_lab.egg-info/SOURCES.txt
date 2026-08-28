@@ -1,8 +1,0 @@
-LICENSE
-README.md
-pyproject.toml
-src/collateral_lab.egg-info/PKG-INFO
-src/collateral_lab.egg-info/SOURCES.txt
-src/collateral_lab.egg-info/dependency_links.txt
-src/collateral_lab.egg-info/requires.txt
-src/collateral_lab.egg-info/top_level.txt

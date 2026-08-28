@@ -23,3 +23,11 @@ __pycache__/
 # OS/ éditeur
 .DS_Store
 .vscode/
+
+**/data/
+
+*.duckdb
+
+*.egg-info/
+build/
+dist/

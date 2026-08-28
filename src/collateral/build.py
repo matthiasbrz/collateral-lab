@@ -1,22 +1,18 @@
-"""Point d'entree unique des transformations.
+"""Point d'entree : construction de l'entrepot.
 
-Execute tous les scripts sql/NN_*.sql dans l'ordre de leur prefixe numerique.
-Prerequis : sources presentes dans data/raw (lancer src/download.py au prealable).
+Prerequis : sources presentes dans data/raw (lancer collateral.download au prealable).
+Usage : python -m collateral.build
 """
 
 import logging
 import sys
 
-import duckdb
-
-from config import (
-    BASE_DUCKDB,
-    DOSSIER_DATA,
-    DOSSIER_SQL,
-    FICHIER_COG,
-    MOTIF_DVF,
-    configurer_journal,
-)
+from collateral import journal
+from collateral.config import DOSSIER_SQL
+from collateral.controle import signature
+from collateral.db import connexion
+from collateral.download import sources_manquantes
+from collateral.sql import executer, lister
 
 logger = logging.getLogger(__name__)
 
@@ -24,40 +20,27 @@ CODE_OK = 0
 CODE_ERREUR = 1
 
 
-def verifier_sources() -> None:
-    """Echoue tot et clairement, plutot que sur une erreur SQL incomprehensible."""
-    manquants = []
-    if not list(DOSSIER_DATA.glob(MOTIF_DVF)):
-        manquants.append(f"fichiers DVF ({MOTIF_DVF})")
-    if not (DOSSIER_DATA / FICHIER_COG).exists():
-        manquants.append(f"referentiel COG ({FICHIER_COG})")
-    if manquants:
-        logger.error("sources manquantes dans %s : %s", DOSSIER_DATA, ", ".join(manquants))
-        logger.error("lancez d'abord : python src/download.py")
-        sys.exit(CODE_ERREUR)
-
-
 def main() -> int:
-    verifier_sources()
-    scripts = sorted(DOSSIER_SQL.glob("[0-9][0-9]_*.sql"))
-    if not scripts:
-        logger.error("aucun script SQL trouve dans %s", DOSSIER_SQL)
+    manquants = sources_manquantes()
+    if manquants:
+        logger.error("sources manquantes : %s", ", ".join(manquants))
+        logger.error("lancez d'abord : python -m collateral.download")
         return CODE_ERREUR
 
-    con = duckdb.connect(str(BASE_DUCKDB))
-    for chemin in scripts:
-        logger.info("execution : %s", chemin.name)
-        con.execute(chemin.read_text(encoding="utf-8"))
+    scripts = lister(DOSSIER_SQL)
+    if not scripts:
+        logger.error("aucun script SQL dans %s", DOSSIER_SQL)
+        return CODE_ERREUR
 
-    lignes, signature = con.execute(
-        "SELECT count(*), sum(hash(t)) FROM mart_prix_m2_reference t"
-    ).fetchone()
-    con.close()
+    with connexion() as con:
+        for chemin in scripts:
+            executer(con, chemin)
+        lignes, empreinte = signature(con, "mart_prix_m2_reference")
 
-    logger.info("mart_prix_m2_reference : %s lignes, signature %s", lignes, signature)
+    logger.info("mart_prix_m2_reference : %s lignes, signature %s", lignes, empreinte)
     return CODE_OK
 
 
 if __name__ == "__main__":
-    configurer_journal()
+    journal.configurer()
     sys.exit(main())

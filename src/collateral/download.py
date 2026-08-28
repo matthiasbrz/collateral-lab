@@ -12,15 +12,15 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-from config import (
+from collateral import journal
+from collateral.config import (
     DEPARTEMENT,
     DOSSIER_DATA,
     FICHIER_COG,
     MILLESIMES,
+    MOTIF_DVF,
     URL_COG,
     URL_DVF,
-    MOTIF_DVF,
-    configurer_journal,
 )
 
 logger = logging.getLogger(__name__)
@@ -74,6 +74,7 @@ def download_cog() -> Path:
     logger.info("ecrit : %s (%.1f Mo)", cible.name, cible.stat().st_size / 1e6)
     return cible
 
+
 def sources_manquantes() -> list[str]:
     """Rend la liste des sources absentes de data/raw, vide si tout est present."""
     manquants = []
@@ -83,8 +84,9 @@ def sources_manquantes() -> list[str]:
         manquants.append(f"referentiel COG ({FICHIER_COG})")
     return manquants
 
+
 if __name__ == "__main__":
-    configurer_journal()
+    journal.configurer()
     for annee in MILLESIMES:
         download_dvf(DEPARTEMENT, annee)
     download_cog()

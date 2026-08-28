@@ -1,32 +1,29 @@
-"""Affiche et enregistre le plan d'execution d'une requete.
+"""Plan d'execution d'une requete stockee dans un fichier.
 
-Usage :
-    python src/plan.py sql/perf/05_agg_prix_m2_glissant.sql [--analyze]
+Usage : python -m collateral.plan sql/perf/05_agg_prix_m2_glissant.sql [--analyze]
 """
 
 import logging
 import sys
 from pathlib import Path
 
-import duckdb
-
-from config import BASE_DUCKDB, DOSSIER_PLANS, configurer_journal
+from collateral import journal
+from collateral.config import DOSSIER_PLANS
+from collateral.db import connexion
 
 logger = logging.getLogger(__name__)
 
 
 def plan(chemin: Path, analyze: bool = False) -> str:
-    """Rend le texte du plan d'execution d'une requete stockee dans un fichier."""
+    """Rend le texte du plan d'execution d'une requete."""
     requete = chemin.read_text(encoding="utf-8").strip().rstrip(";")
     prefixe = "EXPLAIN ANALYZE" if analyze else "EXPLAIN"
-    con = duckdb.connect(str(BASE_DUCKDB), read_only=True)
-    texte = con.execute(f"{prefixe} {requete}").fetchone()[1]
-    con.close()
-    return texte
+    with connexion(lecture_seule=True) as con:
+        return con.execute(f"{prefixe} {requete}").fetchone()[1]
 
 
 if __name__ == "__main__":
-    configurer_journal()
+    journal.configurer()
     chemin = Path(sys.argv[1])
     analyze = "--analyze" in sys.argv
 
@@ -35,5 +32,5 @@ if __name__ == "__main__":
     cible = DOSSIER_PLANS / f"{chemin.stem}_{'analyze' if analyze else 'explain'}.txt"
     cible.write_text(texte, encoding="utf-8")
 
-    print(texte)  # le plan est le produit demande
-    logger.info("plan ecrit dans %s", cible)  # le chemin est un diagnostic
+    print(texte)
+    logger.info("plan ecrit dans %s", cible)
