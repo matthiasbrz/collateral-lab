@@ -1,14 +1,21 @@
-"""Constantes et configuration de la chaine collateral-lab.
+"""Constantes de la chaine collateral-lab.
 
 Aucune valeur litterale ne doit subsister ailleurs dans le code Python.
 Les litteraux des fichiers SQL ne sont pas couverts : voir l'issue ouverte.
 """
 
-import logging
 from pathlib import Path
 
+
+def _racine() -> Path:
+    """Remonte jusqu'au repertoire contenant pyproject.toml."""
+    for dossier in Path(__file__).resolve().parents:
+        if (dossier / "pyproject.toml").exists():
+            return dossier
+    raise RuntimeError("racine du projet introuvable : pyproject.toml absent")
+
 # --- Arborescence -----------------------------------------------------------
-RACINE = Path(__file__).resolve().parent.parent
+RACINE = _racine()
 DOSSIER_DATA = RACINE / "data" / "raw"
 DOSSIER_SQL = RACINE / "sql"
 DOSSIER_TESTS = RACINE / "tests"
@@ -28,15 +35,3 @@ MOTIF_DVF = "dvf_*.csv.gz"
 
 # --- Gouvernance ------------------------------------------------------------
 SEUIL_PUBLICATION = 5
-
-# --- Journalisation ---------------------------------------------------------
-FORMAT_JOURNAL = "%(asctime)s  %(levelname)-8s %(name)-16s %(message)s"
-FORMAT_HORODATAGE = "%Y-%m-%d %H:%M:%S"
-
-
-def configurer_journal(niveau: int = logging.INFO) -> None:
-    """Configure la journalisation. Un seul appel, depuis un point d'entree.
-
-    A deplacer dans src/journal.py au J2 : ce module ne doit porter que des constantes.
-    """
-    logging.basicConfig(level=niveau, format=FORMAT_JOURNAL, datefmt=FORMAT_HORODATAGE)
