@@ -1,0 +1,1 @@
+"""collateral-lab : entrepot analytique local sur les transactions immobilieres DVF."""
