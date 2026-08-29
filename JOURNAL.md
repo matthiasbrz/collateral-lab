@@ -66,3 +66,13 @@
 - Fait : Découpage (src/collateral/ : config (constantes), journal (journalisation), db (connexion), sql (execution), controle (signature), download (sources), + 5 points d'entree. build.py : 38 lignes,orchestration seule. Paquet installable en mode editable (disposition src).)
 - Coincé : Perdu dans l'arborescence du projet. Un fragment de phrase répété dans plusieurs descriptions de modules est un module non extrait. Quatre de mes sept descriptions commençaient par « il configure une connexion à l'entrepôt » : db.py s'est trouvé tout seul. Un chemin calculé par comptage de niveaux est un couplage caché entre un fichier et l'arborescence. Invisible pour le linter, invisible pour les six tests de données, et il a provoqué l'écriture de 24 Mo au mauvais endroit. Ruff a validé un fichier contenant deux affectations de la même constante. F811 ne couvre pas les variables de module. Deuxième démonstration de la semaine que le lint garantit la forme, pas la correction. Le découpage lui-même n'a produit aucune régression. Tout le temps perdu l'a été en diagnostic, pas en conception.
 - Demain : S3-J3 (pytest — tester des fonctions, pas des données)
+
+## 2026-08-29 - S3-J3 : pytest — tester des fonctions, pas des données
+- Fait : 
+- Coincé : 
+- Demain : Repos
+- Différence entre test de données et test unitaire : Un test de données demande : le contenu de l'entrepôt est-il correct ? Il a besoin d'une base construite. Un test unitaire demande : cette fonction fait-elle ce qu'elle prétend ? Il n'a besoin de rien.
+- La fonction la plus difficile à tester : sources_manquantes, avant paramétrage.
+- La logique métier est en SQL et non en Python : les tests unitaires couvrent la "plomberie", les tests de données couvrent le métier, et rien ne relie encore les deux.
+- Le bug de RACINE d'hier est passé sous les six tests de données. Un test unitaire d'une ligne l'aurait attrapé.
+- Un test non collecté ne rate pas, il n'existe pas. pytest --collect-only -q est le seul contrôle qui le détecte.
