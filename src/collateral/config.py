@@ -14,11 +14,12 @@ def _racine() -> Path:
             return dossier
     raise RuntimeError("racine du projet introuvable : pyproject.toml absent")
 
+
 # --- Arborescence -----------------------------------------------------------
 RACINE = _racine()
 DOSSIER_DATA = RACINE / "data" / "raw"
 DOSSIER_SQL = RACINE / "sql"
-DOSSIER_TESTS = RACINE / "tests"
+DOSSIER_TESTS = RACINE / "tests" / "donnees"
 DOSSIER_PLANS = RACINE / "docs" / "plans"
 BASE_DUCKDB = RACINE / "collateral.duckdb"
 

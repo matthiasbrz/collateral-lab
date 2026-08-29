@@ -18,3 +18,9 @@ preview = true
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "RUF"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unitaires"]

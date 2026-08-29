@@ -75,12 +75,44 @@ def download_cog() -> Path:
     return cible
 
 
-def sources_manquantes() -> list[str]:
-    """Rend la liste des sources absentes de data/raw, vide si tout est present."""
+SIGNATURE_ZIP = b"PK\x03\x04"
+
+
+def url_dvf(code_departement: str, annee: int) -> str:
+    """Rend l'URL du fichier DVF geolocalise d'un departement pour une annee."""
+    return f"{URL_DVF}/{annee}/departements/{code_departement}.csv.gz"
+
+
+def nom_fichier_dvf(code_departement: str, annee: int) -> str:
+    """Rend le nom local du fichier DVF."""
+    return f"dvf_{code_departement}_{annee}.csv.gz"
+
+
+def contenu_cog(donnees: bytes) -> bytes:
+    """Rend le CSV du referentiel a partir de ce que l'Insee a renvoye.
+
+    Accepte un CSV brut ou une archive zip contenant un unique CSV.
+    Leve RuntimeError si le contenu ne ressemble pas au fichier attendu.
+    """
+    if donnees[:4] == SIGNATURE_ZIP:
+        archive = zipfile.ZipFile(io.BytesIO(donnees))
+        csv = [nom for nom in archive.namelist() if nom.endswith(".csv")]
+        if len(csv) != 1:
+            raise RuntimeError(f"archive COG inattendue : {csv}")
+        donnees = archive.read(csv[0])
+
+    entete = donnees[:200].decode("utf-8", errors="replace")
+    if "TYPECOM" not in entete:
+        raise RuntimeError(f"ce n'est pas le fichier COG attendu. Debut recu : {entete[:120]!r}")
+    return donnees
+
+
+def sources_manquantes(dossier: Path = DOSSIER_DATA) -> list[str]:
+    """Rend la liste des sources absentes du dossier, vide si tout est present."""
     manquants = []
-    if not list(DOSSIER_DATA.glob(MOTIF_DVF)):
+    if not list(dossier.glob(MOTIF_DVF)):
         manquants.append(f"fichiers DVF ({MOTIF_DVF})")
-    if not (DOSSIER_DATA / FICHIER_COG).exists():
+    if not (dossier / FICHIER_COG).exists():
         manquants.append(f"referentiel COG ({FICHIER_COG})")
     return manquants
 
