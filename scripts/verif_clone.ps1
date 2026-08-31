@@ -70,9 +70,17 @@ function Etape {
         [switch]$Silencieux
     )
     Write-Host "-> $Libelle" -ForegroundColor White
+
+    # Python journalise sur stderr. PowerShell transforme toute ligne de stderr
+    # d'une commande native en ErrorRecord et l'affiche. L'affectation ci-dessous
+    # est locale a la fonction : elle ne modifie pas la session appelante.
+    $ErrorActionPreference = 'SilentlyContinue'
+
     $global:LASTEXITCODE = 0
-    $sortie = & $Action 2>&1
-    if ($LASTEXITCODE -ne 0) {
+    $sortie = & $Action 2>&1 | ForEach-Object { $_.ToString() }
+    $code = $LASTEXITCODE
+
+    if ($code -ne 0) {
         @($sortie) | ForEach-Object { Write-Host "     $_" -ForegroundColor DarkGray }
         Terminer 1 "echec a l'etape : $Libelle"
     }
