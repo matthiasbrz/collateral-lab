@@ -2,7 +2,6 @@
 
 Observatoire du collatéral immobilier : mini-entrepôt analytique sur les transactions immobilières françaises, construit comme le ferait une banque pour valoriser et surveiller son collatéral.
 
-
 ## Question directrice
 
 Pour une commune et un type de bien donnés, quelle est la valeur de référence au m², comment a-t-elle évolué sur 12 mois, et avec quel niveau de fiabilité (volume de transactions) ?
@@ -65,3 +64,30 @@ Filtrer sur la dispersion supprimerait les grandes villes.
 6. **Référentiel géographique en retard.** Mesuré : le code 76358 porte des mutations jusqu'au 02/09/2025 alors que la commune a disparu au 01/01/2025.
 7. **Seuils recalculés à chaque exécution.** Les bornes p1/p99 dépendent des données présentes : une valeur historique peut changer après une nouvelle livraison.
 8. 5318 cellules sur 11383, soit 47 % de la publication, reposent sur 5 à 9 transactions.
+
+## Reproduire
+
+Prérequis : Python 3.12 et Git.
+
+```powershell
+git clone https://github.com/matthiasbrz/collateral-lab.git
+cd collateral-lab
+py -m venv .venv ; .\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+```
+
+Puis :
+
+```powershell
+python -m collateral.download # sources dvf et référentiel COG, ~8 Mo
+python -m collateral.build # consruit l'entrepot, affiche la signature
+```
+
+Vérifier :
+
+```powershell
+python -m collateral.tests_donnees # 6 tests de données
+pytest # 16 tests unitaires
+```
+
+Aucune étape manuelle. Aucune donnée versionnée : 'data/' et '*.duckdb' sont exclus, et le '.gitignore' a été écrit avant le premier téléchargement.

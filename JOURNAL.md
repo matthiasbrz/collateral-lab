@@ -68,11 +68,16 @@
 - Demain : S3-J3 (pytest — tester des fonctions, pas des données)
 
 ## 2026-08-29 - S3-J3 : pytest — tester des fonctions, pas des données
-- Fait : 
-- Coincé : 
+- Fait : 1 PR ouverte (feat/tests-unitaires), distinction entre tests de données et tests unitaires, génération des tests unitaires.
+- Coincé : RAS
 - Demain : Repos
 - Différence entre test de données et test unitaire : Un test de données demande : le contenu de l'entrepôt est-il correct ? Il a besoin d'une base construite. Un test unitaire demande : cette fonction fait-elle ce qu'elle prétend ? Il n'a besoin de rien.
 - La fonction la plus difficile à tester : sources_manquantes, avant paramétrage.
 - La logique métier est en SQL et non en Python : les tests unitaires couvrent la "plomberie", les tests de données couvrent le métier, et rien ne relie encore les deux.
 - Le bug de RACINE d'hier est passé sous les six tests de données. Un test unitaire d'une ligne l'aurait attrapé.
 - Un test non collecté ne rate pas, il n'existe pas. pytest --collect-only -q est le seul contrôle qui le détecte.
+
+## 2026-08-31 - S3-J4 : Le message, et la dette
+- Fait : 1 PR ouverte puis supprimée (test/casse-volontaire), vérification clonage dépôt via script powershell (cas succès et cas avec erreurs)
+- Coincé : RAS
+- Demain : S2-J5 (Échouer proprement)
