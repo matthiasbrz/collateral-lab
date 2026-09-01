@@ -26,15 +26,32 @@ from collateral.config import (
 logger = logging.getLogger(__name__)
 
 
-def _telecharger(url: str, cible: Path) -> Path:
-    """Telecharge une URL vers un fichier. Idempotent : ne refait rien si present."""
+def _telecharger(url: str, cible: Path):
+    """Telecharge une URL vers un fichier. Idempotent et atomique.
+
+    L'ecriture passe par un fichier temporaire renomme en fin de course :
+    une interruption ne laisse jamais de fichier partiel a l'emplacement final.
+    """
     cible.parent.mkdir(parents=True, exist_ok=True)
     if cible.exists():
         logger.info("deja present, ignore : %s", cible.name)
         return cible
 
-    logger.info("telechargement : %s", url)
-    urllib.request.urlretrieve(url, cible)
+    partiel = cible.parent / (cible.name + ".partiel")
+    logger.info("telechargement : %s, url")
+    try:
+        urllib.request.urlretrieve(url, partiel)
+    except OSError as erreur:
+        partiel.unlink(missing_ok=True)
+        raise RuntimeError(
+            f"telechargement impossible depuis {url}\n"
+            f"  cause : {erreur}\n"
+            f"  que faire : verifiez votre connexion, puis relancez "
+            f"python -m collateral.download"
+        ) from erreur
+
+    verifier(partiel)
+    partiel.replace(cible)
     logger.info("ecrit : %s (%.1f Mo)", cible.name, cible.stat().st_size / 1e6)
     return cible
 
