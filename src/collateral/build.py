@@ -8,10 +8,11 @@ import logging
 import sys
 
 from collateral import journal
-from collateral.config import DOSSIER_SQL
+from collateral.config import DOSSIER_DATA, DOSSIER_SQL, FICHIER_COG, MOTIF_DVF
 from collateral.controle import signature
 from collateral.db import connexion
 from collateral.download import sources_manquantes
+from collateral.integrite import verifier
 from collateral.sql import executer, lister
 
 logger = logging.getLogger(__name__)
@@ -20,12 +21,22 @@ CODE_OK = 0
 CODE_ERREUR = 1
 
 
-def main() -> int:
+def verifier_sources() -> None:
+    """Verifie que les sources sont presentes ET completes avant toute lecture."""
     manquants = sources_manquantes()
     if manquants:
-        logger.error("sources manquantes : %s", ", ".join(manquants))
-        logger.error("lancez d'abord : python -m collateral.download")
-        return CODE_ERREUR
+        raise RuntimeError(
+            "sources manquantes : "
+            + ", ".join(manquants)
+            + "\n  que faire : python -m collateral.download"
+        )
+    for chemin in sorted(DOSSIER_DATA.glob(MOTIF_DVF)):
+        verifier(chemin)
+    verifier(DOSSIER_DATA / FICHIER_COG, entete_attendu="TYPECOM")
+
+
+def main() -> int:
+    verifier_sources()
 
     scripts = lister(DOSSIER_SQL)
     if not scripts:
