@@ -53,6 +53,9 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Exception as erreur:
+    except RuntimeError as erreur:  # base inaccessible, script SQL casse
+        print(f"[ERREUR] {erreur}", file=sys.stderr)
+        sys.exit(CODE_ERREUR)
+    except Exception as erreur:  # bug du harnais lui-meme
         print(f"[HARNAIS] erreur inattendue : {erreur}", file=sys.stderr)
         sys.exit(CODE_ERREUR)

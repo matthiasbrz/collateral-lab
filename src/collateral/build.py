@@ -43,4 +43,8 @@ def main() -> int:
 
 if __name__ == "__main__":
     journal.configurer()
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except RuntimeError as erreur:
+        logger.error("%s", erreur)
+        sys.exit(CODE_ERREUR)

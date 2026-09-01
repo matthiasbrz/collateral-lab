@@ -8,6 +8,7 @@ Licence Ouverte 2.0. Aucune donnee n'est versionnee : voir .gitignore.
 
 import io
 import logging
+import sys
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -22,6 +23,10 @@ from collateral.config import (
     URL_COG,
     URL_DVF,
 )
+from collateral.integrite import verifier
+
+CODE_OK = 0
+CODE_ERREUR = 1
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +43,7 @@ def _telecharger(url: str, cible: Path):
         return cible
 
     partiel = cible.parent / (cible.name + ".partiel")
-    logger.info("telechargement : %s, url")
+    logger.info("telechargement : %s", url)
     try:
         urllib.request.urlretrieve(url, partiel)
     except OSError as erreur:
@@ -136,6 +141,10 @@ def sources_manquantes(dossier: Path = DOSSIER_DATA) -> list[str]:
 
 if __name__ == "__main__":
     journal.configurer()
-    for annee in MILLESIMES:
-        download_dvf(DEPARTEMENT, annee)
-    download_cog()
+    try:
+        for annee in MILLESIMES:
+            download_dvf(DEPARTEMENT, annee)
+        download_cog()
+    except RuntimeError as erreur:
+        logger.error("%s", erreur)
+        sys.exit(1)

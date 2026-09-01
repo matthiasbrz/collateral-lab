@@ -18,4 +18,12 @@ def lister(dossier: Path, motif: str = MOTIF_SCRIPTS) -> list[Path]:
 def executer(con: duckdb.DuckDBPyConnection, chemin: Path) -> None:
     """Execute le contenu d'un fichier SQL."""
     logger.info("execution : %s", chemin.name)
-    con.execute(chemin.read_text(encoding="utf-8"))
+    try:
+        con.execute(chemin.read_text(encoding="utf-8"))
+    except duckdb.Error as erreur:
+        raise RuntimeError(
+            f"echec du script {chemin.name}\n"
+            f"  {erreur}\n"
+            f"  que faire : verifiez que les scripts precedents ont bien cree les "
+            f"tables attendues, puis relancez python -m collateral.build"
+        ) from erreur
