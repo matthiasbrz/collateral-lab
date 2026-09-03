@@ -81,3 +81,8 @@
 - Fait : 1 PR ouverte puis supprimée (test/casse-volontaire), vérification clonage dépôt via script powershell (cas succès et cas avec erreurs)
 - Coincé : RAS
 - Demain : S2-J5 (Échouer proprement)
+
+## 2026-09-03 - S4-J1 : Installer dbt sans rien casser
+- Fait : 1 PR ouverte (feat/dbt), installation dbt-duckdb, création projet dbt dans sous-dossier dépôt "/transform", génération "dbt_project.yml", écriture profil, validation avec "dbt debug", dbt Fundamentals (partie 1, ce qu'est un modèle, ce qu'est un graph de dépendances), déclaration d'une seule source dans "sources.yml" : "raw_mutations"
+- Coincé : RAS
+- Demain : S4-J2 (Le premier modèle porté)
