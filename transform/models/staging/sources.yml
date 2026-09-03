@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: brut
+    description: >
+      Tables chargees par la chaine Python (collateral.build), hors perimetre dbt.
+      dbt les lit, ne les produit pas.
+    schema: main
+    tables:
+      - name: raw_mutations
+        description: >
+          Transactions DVF geolocalisees, Seine-Maritime, millesimes 2023-2025.
+          Grain : une ligne par (local x subdivision fiscale) d'une mutation.
+          Une ligne n'est pas une vente : voir docs/regles_filtrage.md.

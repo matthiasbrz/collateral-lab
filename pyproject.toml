@@ -20,7 +20,7 @@ preview = true
 select = ["E", "F", "I", "UP", "RUF"]
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff"]
+dev = ["pytest", "ruff", "dbt-duckdb"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/unitaires"]
