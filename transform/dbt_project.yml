@@ -1,0 +1,19 @@
+name: collateral
+version: 0.1.0
+
+# Nom du profil recherche dans profiles.yml
+profile: collateral
+
+model-paths:    ["models"]
+test-paths:     ["tests"]
+macro-paths:    ["macros"]
+seed-paths:     ["seeds"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  collateral:
+  # La chaine actuelle cree des TABLES. La materialisation par defaut
+  # de dbt est une VUE : on l'aligne pour pouvoir comparer les resultats.
+  +materialized: table
