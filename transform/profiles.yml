@@ -4,4 +4,8 @@ collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient au
     dev:
       type: duckdb
       path: ../collateral.duckdb
+      # Schema distinct de main : la chaine Python et dbt coexistent
+      # dans la meme base sans se marcher dessus. Permet la comparaison
+      # directe des deux sorties. Bascule prevue au J5.
+      schema: dbt
       threads: 4
