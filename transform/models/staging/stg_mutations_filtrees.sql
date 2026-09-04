@@ -5,7 +5,7 @@ WITH base AS (
     SELECT
         *,
         round(valeur_fonciere / surface_bati, 2) AS prix_m2
-    FROM stg_mutations
+    FROM {{ ref('stg_mutations') }}
     WHERE nature_mutation = 'Vente'          -- 1. echanges, expropriations, adjudications hors marche
       AND nb_communes = 1                    -- 2. un prix unique sur deux communes n'est rattachable a aucune
       AND valeur_fonciere > 0                -- 3. valeur absente ou nulle : prix non exploitable
