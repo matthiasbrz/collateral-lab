@@ -28,7 +28,7 @@ locaux AS (
         type_local,
         surface_reelle_bati,
         nombre_pieces_principales
-    FROM raw_mutations
+    FROM {{ source('brut', 'raw_mutations') }}
     WHERE type_local IS NOT NULL
 ),
 

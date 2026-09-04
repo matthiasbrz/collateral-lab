@@ -258,9 +258,31 @@ if ($Rapide) {
     }
 }
 
+# ============================================================================
+Section "8. Graphe dbt"
+# ============================================================================
+
+$dossierModeles = Join-Path $racine 'transform\models'
+$modeles = @(Get-ChildItem -Path $dossierModeles -Recurse -Filter '*.sql' -ErrorAction SilentlyContinue)
+
+if ($modeles.Count -eq 0) {
+    Echec "aucun modele sous transform\models - le controle n'a rien examine"
+} else {
+    # Toute table du projet citee sans ref() ni source() est une arete manquante.
+    $motifEnDur = '(FROM|JOIN)\s+(raw_|stg_|agg_|dim_|mart_|ref_)'
+    $enDur = @($modeles | Select-String -Pattern $motifEnDur)
+
+    if ($enDur) {
+        Echec "$($enDur.Count) reference(s) en dur dans les modeles dbt"
+        Detail ($enDur | ForEach-Object { "$($_.Filename):$($_.LineNumber)  $($_.Line.Trim())" })
+    } else {
+        Ok "$($modeles.Count) modeles examines, aucune reference en dur"
+    }
+}
+
 
 # ============================================================================
-Section "8. Etat Git"
+Section "9. Etat Git"
 # ============================================================================
 
 $branche = ((& git rev-parse --abbrev-ref HEAD 2>&1) -join '').Trim()
