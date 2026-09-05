@@ -12,3 +12,8 @@ sources:
           Transactions DVF geolocalisees, Seine-Maritime, millesimes 2023-2025.
           Grain : une ligne par (local x subdivision fiscale) d'une mutation.
           Une ligne n'est pas une vente : voir docs/regles_filtrage.md.
+      - name: dim_commune
+        description: >
+          Referentiel des communes, COG Insee millesime 2026, TYPECOM = 'COM'.
+          Produite par la chaine Python (sql/01_dim_commune.sql).
+          Portage en modele dbt prevu en semaine 5.
