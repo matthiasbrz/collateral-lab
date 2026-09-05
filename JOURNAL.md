@@ -82,6 +82,12 @@
 - Coincé : RAS
 - Demain : S2-J5 (Échouer proprement)
 
+## 2026-09-03 - S4-J1 : Installer dbt sans rien casser
+- Fait : 1 PR ouverte (feat/dbt), installation dbt-duckdb, création projet dbt dans sous-dossier dépôt "/transform", génération "dbt_project.yml", écriture profil, validation avec "dbt debug", dbt Fundamentals (partie 1, ce qu'est un modèle, ce qu'est un graph de dépendances), déclaration d'une seule source dans "sources.yml" : "raw_mutations"
+- Coincé : RAS
+- Demain : S4-J2 (Le premier modèle porté)
+
+
 ## 2026-09-05 - S4-J3 : Déclarer un test au lieu de l'écrire
 - Fait : Déclaration de tests en dbt, comparaison avec tests existants python
 - Coincé : RAS
@@ -94,8 +100,4 @@ Test maison	Devient	Reste
 04_coherence_entonnoir	—	singulier, deux modèles à la fois
 05_integrite_referentielle	relationships, entièrement	—
 06_coherence_evolution	—	singulier, invariant conditionnel
-- Concernant la déclaration de tests en YAML : le test vis a côté de la colonne qu'il protège, dans le fichier qu'on modifie quand on change cette colonne. "dbt test --select stg_mutations" teste un modèle précis, ce que mon harnais ne savait pas faire. Un seuil de tolérence documenté remplace un binaire vert/rouge.
-## 2026-09-03 - S4-J1 : Installer dbt sans rien casser
-- Fait : 1 PR ouverte (feat/dbt), installation dbt-duckdb, création projet dbt dans sous-dossier dépôt "/transform", génération "dbt_project.yml", écriture profil, validation avec "dbt debug", dbt Fundamentals (partie 1, ce qu'est un modèle, ce qu'est un graph de dépendances), déclaration d'une seule source dans "sources.yml" : "raw_mutations"
-- Coincé : RAS
-- Demain : S4-J2 (Le premier modèle porté)
+- Concernant la déclaration de tests en YAML : le test vis a côté de la colonne qu'il protège, dans le fichier qu'on modifie quand on change cette colonne. "dbt test --select stg_mutations" teste un modèle précis, ce que mon harnais ne savait pas faire. Un seuil de tolérence documenté remplace un binaire vert/rouge. Mon test Python ne surveillait l'intégrité référentielle qu'à la sortie, jamais à l'entrée.
