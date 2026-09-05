@@ -154,6 +154,10 @@ $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '__pycache
 $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '.ruff_cache' -ErrorAction SilentlyContinue
 $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '.pytest_cache' -ErrorAction SilentlyContinue
 $parasites = @($parasites | Where-Object { $_ -and $_.FullName -notlike "*\.venv\*" })
+# Bases DuckDB egarees : une seule est legitime.
+$baseLegitime = Join-Path $racine 'collateral.duckdb'
+$parasites += Get-ChildItem -Path $racine -Recurse -Include '*.duckdb', '*.duckdb.wal' -ErrorAction SilentlyContinue |
+    Where-Object { $_.FullName -ne $baseLegitime }
 
 if ($parasites) {
     if ($Nettoyer) {
