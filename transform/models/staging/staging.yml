@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: stg_mutations
+    description: Mutations DVF au grain mutation, sans filtre metier.
+    columns:
+      - name: id_mutation
+        description: Identifiant Etalab de la mutation. Cle du modele.
+        data_tests:
+          - unique
+          - not_null
+      - name: date_mutation
+        data_tests: [not_null]
+      - name: code_commune
+        data_tests: [not_null]
+      - name: nb_communes
+        data_tests: [not_null]
+      - name: nb_natures
+        data_tests: [not_null]
+      # valeur_fonciere volontairement absente : nullable par construction,
+      # 320 mutations sans valeur exploitable, ecartees en aval.
+
+  - name: stg_mutations_filtrees
+    description: Mutations retenues dans le perimetre de la question directrice.
+    columns:
+      - name: id_mutation
+        data_tests:
+          - unique
+          - not_null
+      - name: prix_m2
+        data_tests: [not_null]
+      - name: surface_bati
+        data_tests: [not_null]
+      - name: mois
+        description: Premier jour du mois de la mutation. Cle temporelle des agregats.
+        data_tests: [not_null]
+      - name: type_local
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Maison', 'Appartement']
+      - name: code_commune
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: source('brut', 'dim_commune')
+                field: code_commune
+              config:
+                # Dette connue et documentee :  commune 76358 (Le Heron);
+                # fusionnee au 01/01/2025, encore presente dans DVF
+                # jusqu'au 02/09/2025. Voir docs/dimension_commune.md.
+                # On tolere l'existant, on refuse toute aggravation.
+                severity: warn
+                error_if: ">5"
+                warn_if: ">0"
+
+        
