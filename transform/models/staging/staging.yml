@@ -2,7 +2,12 @@ version: 2
 
 models:
   - name: stg_mutations
-    description: Mutations DVF au grain mutation, sans filtre metier.
+    description: >
+      Une ligne par mutation DVF.
+
+      Le grain source est le croisement (local x subdivision fiscale) : une ligne
+      brute n'est pas une vente. Aucun filtre metier n'est applique ici.
+      Verifie le 16/08/2026 : aucune mutation ne porte deux valeurs foncieres.
     columns:
       - name: id_mutation
         description: Identifiant Etalab de la mutation. Cle du modele.
@@ -17,22 +22,42 @@ models:
         data_tests: [not_null]
       - name: nb_natures
         data_tests: [not_null]
-      # valeur_fonciere volontairement absente : nullable par construction,
-      # 320 mutations sans valeur exploitable, ecartees en aval.
+      - name: valeur_fonciere
+        description: >
+          Prix total de la mutation, repete a l'identique sur chaque ligne source.
+          Nullable : 320 mutations sans valeur exploitable, ecartees en aval.
+      - name: nb_lignes_source
+        description: >
+          Nombre de lignes brutes agregees. Moyenne 2,5. Sert a expliquer
+          l'ecart entre volumetrie brute et volumetrie metier.
+      - name: surface_bati
+        description: >
+          Surface batie des locaux principaux, dependances exclues.
+          Convention : la dependance entre au numerateur du prix du m2,
+          pas au denominateur.
 
   - name: stg_mutations_filtrees
-    description: Mutations retenues dans le perimetre de la question directrice.
+    description: >
+      Une mutation retenue dans le perimetre de la question directrice.
+
+      Six regles de filtrage, chiffrees dans docs/regles_filtrage.md.
+      Taux de couverture : 46 655 sur 66 151, soit 70,5 %.
     columns:
       - name: id_mutation
         data_tests:
           - unique
           - not_null
       - name: prix_m2
+        description: >
+          Valeur fonciere divisee par la surface batie. Borne aux centiles 1 et 99,
+          calcules sur le perimetre deja filtre.
         data_tests: [not_null]
       - name: surface_bati
         data_tests: [not_null]
       - name: mois
-        description: Premier jour du mois de la mutation. Cle temporelle des agregats.
+        description: >
+          Premier jour du mois de la mutation. Cle temporelle des agregats
+          glissants sur 12 mois.
         data_tests: [not_null]
       - name: type_local
         data_tests:
@@ -41,6 +66,10 @@ models:
               arguments:
                 values: ['Maison', 'Appartement']
       - name: code_commune
+        description: >
+          Code INSEE au millesime de la source, en retard sur le COG :
+          5 mutations portent un code disparu au 01/01/2025. Tolerance
+          declaree dans le test relationships.
         data_tests:
           - not_null
           - relationships:
@@ -55,5 +84,3 @@ models:
                 severity: warn
                 error_if: ">5"
                 warn_if: ">0"
-
-        
