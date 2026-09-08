@@ -113,3 +113,10 @@ Script | Camp | Pourquoi
     ref_seuils_prix_m2 : sql/03 crée deux tables en recopiant le bloc de filtres. dbt l'interdit - un fichier, une relation. Le portage supprimera la duplication. 
     La configuration vit à deux endroits : config.py côté Python, et des littéraux en dur dans le SQL - chemins, seuil de cinq transactions. Côté dbt, c'esr '{{ var() }}. Deux sources de vérité restent deux sources de vérité.
     L'ordre d'exécution : build.py le numérote, dbt le déduit. Après bascule, les préfixes 00_ à 08_ disparaissent - sauf pour le seul script qui reste côté Python.
+Ce que dbt a supprimé de mon code, sur les deux modèles portés : les 'CREATE OR REPLACE TABLE', la numérotation des fichiers, l'ordre d'exécution explicite, et deux des six assertions de test.
+Ce qu'il ne remplace pas - la liste honnête :
+    - le téléchargement, le contrôle d'intégrité, tout ce qui touche le réseau et le disque ;
+    - trois tests de données sur six, qui restent du SQL singulier ;
+    - la signature de non-régression, qui n'est pas un test de données mais un contrôle de refactoring ;
+    - le tracé de la frontière lui-même, qui est une décision et le restera.
+La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
