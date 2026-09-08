@@ -101,3 +101,15 @@ Test maison	Devient	Reste
 05_integrite_referentielle	relationships, entièrement	—
 06_coherence_evolution	—	singulier, invariant conditionnel
 - Concernant la déclaration de tests en YAML : le test vis a côté de la colonne qu'il protège, dans le fichier qu'on modifie quand on change cette colonne. "dbt test --select stg_mutations" teste un modèle précis, ce que mon harnais ne savait pas faire. Un seuil de tolérence documenté remplace un binaire vert/rouge. Mon test Python ne surveillait l'intégrité référentielle qu'à la sortie, jamais à l'entrée.
+
+## 2026-09-08 - S4-J5 : Réconcilier, et décider
+- Frontière : Python amène la donnée jusqu'à l'entrepôt et garanti qu'elle est complète. dbt transforme ce qui est déjà dans l'entrepôt et prouve que le résultat tient.
+Script | Camp | Pourquoi
+00_raw_mutations | Python | chargement d'un fichier, pas une transformation
+01_dim_commune | les deux | il charge un CSV et filtre 'TYPECOM' et renomme
+02 à 08 | dbt | transformations pures
+- Future évolution : 01 doit être découper en deux. Un chargement brut 'raw_communes' côté Python, et un modèle 'dim_commune' côté dbt.
+- Frictions : 
+    ref_seuils_prix_m2 : sql/03 crée deux tables en recopiant le bloc de filtres. dbt l'interdit - un fichier, une relation. Le portage supprimera la duplication. 
+    La configuration vit à deux endroits : config.py côté Python, et des littéraux en dur dans le SQL - chemins, seuil de cinq transactions. Côté dbt, c'esr '{{ var() }}. Deux sources de vérité restent deux sources de vérité.
+    L'ordre d'exécution : build.py le numérote, dbt le déduit. Après bascule, les préfixes 00_ à 08_ disparaissent - sauf pour le seul script qui reste côté Python.
