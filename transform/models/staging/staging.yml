@@ -84,3 +84,17 @@ models:
                 severity: warn
                 error_if: ">5"
                 warn_if: ">0"
+
+  - name: ref_seuils_prix_m2
+    description: >
+      Bornes d'ecretage du prix au m2, une seule ligne.
+
+      Calculees sur int_mutations_perimetre, jamais sur la table brute.
+      Recalculees a chaque execution : voir la limite n 7 du README.
+    columns:
+      - name: seuil_bas
+        data_tests: [not_null]
+      - name: seuil_haut
+        data_tests: [not_null]
+      - name: mutations_perimetre
+        data_tests: [not_null]

@@ -53,3 +53,9 @@ Condition : les neuf modeles portes, chaque signature identique a son
 equivalent Python. Prevu en semaien 5.
 A la bascule : suppression de tests_donnees.py, de la numerotation des
 scripts, et passage de dbt-duckdb en dependance de production.
+
+## Dette de nommage
+
+"stg_mutations_filtrees" dépend désormais d'un modèle "int_", ce qui inverse la convention dbt - staging, puis intermédiaire, puis marts.
+Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre à "main.stg_mutations_filtrees" pour que "comparer()" fonctionne.
+Il changera à la bascule, quand les noms Python disparaîtront.
