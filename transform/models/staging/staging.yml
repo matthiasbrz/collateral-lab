@@ -74,7 +74,7 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: source('brut', 'dim_commune')
+                to: ref('dim_commune')
                 field: code_commune
               config:
                 # Dette connue et documentee :  commune 76358 (Le Heron);
@@ -97,4 +97,26 @@ models:
       - name: seuil_haut
         data_tests: [not_null]
       - name: mutations_perimetre
+        data_tests: [not_null]
+
+  - name: dim_commune
+    description: >
+      Une commune de plein exercice au millesime 2026.
+
+      Source : Code officiel geographique de l'Insee. Le filtre TYPECOM = 'COM'
+      exclut communes deleguees, associees et arrondissements municipaux.
+      34 875 communes, conforme au decompte officiel au 01/01/2026.
+    columns:
+      - name: code_commune
+        description: Code INSEE. Cle de la dimension.
+        data_tests:
+          - unique
+          - not_null
+      - name: nom_commune
+        description: >
+          Libelle au millesime 2026. Diverge du libelle porte par DVF pour les
+          communes renommes : 19 changements de nom sur le millesime.
+        data_tests: [not_null]
+      - name: millesime_cog
+        description: Millesime du referentiel, declare en variable dbt.
         data_tests: [not_null]

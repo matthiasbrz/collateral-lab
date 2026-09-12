@@ -47,6 +47,25 @@ Python par comparaison de signature, pas par relecture.
   sql_mutations_filtrees et ref_seuils_prix_m2 deviennent deux modules,
   ce qui supprime la duplication actuelle du bloc de filtres.
 
+### 01_dim_commune, coupe du 12/09/2026
+
+Avant : un script, trois responsabilites - lire, filtrer, renommer.
+
+Apres :
+- sql/00_raw_communes.sql (Python) : chargement brut du COG, types forces.
+  Aucune ligne ecartee, aucune colonne renommee.
+- transform/models/staging/dim_commune.sql (dbt) : filtre TYPECOM = 'COM',
+  renommage, millesime declare en variable dbt.
+
+Ce que la coupe a rendu visible : le filtre TYPECOM n'est pas une option de
+lecture, c'est la definition de ce qu'est une commune. Colle a un read_csv,
+il passait pour un detail technique.
+
+Le millesime 2026 reste declare a deux endroits : config.MILLESIME_COG pour
+le nom du fichier, var('millesime_cog') pour la colonne. La duplication ne
+disparait pas, elle se deplace sur la frontiere - une valeur au lieu d'un
+bloc SQL.
+
 ## Bascule
 
 Condition : les neuf modeles portes, chaque signature identique a son

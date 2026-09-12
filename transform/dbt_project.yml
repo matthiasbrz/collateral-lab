@@ -17,3 +17,6 @@ models:
   # La chaine actuelle cree des TABLES. La materialisation par defaut
   # de dbt est une VUE : on l'aligne pour pouvoir comparer les resultats.
   +materialized: table
+
+vars:
+  millesime_cog: 2026
