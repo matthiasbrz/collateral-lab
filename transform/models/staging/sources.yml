@@ -6,6 +6,17 @@ sources:
       Tables chargees par la chaine Python (collateral.build), hors perimetre dbt.
       dbt les lit, ne les produit pas.
     schema: main
+    config:
+      loaded_at_field: charge_le
+      freshness:
+        # Rythme reel de DVF : deux livraisons par an, en avril et en octobre.
+        # Intervalle mesure entre les deux livraisons 2026 : 183 jours.
+        # warn a 190 j : un intervalle normal est depasse, une livraison a
+        #                probablement ete publiee sans etre integree.
+        # error a 220 j : une livraison entiere a certainement ete manquee.
+        # Un seuil en heures n'aurait aucun sens sur une source semestrielle.
+        warn_after: { count: 190, period: day }
+        error_after: { count: 220, period: day }
     tables:
       - name: raw_mutations
         description: >

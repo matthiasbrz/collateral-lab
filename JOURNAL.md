@@ -120,3 +120,18 @@ Ce qu'il ne remplace pas - la liste honnête :
     - la signature de non-régression, qui n'est pas un test de données mais un contrôle de refactoring ;
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
+
+## Bilan Horaire à Semaine 4
+| Semaine | Roadmap | POC | Total | Plafond |
+|---|---|---|---|---|
+| S1 | ~12 h | - | 12 h | 11 h |
+| S2 | 9-10 h | ~5 h | ~15 h | 11 h |
+| S3 | ~15 h | ~5 h | ~20 h | 11 h |
+| S4 | ~9 h | pause | ~9 h | 10 h + 5 h |
+
+## 2026-09-14 - S5-J4 : La fraîcheur des sources
+Notes : 
+   |   'date_calcul' dans 'ref_seuils_prix_m2'   |   'charge_le' dans 'raw_mutations'
+Prétend |   figer une borne de référence   |   enregistrer un événement de chargement
+Enregistre en réalité |   la date du dernier build   |   la date du dernier chargement
+Ecart entre les deux |   total   |   nul

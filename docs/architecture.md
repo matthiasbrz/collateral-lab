@@ -75,6 +75,15 @@ scripts, et passage de dbt-duckdb en dependance de production.
 
 ## Dette de nommage
 
-"stg_mutations_filtrees" dépend désormais d'un modèle "int_", ce qui inverse la convention dbt - staging, puis intermédiaire, puis marts.
-Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre à "main.stg_mutations_filtrees" pour que "comparer()" fonctionne.
-Il changera à la bascule, quand les noms Python disparaîtront.
+"stg_mutations_filtrees" depend desormais d'un modele "int_", ce qui inverse la convention dbt - staging, puis intermediaire, puis marts.
+Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre a "main.stg_mutations_filtrees" pour que "comparer()" fonctionne.
+Il changera a la bascule, quand les noms Python disparaitront.
+
+## Controle freshness
+
+Age du chargement : mesure. 'charge_le' dit quand l'entrepot a ete reconstruit.
+Age du fichier : non mesure. Un fichier telecharge le 15 aout peut avoir ete charge ce matin.
+Age du millesime : non mesure, et c'est celui vraiment interessant. Savoir si on tourne sur la derniere livraison 
+publiee exige de consulter data.gouv.fr, ce qu'aucun controle de fraicheur ne sait faire.
+Consequence pratique : 'build.py' recharge les table brutes a chaque execution, donc le controle sera vert en permanence.
+Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six mois plus tard sans savoir a quoi s'attendre.

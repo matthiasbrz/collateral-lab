@@ -91,3 +91,31 @@ pytest # 16 tests unitaires
 ```
 
 Aucune étape manuelle. Aucune donnée versionnée : 'data/' et '*.duckdb' sont exclus, et le '.gitignore' a été écrit avant le premier téléchargement.
+
+## Architecture
+
+Python amène la donnée jusqu'à l'entrepôt et garantit qu'elle est complète.
+dbt transforme ce qui est déjà dans l'entrepôt et prouve que le résultat tient.
+
+```
+    data.gouv.fr, insee.fr
+             | 
+        [ Python ]      téléchargement atomique, contrôle d'intégrité, chargement brut
+             |
+        DuckDB (main)   raw_mutations, dim_commune
+             |
+          [ dbt ]       grain, filtres, agrégats, publication
+             |          + tests déclaratifs, documentation, lignée
+        DuckDB (dbt)    stg_mutations, stg_mutations_filtrees
+```
+
+Transition en cours : 2 modèles sur 9 portés, chacun prouvé identique à son
+équivalent Python par comparaison de signature. Détail et calendrier de bascule
+dans 'docs/architecture.md'.
+
+### Documentation générée
+```powershell
+cd transform
+dbt docs generate --profiles-dir .
+dbt docs serve --profiles-dir .
+```
