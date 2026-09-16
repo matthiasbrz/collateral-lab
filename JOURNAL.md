@@ -128,6 +128,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S2 | 9-10 h | ~5 h | ~15 h | 11 h |
 | S3 | ~15 h | ~5 h | ~20 h | 11 h |
 | S4 | ~9 h | pause | ~9 h | 10 h + 5 h |
+| S5 | ~7 h | pause | ~7 h | 10 h
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -135,3 +136,26 @@ Notes :
 Prétend |   figer une borne de référence   |   enregistrer un événement de chargement
 Enregistre en réalité |   la date du dernier build   |   la date du dernier chargement
 Ecart entre les deux |   total   |   nul
+
+## 2026-09-16 - S5-J6 : Contrôle S5 et cap sur le 10 octobre
+Point de contrôle S5 :
+Critère | Etat | Date
+'comparer()' existe, testé, calibré sur une mesure connue | atteint | 10/09
+La duplication des filtres a disparu du projet | atteint | 11/09
+'dim_commune' coupée selon la frontière ingestion/transformation | atteint | 12/09
+Fraîcheur déclarée, seuils justifiés par le rythme semestriel | atteint | 14/09
+Documentation publique, accessible sans authentification | atteint | 15/09
+Le rituel utilise 'dbt build' | atteint | 14/09
+Cinq modèles portés quatre prouvés identiques par outil | atteint | 12/09
+
+Constats :
+ - Un test a cessé d'exister pendant huit minutes le 12/09 sans qu'aucun contrôle ne le voie.
+'Found 20 data tests' au lieu de 21, un avertissement, et "Completed successfully".
+Quatorzième objet inerte, et le premier produit par l'outil censé les empêcher.
+ - 'transform/.user.yml' était versionné depuis onze jours. Sorti de l'index le 4 septembre,
+revenu par un 'git add -A'. Troisième artefact d'outil ramassé de la même façon après
+'egg-info' et 'logs/'.
+ - 'docs/plans/profil.json' et le fichier 'collateral-lab' à la racine sont suivis par Git.
+Deux artefacts générés dans l'historique des sources, découverts par accident hier.
+ - 'ref_seuils_prix_m2' reste non déterministe. Issue ouverte le 11, démonstration obtenue
+le 12 : deux signatures différentes à vingt-quatre heures d'écart, sans modification de code.

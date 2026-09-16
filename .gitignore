@@ -38,4 +38,4 @@ transform/dbt_packages/
 transform/logs/
 logs/
 **/logs/
-user.yml
+transform/user.yml
