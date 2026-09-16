@@ -142,8 +142,12 @@ Etape "pip install -e .[dev]" { & $python -m pip install --quiet -e '.[dev]' } -
 Titre "3. Chaine complete"
 # ============================================================================
 
+$dbt = Join-Path $travail '.venv\Scripts\dbt.exe'
+
 Etape "collateral.download" { & $python -m collateral.download }
 Etape "collateral.build"    { & $python -m collateral.build }
+Etape "dbt source freshness" { & $dbt source freshness --project-dir transform --profiles-dir transform }
+Etape "dbt build" { & $dbt build --project-dir transform --profiles-dir transform }
 Etape "collateral.tests_donnees" { & $python -m collateral.tests_donnees }
 Etape "pytest" { & $python -m pytest -q }
 

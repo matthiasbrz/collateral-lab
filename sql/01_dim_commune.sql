@@ -12,8 +12,5 @@ SELECT
     REG AS code_region,
     COMPARENT AS code_commune_parent,
     2026 AS millesime_cog
-FROM read_csv(
-    'data/raw/v_commune_2026.csv',
-    types = {'COM': 'VARCHAR', 'DEP': VARCHAR, 'REG': VARCHAR, 'COMPARENT': 'VARCHAR'}
-)
+FROM raw_communes
 WHERE TYPECOM = 'COM';  

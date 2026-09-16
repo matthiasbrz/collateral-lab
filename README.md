@@ -34,6 +34,11 @@ Les données doivent être traitées conformément au RGPD, un non-respect de ce
 La collecte, le traitement et la protections de ces données doivent être démontrable.
 Ces données ayant un caractère sensible, il est nécessaire de savoir qui utilise ces données et à quelle fin.
 
+- 15/09/2026 : contrôle avant publication du catalogue dbt. Recherche de valeurs
+de données et de chemins locaux dans 'static_index.html' : aucune occurence.
+Le site publie noms de colonnes, types, statistiques de table et SQL compilé
+des modèles - ce dernier étant déjà public dans le dépôt.
+
 ## Stack
 
 Python, DuckDB, SQL, Git. dbt introduit en semaine 10.
@@ -91,3 +96,39 @@ pytest # 16 tests unitaires
 ```
 
 Aucune étape manuelle. Aucune donnée versionnée : 'data/' et '*.duckdb' sont exclus, et le '.gitignore' a été écrit avant le premier téléchargement.
+
+## Architecture
+
+Python amène la donnée jusqu'à l'entrepôt et garantit qu'elle est complète.
+dbt transforme ce qui est déjà dans l'entrepôt et prouve que le résultat tient.
+
+```
+    data.gouv.fr, insee.fr
+             | 
+        [ Python ]      téléchargement atomique, contrôle d'intégrité, chargement brut
+             |
+        DuckDB (main)   raw_mutations, dim_commune
+             |
+          [ dbt ]       grain, filtres, agrégats, publication
+             |          + tests déclaratifs, documentation, lignée
+        DuckDB (dbt)    stg_mutations, stg_mutations_filtrees
+```
+
+Transition en cours : 2 modèles sur 9 portés, chacun prouvé identique à son
+équivalent Python par comparaison de signature. Détail et calendrier de bascule
+dans 'docs/architecture.md'.
+
+### Documentation générée
+```powershell
+cd transform
+dbt docs generate --profiles-dir .
+dbt docs serve --profiles-dir .
+```
+
+### Documentation
+
+Catalogue et graphe de lignée : https://matthiasbrz.github.io/collateral-lab/
+
+Généré par 'dbt docs generate --static', publié manuellement sur la branche
+'gh-pages'. Ne contient que des noms de colonnes, des types et des statistiques
+de table - aucune valeur de donnée. Contrôle effectué le 15/09/2026.

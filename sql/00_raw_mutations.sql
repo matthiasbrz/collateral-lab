@@ -1,7 +1,9 @@
 -- sql/00_raw_mutations.sql
 -- Chargement brut des fichiers DVF. Aucune transformation.
 CREATE OR REPLACE TABLE raw_mutations AS
-SELECT *
+SELECT 
+    *,
+    now() AS charge_le
 FROM read_csv(
     'data/raw/dvf_*.csv.gz',
     union_by_name = true,

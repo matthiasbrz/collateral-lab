@@ -47,9 +47,43 @@ Python par comparaison de signature, pas par relecture.
   sql_mutations_filtrees et ref_seuils_prix_m2 deviennent deux modules,
   ce qui supprime la duplication actuelle du bloc de filtres.
 
+### 01_dim_commune, coupe du 12/09/2026
+
+Avant : un script, trois responsabilites - lire, filtrer, renommer.
+
+Apres :
+- sql/00_raw_communes.sql (Python) : chargement brut du COG, types forces.
+  Aucune ligne ecartee, aucune colonne renommee.
+- transform/models/staging/dim_commune.sql (dbt) : filtre TYPECOM = 'COM',
+  renommage, millesime declare en variable dbt.
+
+Ce que la coupe a rendu visible : le filtre TYPECOM n'est pas une option de
+lecture, c'est la definition de ce qu'est une commune. Colle a un read_csv,
+il passait pour un detail technique.
+
+Le millesime 2026 reste declare a deux endroits : config.MILLESIME_COG pour
+le nom du fichier, var('millesime_cog') pour la colonne. La duplication ne
+disparait pas, elle se deplace sur la frontiere - une valeur au lieu d'un
+bloc SQL.
+
 ## Bascule
 
 Condition : les neuf modeles portes, chaque signature identique a son
 equivalent Python. Prevu en semaien 5.
 A la bascule : suppression de tests_donnees.py, de la numerotation des
 scripts, et passage de dbt-duckdb en dependance de production.
+
+## Dette de nommage
+
+"stg_mutations_filtrees" depend desormais d'un modele "int_", ce qui inverse la convention dbt - staging, puis intermediaire, puis marts.
+Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre a "main.stg_mutations_filtrees" pour que "comparer()" fonctionne.
+Il changera a la bascule, quand les noms Python disparaitront.
+
+## Controle freshness
+
+Age du chargement : mesure. 'charge_le' dit quand l'entrepot a ete reconstruit.
+Age du fichier : non mesure. Un fichier telecharge le 15 aout peut avoir ete charge ce matin.
+Age du millesime : non mesure, et c'est celui vraiment interessant. Savoir si on tourne sur la derniere livraison 
+publiee exige de consulter data.gouv.fr, ce qu'aucun controle de fraicheur ne sait faire.
+Consequence pratique : 'build.py' recharge les table brutes a chaque execution, donc le controle sera vert en permanence.
+Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six mois plus tard sans savoir a quoi s'attendre.
