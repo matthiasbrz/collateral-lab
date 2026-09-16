@@ -146,8 +146,14 @@ $dbt = Join-Path $travail '.venv\Scripts\dbt.exe'
 
 Etape "collateral.download" { & $python -m collateral.download }
 Etape "collateral.build"    { & $python -m collateral.build }
-Etape "dbt source freshness" { & $dbt source freshness --project-dir transform --profiles-dir transform }
-Etape "dbt build" { & $dbt build --project-dir transform --profiles-dir transform }
+
+# dbt-duckdb resout 'path' par rapport au repertoire courant, pas a profiles.yml.
+# On se place dans transform/ pour que ../collateral.duckdb designe la racine.
+Set-Location (Join-Path $travail 'transform')
+Etape "dbt source freshness" { & $dbt source freshness --profiles-dir . }
+Etape "dbt build" { & $dbt build --profiles-dir . }
+Set-Location $travail
+
 Etape "collateral.tests_donnees" { & $python -m collateral.tests_donnees }
 Etape "pytest" { & $python -m pytest -q }
 

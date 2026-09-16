@@ -87,3 +87,12 @@ Age du millesime : non mesure, et c'est celui vraiment interessant. Savoir si on
 publiee exige de consulter data.gouv.fr, ce qu'aucun controle de fraicheur ne sait faire.
 Consequence pratique : 'build.py' recharge les table brutes a chaque execution, donc le controle sera vert en permanence.
 Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six mois plus tard sans savoir a quoi s'attendre.
+
+## Ecarte d'ici le 10 octobre, a reprendre ensuite
+
+- Portage sur entrepot cloud et orchestration (paliers 2 et 3 du sujet initial).
+  Motif : ne rentre pas avant l'echeance. A reeexaminer au point de controle 2.
+- Snapshots dbt et SCD2 sur dim_commune, malgre le cas Morville-le-Heron.
+  La dette est declaree par un seuil de test, elle tient jusque-la.
+- dbt-utils. Un paquet externe le mois de l'entretien est une variable de trop.
+- Extension a d'autres departements. Le volume ne prouverait rien de plus.

@@ -310,6 +310,15 @@ if ($LASTEXITCODE -eq 0) {
     Alerte "branche sans suivi distant - git push -u origin $branche"
 }
 
+if ($branche -ne 'main') {
+    & git show-ref --verify --quiet "refs/remotes/origin/main"
+    if ($LASTEXITCODE -eq 0) {
+        $avance = ((& git rev-list --count "origin/main..HEAD") -join '').Trim()
+        if ([int]$avance -gt 0) { Alerte "$avance commit(s) d'avance sur main - fusion en attente" }
+        else { Ok "aucune avance sur main" }
+    }
+}
+
 
 # ============================================================================
 Write-Host ""
