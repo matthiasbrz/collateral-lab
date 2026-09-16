@@ -82,6 +82,12 @@
 - Coincé : RAS
 - Demain : S2-J5 (Échouer proprement)
 
+## 2026-09-03 - S4-J1 : Installer dbt sans rien casser
+- Fait : 1 PR ouverte (feat/dbt), installation dbt-duckdb, création projet dbt dans sous-dossier dépôt "/transform", génération "dbt_project.yml", écriture profil, validation avec "dbt debug", dbt Fundamentals (partie 1, ce qu'est un modèle, ce qu'est un graph de dépendances), déclaration d'une seule source dans "sources.yml" : "raw_mutations"
+- Coincé : RAS
+- Demain : S4-J2 (Le premier modèle porté)
+
+
 ## 2026-09-05 - S4-J3 : Déclarer un test au lieu de l'écrire
 - Fait : Déclaration de tests en dbt, comparaison avec tests existants python
 - Coincé : RAS
@@ -94,8 +100,23 @@ Test maison	Devient	Reste
 04_coherence_entonnoir	—	singulier, deux modèles à la fois
 05_integrite_referentielle	relationships, entièrement	—
 06_coherence_evolution	—	singulier, invariant conditionnel
-- Concernant la déclaration de tests en YAML : le test vis a côté de la colonne qu'il protège, dans le fichier qu'on modifie quand on change cette colonne. "dbt test --select stg_mutations" teste un modèle précis, ce que mon harnais ne savait pas faire. Un seuil de tolérence documenté remplace un binaire vert/rouge.
-## 2026-09-03 - S4-J1 : Installer dbt sans rien casser
-- Fait : 1 PR ouverte (feat/dbt), installation dbt-duckdb, création projet dbt dans sous-dossier dépôt "/transform", génération "dbt_project.yml", écriture profil, validation avec "dbt debug", dbt Fundamentals (partie 1, ce qu'est un modèle, ce qu'est un graph de dépendances), déclaration d'une seule source dans "sources.yml" : "raw_mutations"
-- Coincé : RAS
-- Demain : S4-J2 (Le premier modèle porté)
+- Concernant la déclaration de tests en YAML : le test vis a côté de la colonne qu'il protège, dans le fichier qu'on modifie quand on change cette colonne. "dbt test --select stg_mutations" teste un modèle précis, ce que mon harnais ne savait pas faire. Un seuil de tolérence documenté remplace un binaire vert/rouge. Mon test Python ne surveillait l'intégrité référentielle qu'à la sortie, jamais à l'entrée.
+
+## 2026-09-08 - S4-J5 : Réconcilier, et décider
+- Frontière : Python amène la donnée jusqu'à l'entrepôt et garanti qu'elle est complète. dbt transforme ce qui est déjà dans l'entrepôt et prouve que le résultat tient.
+Script | Camp | Pourquoi
+00_raw_mutations | Python | chargement d'un fichier, pas une transformation
+01_dim_commune | les deux | il charge un CSV et filtre 'TYPECOM' et renomme
+02 à 08 | dbt | transformations pures
+- Future évolution : 01 doit être découper en deux. Un chargement brut 'raw_communes' côté Python, et un modèle 'dim_commune' côté dbt.
+- Frictions : 
+    ref_seuils_prix_m2 : sql/03 crée deux tables en recopiant le bloc de filtres. dbt l'interdit - un fichier, une relation. Le portage supprimera la duplication. 
+    La configuration vit à deux endroits : config.py côté Python, et des littéraux en dur dans le SQL - chemins, seuil de cinq transactions. Côté dbt, c'esr '{{ var() }}. Deux sources de vérité restent deux sources de vérité.
+    L'ordre d'exécution : build.py le numérote, dbt le déduit. Après bascule, les préfixes 00_ à 08_ disparaissent - sauf pour le seul script qui reste côté Python.
+Ce que dbt a supprimé de mon code, sur les deux modèles portés : les 'CREATE OR REPLACE TABLE', la numérotation des fichiers, l'ordre d'exécution explicite, et deux des six assertions de test.
+Ce qu'il ne remplace pas - la liste honnête :
+    - le téléchargement, le contrôle d'intégrité, tout ce qui touche le réseau et le disque ;
+    - trois tests de données sur six, qui restent du SQL singulier ;
+    - la signature de non-régression, qui n'est pas un test de données mais un contrôle de refactoring ;
+    - le tracé de la frontière lui-même, qui est une décision et le restera.
+La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.

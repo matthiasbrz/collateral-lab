@@ -20,6 +20,9 @@ preview = true
 select = ["E", "F", "I", "UP", "RUF"]
 
 [project.optional-dependencies]
+# dbt-duckdb reste en dev tant que build.py ne l'appelle pas.
+# Passera en dependencies a la bascule (semaine 5), quand les neufs modeles
+# seront portes. Voir docs/architecture.md.
 dev = ["pytest", "ruff", "dbt-duckdb"]
 
 [tool.pytest.ini_options]
