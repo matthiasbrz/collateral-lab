@@ -159,3 +159,8 @@ revenu par un 'git add -A'. Troisième artefact d'outil ramassé de la même fa�
 Deux artefacts générés dans l'historique des sources, découverts par accident hier.
  - 'ref_seuils_prix_m2' reste non déterministe. Issue ouverte le 11, démonstration obtenue
 le 12 : deux signatures différentes à vingt-quatre heures d'écart, sans modification de code.
+
+Une vérification qui ne peut pas distinguer deux hypothèses n'est pas une vérification.
+Le chemin de la base semblait validé depuis le 3 septembre ; le contrôle proposé donnait
+le même résultat dans les deux cas. Seul le test de clone, qui change les conditions d'exécution,
+l'a relevé.
