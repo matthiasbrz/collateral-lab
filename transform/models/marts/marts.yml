@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: agg_prix_m2_mensuel
+    description: >
+      Prix median au m2 par commune, type de bien et mois.
+
+      Agregat d'observation : aucun modele ne le consomme. Il mesure la
+      dispersion du volume mensuel, qui justifie le passage a une fenetre
+      glissante - 12 669 cellules, dont 52 % ne contiennent qu'une seule
+      vente et 15,1 % atteignent cinq transactions.
+    columns:
+      - name: code_commune
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_commune')
+                field: code_commune
+              config:
+                severity: warn
+                error_if: ">5"
+                warn_if: ">0"
+      - name: type_local
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Maison', 'Appartement']
+      - name: mois
+        data_tests: [not_null]
+      - name: nb_mutations
+        description: >
+          Volume de la cellule. Indicateur de fiabilite : une mediane sur une
+          transaction est cette transaction.
+        data_tests: [not_null]
+      - name: prix_m2_median
+        data_tests: [not_null]
