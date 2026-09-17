@@ -96,3 +96,17 @@ Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six m
   La dette est declaree par un seuil de test, elle tient jusque-la.
 - dbt-utils. Un paquet externe le mois de l'entretien est une variable de trop.
 - Extension a d'autres departements. Le volume ne prouverait rien de plus.
+
+## Defauts connus des modeles a porter - releves le 17/09/2026
+
+Portage fidele d'abord : la regle 9 interdit qu'un refactoring change le
+resultat. Correction apres la bascule (S7), jamais pendant.
+
+| Modele | Defaut | Repere le | Correction |
+|---|---|---|---|
+| agg_prix_m2_glissant | jointure vers dim_commune sans effet : la colonne selectionnee existe deja | 24/08 | S7 |
+| agg_prix_m2_glissant | 'mois - INTERVAL 11 MONTH' force un CAST vers TIMESTAMP sur 468 775 lignes | 01/09 | S7 |
+| agg_prix_m2_glissant | sous-requete scalaire pour 'fenetre_complete' : DuckDB ajoute un garde-fou d'unicite | 24/08 | S7 |
+| mart_prix_m2_reference | seuil de publication 5 en dur dans le SQL | 27/08 | S7, via '{{ var()}}' |
+| ref_seuils_dispersion | 'current_date' rend la table non deterministe | 11/09 | S7 |
+| ref_seuils_dispersion | aucun modele ne la consomme | 26/08 | a trancher au J4 |
