@@ -5,6 +5,11 @@
 -- Grain : une ligne = une mutation retenue dans le perimetre de la
 --         question directrice (vente de logement, prix au m2 exploitable)
 -- Regles et volumes ecartes : docs/regles_filtrage.md
+--
+-- date_calcul retiree le 18/09 : current_date enregistrait la date du dernier
+-- build, pas celle d'un figement. Une table de reference ne porte pas une
+-- valeur qui change sans que son contenu change.
+-- Le figement reel des bornes par millesime est l'affaire de la semaine 10.
 
 CREATE OR REPLACE TABLE stg_mutations_filtrees AS
 
@@ -58,7 +63,6 @@ WITH base AS (
 )
 
 SELECT
-    current_date                 AS date_calcul,
     'p1/p99 sur perimetre filtre' AS methode,
     quantile_cont(prix_m2, 0.01) AS seuil_bas,
     quantile_cont(prix_m2, 0.99) AS seuil_haut,
