@@ -164,3 +164,13 @@ Une vérification qui ne peut pas distinguer deux hypothèses n'est pas une vér
 Le chemin de la base semblait validé depuis le 3 septembre ; le contrôle proposé donnait
 le même résultat dans les deux cas. Seul le test de clone, qui change les conditions d'exécution,
 l'a relevé.
+
+## 2026-09-18 - S6-J2 : 
+ - Le défaut a été reproduit sur commande avant correction. Dix exécutions, une seule signature,
+ quatre hypothèses écartées par une seule mesure.
+ - 'current_date' dans une table de référence enregistrait la date du dernier build, jamais
+ un figement. Le figement réel des bornes par millésime reste l'affaire de la semaine 10.
+ - Deux références en dur dans un modèle qui rendait les bonnes données et passait dbt run.
+ Dix-septième objet du même motif : le résultat était juste, le graphe faux.
+ - Le contrôle qui l'a vu couvre 'JOIN' depuis le 11 septembre seulement. Elargi trois
+ jours avant d'en avoir besoin.
