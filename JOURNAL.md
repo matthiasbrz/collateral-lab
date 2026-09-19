@@ -181,3 +181,9 @@ d'origine. Le dixième, 'int_mutations_perimetre', n'a pas d'équivalent Python 
 n'existait pas avant le 11 septembre, son contenu était dupliqué dans deux CTE du même
 script. Il est vérifié par la colonne 'mutations_perimetre' de 'ref_seuils_prix_m2' - 47
 609 des deux côtés.
+Deux feuilles assumées : agg_prix_m2_mensuel, qui mesure la dispersion justifiant la fenêtre glissante,
+et ref_seuils_dispersion, qui documente les seuils cités au
+README. Déclarées comme telles, pas subies.
+La règle de gouvernance écrite le 19 août — aucun agrégat publié sous cinq transactions 
+— est devenue le 19 septembre un test qui échoue. C'est ce qui sépare une charte d'une
+gouvernance.
