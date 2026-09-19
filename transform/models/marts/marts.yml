@@ -36,3 +36,32 @@ models:
         data_tests: [not_null]
       - name: prix_m2_median
         data_tests: [not_null]
+
+  - name: mart_prix_m2_reference
+    description: >
+      Prix de reference au m2 par commune, type de bien et mois, sur douze
+      mois glissants.
+
+      Couche de publication. 11 383, 79 % des communes couvertes.
+      Aucune cellule sous cinq transactions : seuil de gouvernance ET de
+      fiabilite. 47 % des cellules publiees reposent sur 5 a 9 transactions.
+    columns:
+      - name: code_commune
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: { to: ref('dim_commune'), field: code_commune }
+      - name: nom_commune
+        data_tests: [not_null]
+      - name: type_local
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments: { values: ['Maison', 'Appartement'] }
+      - name: mois
+        data_tests: [not_null]
+      - name: prix_m2_median_12m
+        data_tests: [not_null]
+      - name: nb_mutations_12m
+        data_tests: [not_null]
+      # evolution_pct volontairement absente : nullable par construction.

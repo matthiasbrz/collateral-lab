@@ -262,6 +262,15 @@ if ($Rapide) {
     }
 }
 
+$sortieComparer = & python -m collateral.controle 2>&1
+switch ($LASTEXITCODE) {
+    0 { Ok "comparer : toutes les relations identiques"
+        Detail (@($sortieComparer) | Select-Object -Last 1) }
+    2 { Alerte "comparer : plus aucune relation commune - chaine unique" }
+    default { Echec "comparer : au moins une relation diverge"
+              Detail $sortieComparer }
+}
+
 # ============================================================================
 Section "8. Graphe dbt"
 # ============================================================================
