@@ -110,3 +110,10 @@ resultat. Correction apres la bascule (S7), jamais pendant.
 | mart_prix_m2_reference | seuil de publication 5 en dur dans le SQL | 27/08 | S7, via '{{ var()}}' |
 | ref_seuils_dispersion | 'current_date' rend la table non deterministe | 11/09 | S7 |
 | ref_seuils_dispersion | aucun modele ne la consomme | 26/08 | a trancher au J4 |
+
+## Scripts sans equivalent modele
+sql/00_raw_*.sql reste Python - ingestion, par la frontiere du 8 septembre.
+sql/01 a sql/08 portes, supprimes lundi.
+sql/analyses/ (6 fichiers) gardes - ils produisent des rapports, pas des relations. Un script de profilage n'a rien a faire dans un graphe de transformation.
+sql/perf/ (6 fichiers) supprimes - dbt ecrit deja le SQL compile de chaque modele dans 'target/compiled', qui est exactement ce que ces copies contenaient. Ils sont perimes depuis le portage.
+src/collateral/plan.py, mesure.py, profil.py gardes - outil de diagnostic, pas des transformations.

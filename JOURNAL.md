@@ -174,3 +174,10 @@ l'a relevé.
  Dix-septième objet du même motif : le résultat était juste, le graphe faux.
  - Le contrôle qui l'a vu couvre 'JOIN' depuis le 11 septembre seulement. Elargi trois
  jours avant d'en avoir besoin.
+
+## 2026-09-19 - S6-J3 : Le mart, et le reliquat
+Dix modèles sous dbt. Neuf prouvés identiques par signature à leur implémentation
+d'origine. Le dixième, 'int_mutations_perimetre', n'a pas d'équivalent Python : il
+n'existait pas avant le 11 septembre, son contenu était dupliqué dans deux CTE du même
+script. Il est vérifié par la colonne 'mutations_perimetre' de 'ref_seuils_prix_m2' - 47
+609 des deux côtés.
