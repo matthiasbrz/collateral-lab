@@ -16,11 +16,9 @@ transforme par Python.
                                                              |
                             [ PYTHON ] ................... [ FRONTIERE ] .........
                                                              |
-                                                        dbt.stg_mutations
-                                                        dbt.stg_mutations_filtrees
+                                                        [ dbt ] dix modeles
                                                              |
-                                                        (7 modeles restants,
-                                                         encore dans main/)
+                                                        dbt.mart_prix_m2_reference
                 
 Deux chaines coexistent volontairement pendant la transition, dans deux
 schemas distincts. Chaque modele porte est prouve identique a son equivalent
@@ -117,3 +115,11 @@ sql/01 a sql/08 portes, supprimes lundi.
 sql/analyses/ (6 fichiers) gardes - ils produisent des rapports, pas des relations. Un script de profilage n'a rien a faire dans un graphe de transformation.
 sql/perf/ (6 fichiers) supprimes - dbt ecrit deja le SQL compile de chaque modele dans 'target/compiled', qui est exactement ce que ces copies contenaient. Ils sont perimes depuis le portage.
 src/collateral/plan.py, mesure.py, profil.py gardes - outil de diagnostic, pas des transformations.
+
+## Etat au 21/09/2026
+Le 21/09/2026, la chaîne Python de transformation a été supprimée après quatre
+semaines de fonctionnement en parallèle. Neuf modèles sur dix ont été prouvés
+identiques par signature avant suppression ; le dixième n'avait pas d'équivalent. La
+signature du mart, 104679694271579681982287, est la même avant et après.
+'collateral.build' ne construit plus rien - il charge les sources brutes. Son nom ment
+depuis ce matin.
