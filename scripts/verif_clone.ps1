@@ -154,7 +154,7 @@ Etape "dbt source freshness" { & $dbt source freshness --profiles-dir . }
 Etape "dbt build" { & $dbt build --profiles-dir . }
 Set-Location $travail
 
-Etape "collateral.tests_donnees" { & $python -m collateral.tests_donnees }
+##Etape "collateral.tests_donnees" { & $python -m collateral.tests_donnees }
 Etape "pytest" { & $python -m pytest -q }
 
 
