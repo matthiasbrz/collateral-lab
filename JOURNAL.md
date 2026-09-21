@@ -187,3 +187,23 @@ README. Déclarées comme telles, pas subies.
 La règle de gouvernance écrite le 19 août — aucun agrégat publié sous cinq transactions 
 — est devenue le 19 septembre un test qui échoue. C'est ce qui sépare une charte d'une
 gouvernance.
+
+## 2026-09-21 - S6-J4 : Retirer le double
+[OK    ] agg_prix_m2_evolution : identique
+           31176 lignes, signature 288244322853056360201259
+[OK    ] agg_prix_m2_glissant : identique
+           31176 lignes, signature 288804239373805585030098
+[OK    ] agg_prix_m2_mensuel : identique
+           12669 lignes, signature 117768913773059727173619
+[OK    ] dim_commune : identique
+           34875 lignes, signature 320664432050200447135258
+[OK    ] mart_prix_m2_reference : identique
+           11383 lignes, signature 104679694271579681982287
+[OK    ] ref_seuils_dispersion : identique
+           2 lignes, signature 14465713426908130606
+[OK    ] ref_seuils_prix_m2 : identique
+           1 lignes, signature 3532740642176759688
+[OK    ] stg_mutations : identique
+           66151 lignes, signature 611580110470407949607166
+[OK    ] stg_mutations_filtrees : identique
+           46655 lignes, signature 432926588442370536393567

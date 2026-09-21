@@ -167,7 +167,7 @@ if (-not (Test-Path $fichierSignature)) {
     Terminer 1 "docs\signature_attendue.txt absent du depot. Il doit etre versionne."
 }
 
-$expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
+$expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
 $obtenue = ((& $python -c $expression 2>&1) -join '').Trim()
 if ($LASTEXITCODE -ne 0) {
     Note $obtenue

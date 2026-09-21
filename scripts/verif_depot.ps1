@@ -236,7 +236,7 @@ if ($Rapide) {
     }
 
     # Signature : preuve mecanique de non-regression (regle 9).
-    $expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
+    $expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
     $signatureObtenue = ((& python -c $expression 2>&1) -join '').Trim()
     $fichierSignature = Join-Path $racine 'docs\signature_attendue.txt'
 
