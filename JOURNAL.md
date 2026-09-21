@@ -207,3 +207,9 @@ gouvernance.
            66151 lignes, signature 611580110470407949607166
 [OK    ] stg_mutations_filtrees : identique
            46655 lignes, signature 432926588442370536393567
+- 21/09 : chaîne Python de transformation supprimée après quatre semaines de fonctionnement en parallèle. 
+  9 relations sur 9 prouvées identiques avant suppression. Signature du mart inchangée.
+- Le test de clone a révélé que build.py lisait dbt.mart_prix_m2_reference avant que dbt ne l'ait créé.
+  Invisible en local, où la table subsistait d'une exécution précédente.
+- Trois tests de données portés sous dbt, harnais Python supprimé. Compteur dbt de 41 à 44.
+- Un contrôle temporaire qui devient permanent devient du bruit. comparer sort du rituel demain.

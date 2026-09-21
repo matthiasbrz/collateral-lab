@@ -9,7 +9,6 @@ import sys
 
 from collateral import journal
 from collateral.config import DOSSIER_DATA, DOSSIER_SQL, FICHIER_COG, MOTIF_DVF
-from collateral.controle import signature
 from collateral.db import connexion
 from collateral.download import sources_manquantes
 from collateral.integrite import verifier
@@ -46,9 +45,6 @@ def main() -> int:
     with connexion() as con:
         for chemin in scripts:
             executer(con, chemin)
-        ##lignes, empreinte = signature(con, "dbt.mart_prix_m2_reference")
-
-    ##logger.info("dbt.mart_prix_m2_reference : %s lignes, signature %s", lignes, empreinte)
     return CODE_OK
 
 

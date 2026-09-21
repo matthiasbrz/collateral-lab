@@ -131,7 +131,7 @@ function Compter($chemin, $motif) {
 }
 
 $scriptsSql = Compter (Join-Path $racine 'sql') '^\d\d_.*\.sql$'
-if ($scriptsSql.Count -gt 0) { Ok "$($scriptsSql.Count) scripts de transformation dans sql\" }
+if ($scriptsSql.Count -gt 0) { Ok "$($scriptsSql.Count) scripts d'ingestion dans sql\" }
 else { Echec "aucun script sql\NN_*.sql" }
 
 $testsUnitaires = Compter (Join-Path $racine 'tests\unitaires') '^test.*\.py$'
@@ -247,15 +247,6 @@ if ($Rapide) {
             )
         }
     }
-}
-
-$sortieComparer = & python -m collateral.controle 2>&1
-switch ($LASTEXITCODE) {
-    0 { Ok "comparer : toutes les relations identiques"
-        Detail (@($sortieComparer) | Select-Object -Last 1) }
-    2 { Alerte "comparer : plus aucune relation commune - chaine unique" }
-    default { Echec "comparer : au moins une relation diverge"
-              Detail $sortieComparer }
 }
 
 # ============================================================================
