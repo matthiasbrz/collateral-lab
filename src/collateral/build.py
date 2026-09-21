@@ -46,9 +46,9 @@ def main() -> int:
     with connexion() as con:
         for chemin in scripts:
             executer(con, chemin)
-        lignes, empreinte = signature(con, "mart_prix_m2_reference")
+        lignes, empreinte = signature(con, "dbt.mart_prix_m2_reference")
 
-    logger.info("mart_prix_m2_reference : %s lignes, signature %s", lignes, empreinte)
+    logger.info("dbt.mart_prix_m2_reference : %s lignes, signature %s", lignes, empreinte)
     return CODE_OK
 
 

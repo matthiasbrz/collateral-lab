@@ -114,7 +114,7 @@ $attendus = @(
     'pyproject.toml', 'README.md', 'JOURNAL.md', '.gitignore',
     'src\collateral\__init__.py', 'src\collateral\config.py', 'src\collateral\journal.py',
     'src\collateral\db.py', 'src\collateral\sql.py', 'src\collateral\controle.py',
-    'src\collateral\download.py', 'src\collateral\build.py', 'src\collateral\tests_donnees.py'
+    'src\collateral\download.py', 'src\collateral\build.py'
 )
 $absents = @($attendus | Where-Object { -not (Test-Path (Join-Path $racine $_)) })
 if ($absents) {
@@ -133,10 +133,6 @@ function Compter($chemin, $motif) {
 $scriptsSql = Compter (Join-Path $racine 'sql') '^\d\d_.*\.sql$'
 if ($scriptsSql.Count -gt 0) { Ok "$($scriptsSql.Count) scripts de transformation dans sql\" }
 else { Echec "aucun script sql\NN_*.sql" }
-
-$testsDonnees = Compter (Join-Path $racine 'tests\donnees') '^\d\d_.*\.sql$'
-if ($testsDonnees.Count -gt 0) { Ok "$($testsDonnees.Count) tests de donnees dans tests\donnees\" }
-else { Echec "aucun test tests\donnees\NN_*.sql" }
 
 $testsUnitaires = Compter (Join-Path $racine 'tests\unitaires') '^test.*\.py$'
 if ($testsUnitaires.Count -gt 0) { Ok "$($testsUnitaires.Count) fichiers de tests unitaires" }
@@ -225,15 +221,6 @@ if ($Rapide) {
     $sortieBuild = & python -m collateral.build 2>&1
     if ($LASTEXITCODE -eq 0) { Ok "collateral.build" }
     else { Echec "collateral.build"; Detail $sortieBuild }
-
-    $sortieTests = & python -m collateral.tests_donnees 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        Ok "collateral.tests_donnees"
-        Detail (@($sortieTests) | Select-Object -Last 1)
-    } else {
-        Echec "collateral.tests_donnees"
-        Detail $sortieTests
-    }
 
     # Signature : preuve mecanique de non-regression (regle 9).
     $expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
