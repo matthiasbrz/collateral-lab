@@ -186,7 +186,23 @@ if ($artefacts) {
     Echec "artefacts de build suivis par Git"
     Detail (@($artefacts | Select-Object -First 5) + "correctif : git rm -r --cached le_chemin")
 } else {
-    Ok "aucun artefact de build suivi"
+    # Un artefact genere suivi par Git fait echouer le rituel.
+    # La vigilance a echoue trois fois : egg-info (28/08), logs/ (04/09), .user.yml (15/09).
+    $motifsGeneres = @(
+        '\.egg-info', '(^|/)__pycache__/', '(^|/)\.venv/',
+        '(^|/)target', '(^|/)logs/', '(^|/)dbt_packages/', '\.user\.yml$',
+        '\.duckdb(\.wal)?$', '(^|/)\.ruff_cache/', '(^|/)\.pytest_cache/',
+        '^docs/plans/.*\.json$'
+    )
+    $generesSuivis = @(& git ls-files | Where-Object {
+        $f = $_ ; @($motifsGeneres | Where-Object { $f -match $_ }).Count -gt 0
+    })
+    if ($generesSuivis.Count -eq 0) {
+        Ok "aucun fichier genere suivi ($($motifsGeneres.Count) motifs examines)"
+    } else {
+        Echec "$($generesSuivis.Count) fichier(s) genere(s) suivi(s) par Git"
+        Detail $generesSuivis
+    }
 }
 
 
@@ -221,6 +237,30 @@ if ($Rapide) {
     $sortieBuild = & python -m collateral.build 2>&1
     if ($LASTEXITCODE -eq 0) { Ok "collateral.build" }
     else { Echec "collateral.build"; Detail $sortieBuild }
+
+# dbt reconstruit le mart AVANT que sa signature ne soit lue.
+    # Sans cette etape, le rituel certifiait le mart de la derniere
+    # execution manuelle - constate le 21/09.
+    $dbt = Join-Path $racine '.venv\Scripts\dbt.exe'
+    Push-Location (Join-Path $racine 'transform')
+    try { $sortieDbt = & $dbt build --profiles-dir . 2>&1 ; $codeDbt = $LASTEXITCODE }
+    finally { Pop-Location }
+    if ($codeDbt -eq 0) { Ok "dbt build" }
+    else { Echec "dbt build (code $codeDbt)" ; Detail ($sortieDbt | Select-Object -Last 15) }
+
+# Regle 15 : un test dont la cible disparait n'echoue pas, il cesse d'exister.
+    # Le graphe est compare a une valeur declaree, mise a jour dans le meme
+    # commit que tout ajout ou retrait voulu.
+    $m = [regex]::Match(($sortieDbt | Out-String), 'Found (\d+) models?, (\d+) data tests?')
+    $attendu = ((Get-Content (Join-Path $racine 'docs\graphe_attendu.txt') -Raw).Trim()) -split '\s+'
+    if (-not $m.Success) {
+        Echec "compteur dbt introuvable dans la sortie"
+    } elseif ($m.Groups[1].Value -eq $attendu[0] -and $m.Groups[2].Value -eq $attendu[1]) {
+        Ok "graphe conforme : $($attendu[0]) modeles, $($attendu[1]) tests"
+    } else {
+        Echec "graphe : $($m.Groups[1].Value) modeles / $($m.Groups[2].Value) tests, attendu $($attendu[0]) / $($attendu[1])"
+        Detail "ecart voulu : mettre a jour docs\graphe_attendu.txt dans le meme commit"
+    }
 
     # Signature : preuve mecanique de non-regression (regle 9).
     $expression = "import duckdb; from collateral.config import BASE_DUCKDB; c = duckdb.connect(str(BASE_DUCKDB), read_only=True); r = c.execute('SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t').fetchone(); c.close(); print(r[0], r[1])"
@@ -306,6 +346,17 @@ if ($branche -ne 'main') {
     }
 }
 
+# gh-pages est une branche orpheline : main..gh-pages compterait tous ses commits.
+$locales = @(& git for-each-ref --format='%(refname:short)' refs/heads/ |
+    where-Object { $_ -notin @('main', 'gh-pages') })
+$enAvance = @() ; $fusionnees = @()
+foreach ($b in $locales) {
+    $n = [int]((& git rev-list --count "main..$b") -join '').Trim()
+    if ($n -gt 0) { $enAvance += "$b : $n commit(s) non fusionne(s)" } else { $fusionnees += $b }
+}
+if ($enAvance) { Alerte "$($enAvance.Count) branche(s) non fusionnee(s)" ; Detail $enAvance }
+else { Ok "aucune branche locale en avance sur main" }
+if ($fusionnees) { Alerte "$($fusionnees.Count) branche(s) fusionnee(s) : git branch -d <nom>" ; Detail $fusionnees }
 
 # ============================================================================
 Write-Host ""

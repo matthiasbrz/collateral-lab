@@ -213,3 +213,7 @@ gouvernance.
   Invisible en local, où la table subsistait d'une exécution précédente.
 - Trois tests de données portés sous dbt, harnais Python supprimé. Compteur dbt de 41 à 44.
 - Un contrôle temporaire qui devient permanent devient du bruit. comparer sort du rituel demain.
+
+## 2026-09-22 - S6-J5 : L'hygiène, par le contrôle et non par la vigilance
+[ECHEC ] signature illisible
+           Traceback (most recent call last):  File "<string>", line 1, in <module>_duckdb.CatalogException: Catalog Error: Table with name "dbt.mart_prix_m2_reference" does not exist because schema "dbt" does not exist.System.Management.Automation.RemoteExceptionLINE 1: SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t

@@ -39,3 +39,4 @@ transform/logs/
 logs/
 **/logs/
 transform/user.yml
+docs/plans/*.json
