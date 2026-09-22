@@ -38,5 +38,5 @@ transform/dbt_packages/
 transform/logs/
 logs/
 **/logs/
-transform/user.yml
+transform/.user.yml
 docs/plans/*.json
