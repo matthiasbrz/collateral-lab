@@ -128,7 +128,8 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S2 | 9-10 h | ~5 h | ~15 h | 11 h |
 | S3 | ~15 h | ~5 h | ~20 h | 11 h |
 | S4 | ~9 h | pause | ~9 h | 10 h + 5 h |
-| S5 | ~7 h | pause | ~7 h | 10 h
+| S5 | ~7 h | pause | ~7 h | 10 h |
+| S6 | ~6 h | pause | ~6 h | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -217,3 +218,30 @@ gouvernance.
 ## 2026-09-22 - S6-J5 : L'hygiène, par le contrôle et non par la vigilance
 [ECHEC ] signature illisible
            Traceback (most recent call last):  File "<string>", line 1, in <module>_duckdb.CatalogException: Catalog Error: Table with name "dbt.mart_prix_m2_reference" does not exist because schema "dbt" does not exist.System.Management.Automation.RemoteExceptionLINE 1: SELECT count(*), sum(hash(t)) FROM dbt.mart_prix_m2_reference t
+
+## 2026-09-23 - S6-J6 : Contrôle S6 et bascule vers le montrable
+Point de contrôle S6 :
+Critère | Etat | Date
+ref_seuils_prix_m2 rend dix fois la même signature | atteint | 18/09
+Chaîne complète sous dbt - 10 modèles | atteint | 19/09
+Le mart retrouve 104679694271579681982287 | atteint | 19/09
+9 relations sur 9 identiques avant suppression | atteint | 21/09
+SQL de transformation retiré de sql/, commit isolé | atteint - 404 lignes supprimés, 0 ajoutée | 21/09
+Harnais Python supprimé, 3 tests portés | atteint 41 -> 44 | 21/09
+Les quatre constats de la S5 soldés par un contrôle | 3 sur 4 | 22/09
+
+Le critère de la semaine disait « soldés par un contrôle, non par un correctif ponctuel ». Deux constats sur quatre ne le sont qu'à moitié.
+
+Constats ouverts, à lister par la suite :
+ - J1 et J2 inversés par rapport au plan : le déterminisme, qui devait bloquer le reste, est passé second. Aucune conséquence, parce que 'comparer()'
+ rendait déjà 'ref_seuils_prix_m2' identique dans une même session.
+ - Versions non épinglées : dbt 1.12.3 -> 1.12.5 en trois semaines, divergence observée entre deux machines différentes.
+ - 'collateral.build' ne construit plus rien depuis le 21/09 : il charge. Son nom ment.
+ - 'stg_mutations_filtrees' dépend d'un modèle 'int_' : convention dbt inversée, dette de nommage du 11/09.
+ - Trois défauts inventoriés le 17/09 toujours présents : le CAST implicite et la sous-requête scalaire du glissant, le seuil 5 en dur dans le mart.
+ Les trois autres sont soldées ou inexistants. 
+
+Découlement S7 et S8 :
+ - S7 - le premier écran : README réorganisé autour des trois questions, le reste renvoyé vers 'docs/'. Le nom 'collateral.build' corrigé.
+ Le seuil 5 en '{{ var() }}'
+ - S8 - la preuve durable : versions épinglées, 'requirements.txt' soldé, publication de la documentation par GitHub Actions
