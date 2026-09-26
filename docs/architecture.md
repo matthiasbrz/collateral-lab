@@ -8,7 +8,7 @@ dbt transforme ce qui est deja dans l'entrepot et prouve que le resultat tient.
 La ligne de partage est l'entrepot : rien n'y entre par dbt, rien ne s'y
 transforme par Python.
 
-## Etat au 08/09/2026 - transition
+## Historique — la transition, 08/09 → 21/09
     reseau                  disque                      entrepot DuckDB
     ------                  ------                      ---------------
     files.data.gouv.fr  --> data/raw/*.csv.gz   -->     main.raw_mutations

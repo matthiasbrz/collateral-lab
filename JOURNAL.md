@@ -245,3 +245,8 @@ Découlement S7 et S8 :
  - S7 - le premier écran : README réorganisé autour des trois questions, le reste renvoyé vers 'docs/'. Le nom 'collateral.build' corrigé.
  Le seuil 5 en '{{ var() }}'
  - S8 - la preuve durable : versions épinglées, 'requirements.txt' soldé, publication de la documentation par GitHub Actions
+
+ ## 2026-09-26 - S7-J1 : Le premier écran
+ 	    Q1	Q2	    Q3	    Bonnes réponses sur le premier écran
+Avant	oui	absente	fausse	1 sur 3
+Après	oui	oui	    oui	    3 sur 3
