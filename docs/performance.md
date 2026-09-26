@@ -24,6 +24,11 @@ Chaque transaction est visitee par 10 mois de reference en moyenne.
 | E | A, cast ::DATE dans la condition |0,11 | | supprime 468 775 CAST vers TIMESTAMP |
 
 ## Cout par etape de la chaine
+
+> **Mesures historiques** — relevées le 25/08/2026 sur la chaîne Python
+> d'origine, avant le portage sous dbt. Les scripts cités ont été supprimés
+> le 21/09/2026 ; la signature du mart, elle, est restée identique.
+
 | Script | Mediane | Part |
 |---|---|---|
 | 02_stg_mutations | 0,3694 | 55 % |

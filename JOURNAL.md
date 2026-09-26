@@ -250,3 +250,5 @@ Découlement S7 et S8 :
  	    Q1	Q2	    Q3	    Bonnes réponses sur le premier écran
 Avant	oui	absente	fausse	1 sur 3
 Après	oui	oui	    oui	    3 sur 3
+
+Un motif de recherche testé sur un positif connu a révélé six lignes qu'il avait manquées. Un contrôle qui ne trouve rien n'a rien prouvé tant qu'on ne l'a pas vu trouver quelque chose.
