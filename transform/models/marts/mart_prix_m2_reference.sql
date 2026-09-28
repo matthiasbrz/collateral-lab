@@ -27,4 +27,4 @@ SELECT
 FROM {{ ref('agg_prix_m2_evolution') }} e
 LEFT JOIN {{ ref('dim_commune') }} d USING (code_commune)
 WHERE e.fenetre_complete
-    AND e.nb_mutations_12m >=5
+    AND e.nb_mutations_12m >= {{ var('seuil_publication') }}

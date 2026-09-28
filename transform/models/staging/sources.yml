@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: brut
     description: >
-      Tables chargees par la chaine Python (collateral.build), hors perimetre dbt.
+      Tables chargees par la chaine Python, hors perimetre dbt.
       dbt les lit, ne les produit pas.
     schema: main
     config:

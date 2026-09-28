@@ -20,7 +20,7 @@ calculée sur 1 921 ventes. Évolution sur un an : +0,6 %.
 ## Lancer
 
     py -m venv .venv ; .\.venv\Scripts\Activate.ps1 ; pip install -e ".[dev]"
-    python -m collateral.download ; python -m collateral.build
+    python -m collateral.download ; python -m collateral.load
     cd transform ; dbt build --profiles-dir .
 
 *Commandes PowerShell. Sous macOS ou Linux : `python3 -m venv .venv` et `source .venv/bin/activate`.*

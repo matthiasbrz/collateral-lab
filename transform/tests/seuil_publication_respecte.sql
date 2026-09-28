@@ -4,5 +4,5 @@
 
 SELECT code_commune, type_local, mois, nb_mutations_12m
 FROM {{ ref('mart_prix_m2_reference') }}
-WHERE nb_mutations_12m < 5
+WHERE nb_mutations_12m < {{ var('seuil_publication') }}
     OR nb_mutations_12m IS NULL

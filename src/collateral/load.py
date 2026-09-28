@@ -1,8 +1,4 @@
-"""Point d'entree : construction de l'entrepot.
-
-Prerequis : sources presentes dans data/raw (lancer collateral.download au prealable).
-Usage : python -m collateral.build
-"""
+"""Charge les sources brutes dans l'entrepot, apres controle d'integrite."""
 
 import logging
 import sys
