@@ -246,9 +246,16 @@ Découlement S7 et S8 :
  Le seuil 5 en '{{ var() }}'
  - S8 - la preuve durable : versions épinglées, 'requirements.txt' soldé, publication de la documentation par GitHub Actions
 
- ## 2026-09-26 - S7-J1 : Le premier écran
+## 2026-09-26 - S7-J1 : Le premier écran
  	    Q1	Q2	    Q3	    Bonnes réponses sur le premier écran
 Avant	oui	absente	fausse	1 sur 3
 Après	oui	oui	    oui	    3 sur 3
 
 Un motif de recherche testé sur un positif connu a révélé six lignes qu'il avait manquées. Un contrôle qui ne trouve rien n'a rien prouvé tant qu'on ne l'a pas vu trouver quelque chose.
+
+## 2026-09-28 - S7-J2 : Les noms qui mentent
+"git mv" indexe immédiatement. Un "git add -A" suivant l'embarque dans le commit d'à côté, dont le message ne le dit pas. Et un test de clone lancé sans "-Branche" vérifie "main", pas ce qu'on vient de changer.
+
+## 2026-09-29 - S7-J3 : Solder les deux constats à moitié
+Trois echécs, une cause. "dbt build" en code 2 - projet illisible - a entraîné le compteur et la signature.
+Le rituel présente les conséquences au même niveau que la cause ; il faut lire le premier échec dans l'ordre d'exécution.

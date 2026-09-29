@@ -7,11 +7,11 @@
 -- transaction en moyenne.
 
 WITH calendrier AS (
-    SELECT DISTINCT mois FROM {{ ref('stg_mutations_filtrees') }}
+    SELECT DISTINCT mois FROM {{ ref('int_mutations_filtrees') }}
 ),
 
 perimetre AS (
-    SELECT DISTINCT code_commune, type_local FROM {{ ref('stg_mutations_filtrees') }}
+    SELECT DISTINCT code_commune, type_local FROM {{ ref('int_mutations_filtrees') }}
 ),
 
 squelette AS (
@@ -30,7 +30,7 @@ glissant AS (
         round(quantile_cont(f.prix_m2, 0.25), 0) AS prix_m2_q1_12m,
         round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3_12m
     FROM squelette s
-    LEFT JOIN {{ ref('stg_mutations_filtrees') }} f
+    LEFT JOIN {{ ref('int_mutations_filtrees') }} f
         ON f.code_commune = s.code_commune
         AND f.type_local = s.type_local
         AND f.mois BETWEEN s.mois - INTERVAL 11 MONTH AND s.mois

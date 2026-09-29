@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: int_mutations_filtrees # renomme le 29/09, etait stg_mutations_filtrees
+    description: >
+      Une mutation retenue dans le perimetre de la question directrice.
+
+      Six regles de filtrage, chiffrees dans docs/regles_filtrage.md.
+      Taux de couverture : 46 655 sur 66 151, soit 70,5 %.
+    columns:
+      - name: id_mutation
+        data_tests:
+          - unique
+          - not_null
+      - name: prix_m2
+        description: >
+          Valeur fonciere divisee par la surface batie. Borne aux centiles 1 et 99,
+          calcules sur le perimetre deja filtre.
+        data_tests: [not_null]
+      - name: surface_bati
+        data_tests: [not_null]
+      - name: mois
+        description: >
+          Premier jour du mois de la mutation. Cle temporelle des agregats
+          glissants sur 12 mois.
+        data_tests: [not_null]
+      - name: type_local
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Maison', 'Appartement']
+      - name: code_commune
+        description: >
+          Code INSEE au millesime de la source, en retard sur le COG :
+          5 mutations portent un code disparu au 01/01/2025. Tolerance
+          declaree dans le test relationships.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_commune')
+                field: code_commune
+              config:
+                # Dette connue et documentee :  commune 76358 (Le Heron);
+                # fusionnee au 01/01/2025, encore presente dans DVF
+                # jusqu'au 02/09/2025. Voir docs/dimension_commune.md.
+                # On tolere l'existant, on refuse toute aggravation.
+                severity: warn
+                error_if: ">5"
+                warn_if: ">0"
+
+  - name: ref_seuils_prix_m2
+    description: >
+      Bornes d'ecretage du prix au m2, une seule ligne.
+
+      Calculees sur int_mutations_perimetre, jamais sur la table brute.
+      Recalculees a chaque execution : voir la limite n 7 du README.
+    columns:
+      - name: seuil_bas
+        data_tests: [not_null]
+      - name: seuil_haut
+        data_tests: [not_null]
+      - name: mutations_perimetre
+        data_tests: [not_null]

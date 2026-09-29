@@ -5,7 +5,7 @@
 WITH comptes AS (
     SELECT
         (SELECT count(*) FROM {{ ref('int_mutations_perimetre') }}) AS perimetre,
-        (SELECT count(*) FROM {{ ref('stg_mutations_filtrees') }}) AS retenues
+        (SELECT count(*) FROM {{ ref('int_mutations_filtrees') }}) AS retenues
 )
 SELECT *, round(100.0 * (perimetre - retenues) / perimetre, 3) AS taux_ecretage
 FROM comptes

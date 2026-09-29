@@ -22,7 +22,7 @@ comptes AS (
         (SELECT count(*) FROM {{ ref('stg_mutations') }}) AS total,
         (SELECT count(*) FROM classement WHERE dans_perimetre) AS retenues,
         (SELECT count(*) FROM classement WHERE NOT dans_perimetre) AS ecartees,
-        (SELECT count(*) FROM {{ ref('stg_mutations_filtrees') }}) AS publiees
+        (SELECT count(*) FROM {{ ref('int_mutations_filtrees') }}) AS publiees
 )
 
 SELECT *
