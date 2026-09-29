@@ -9,7 +9,7 @@ communes de plein exercice uniquement, les communes déléguéees, associées et
 34875 communes
 
 ## 3. Taux sur les deux tables
-stg_mutations_filtrees : 46655 mutations, 46650 appariées, taux: 99.99%
+int_mutations_filtrees : 46655 mutations, 46650 appariées, taux: 99.99%
 stg_mutations : 66151 mutations, 66145 appariées, taux: 99.99%
 1 code non apparié sur 708, 6 mutations sur 66 151, cause identifiée et sourcée.
 Oissel, Quiberville et Trouville sont non appariés dû à un renommage de commune (le code reste identique).

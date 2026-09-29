@@ -32,7 +32,7 @@ Chaque transaction est visitee par 10 mois de reference en moyenne.
 | Script | Mediane | Part |
 |---|---|---|
 | 02_stg_mutations | 0,3694 | 55 % |
-| 03_stg_mutations_filtrees | 0,0711 | 11 % |
+| 03_int_mutations_filtrees | 0,0711 | 11 % |
 | 05_agg_prix_m2_glissant | 0,1134 | 17 % |
 | 06_agg_prix_m2_evolution | 0,0580 | 9 % |
 | 04_agg_prix_m2_mensuel | 0,0408 | 6 % |

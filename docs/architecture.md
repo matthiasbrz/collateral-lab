@@ -73,8 +73,8 @@ scripts, et passage de dbt-duckdb en dependance de production.
 
 ## Dette de nommage
 
-"stg_mutations_filtrees" depend desormais d'un modele "int_", ce qui inverse la convention dbt - staging, puis intermediaire, puis marts.
-Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre a "main.stg_mutations_filtrees" pour que "comparer()" fonctionne.
+"int_mutations_filtrees" depend desormais d'un modele "int_", ce qui inverse la convention dbt - staging, puis intermediaire, puis marts.
+Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre a "main.int_mutations_filtrees" pour que "comparer()" fonctionne.
 Il changera a la bascule, quand les noms Python disparaitront.
 
 ## Controle freshness
