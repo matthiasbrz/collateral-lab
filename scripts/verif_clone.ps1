@@ -145,7 +145,7 @@ Titre "3. Chaine complete"
 $dbt = Join-Path $travail '.venv\Scripts\dbt.exe'
 
 Etape "collateral.download" { & $python -m collateral.download }
-Etape "collateral.build"    { & $python -m collateral.build }
+Etape "collateral.load"    { & $python -m collateral.load }
 
 # dbt-duckdb resout 'path' par rapport au repertoire courant, pas a profiles.yml.
 # On se place dans transform/ pour que ../collateral.duckdb designe la racine.

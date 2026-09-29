@@ -25,5 +25,5 @@ def executer(con: duckdb.DuckDBPyConnection, chemin: Path) -> None:
             f"echec du script {chemin.name}\n"
             f"  {erreur}\n"
             f"  que faire : verifiez que les scripts precedents ont bien cree les "
-            f"tables attendues, puis relancez python -m collateral.build"
+            f"tables attendues"
         ) from erreur

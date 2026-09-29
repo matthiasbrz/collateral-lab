@@ -20,3 +20,4 @@ models:
 
 vars:
   millesime_cog: 2026
+  seuil_publication: 5 # regle de gouvernance : aucun agregat publie sous ce volume

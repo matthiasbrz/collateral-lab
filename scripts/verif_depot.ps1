@@ -114,7 +114,7 @@ $attendus = @(
     'pyproject.toml', 'README.md', 'JOURNAL.md', '.gitignore',
     'src\collateral\__init__.py', 'src\collateral\config.py', 'src\collateral\journal.py',
     'src\collateral\db.py', 'src\collateral\sql.py', 'src\collateral\controle.py',
-    'src\collateral\download.py', 'src\collateral\build.py'
+    'src\collateral\download.py', 'src\collateral\load.py'
 )
 $absents = @($attendus | Where-Object { -not (Test-Path (Join-Path $racine $_)) })
 if ($absents) {
@@ -234,9 +234,9 @@ Section "7. Chaine de production"
 if ($Rapide) {
     Alerte "chaine non verifiee (-Rapide)"
 } else {
-    $sortieBuild = & python -m collateral.build 2>&1
-    if ($LASTEXITCODE -eq 0) { Ok "collateral.build" }
-    else { Echec "collateral.build"; Detail $sortieBuild }
+    $sortieLoad = & python -m collateral.load 2>&1
+    if ($LASTEXITCODE -eq 0) { Ok "collateral.load" }
+    else { Echec "collateral.load"; Detail $sortieLoad }
 
 # dbt reconstruit le mart AVANT que sa signature ne soit lue.
     # Sans cette etape, le rituel certifiait le mart de la derniere
