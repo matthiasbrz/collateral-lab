@@ -1,6 +1,6 @@
 -- Grain : une ligne = une mutation (id_mutation)
 -- Verifie le 16/08/2026 : 0 mutation porte plusieurs valeurs foncieres distinctes.
--- Aucun filtre metier ici : les exclusions sont dans stg_mutations_filtrees.sql
+-- Aucun filtre metier ici : les exclusions sont dans int_mutations_filtrees.sql
 
 WITH entete AS (
     SELECT

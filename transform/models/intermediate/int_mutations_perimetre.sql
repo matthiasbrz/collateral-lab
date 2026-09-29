@@ -1,10 +1,10 @@
 -- Grain : une mutation du perimetre metier, AVANT ecretage des extremes.
 --
 -- Ce modele n'existait pas : il etait duplique dans les deux CTE 'base'
--- de sql/03_stg_mutations_filtrees.sql. Le nommer supprime sa duplication
+-- de sql/03_int_mutations_filtrees.sql. Le nommer supprime sa duplication
 -- et rend le calcul des bornes acyclique.
 --
--- Regles 1 a 5. La regle 6 (ecretage p1/p99) est dans stg_mutations_filtrees.
+-- Regles 1 a 5. La regle 6 (ecretage p1/p99) est dans int_mutations_filtrees.
 
 SELECT
     *,

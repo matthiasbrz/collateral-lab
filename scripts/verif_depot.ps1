@@ -124,6 +124,23 @@ if ($absents) {
     Ok "$($attendus.Count) fichiers attendus presents"
 }
 
+# Ce qui est suivi a la racine doit etre attendu.
+# Constat du 16/09 : collateral-lab suivi a la racine, retire le 22/09,
+# sans qu'aucun motif ne l'aurait vu revenir.
+$racineAutorisee = @(
+    '.gitignore', '.vscode', 'JOURNAL.md', 'LICENSE', 'README.md',
+    'pyproject.toml', 'requirements.txt',
+    'data', 'docs', 'scripts', 'sql', 'src', 'tests', 'transform'
+)
+$racineSuivie = @(& git ls-files | ForEach-Object { ($_ -split '/')[0] } | Sort-Object -Unique)
+$inconnus = @($racineSuivie | Where-Object { $_ -notin $racineAutorisee })
+if ($inconnus.Count -eq 0) {
+    Ok "$($racineSuivie.Count) entrees suivies a la racine, toutes attendues"
+} else {
+    Echec "$($inconnus.Count) entree(s) suivie(s) a la racine hors liste blanche"
+    Detail $inconnus
+}
+
 # -Filter ne connait pas les classes de caracteres : on filtre avec une regex.
 function Compter($chemin, $motif) {
     if (-not (Test-Path $chemin)) { return @() }
@@ -311,6 +328,22 @@ if ($modeles.Count -eq 0) {
     }
 }
 
+# Aucune fonction dependante du moment ou du hasard dans un modele.
+# Constat du 11/09 : current_date rendait ref_seuils_prix_m2 non deterministe,
+# corrige le 18/09 sans controle. Les commentaires sont exclus : ils peuvent
+# legitimement citer ces fonctions.
+$motifInstable = '\b(current_date|current_time|current_timestamp|current_localtime|current_localtimestamp|localtime|localtimestamp|now|today|get_current_time|get_current_timestamp|transaction_timestamp|random|setseed|uuid|gen_random_uuid|run_started_at|invocation_id)\b'
+$instables = @()
+foreach ($f in Get-ChildItem (Join-Path $racine 'transform\models') -Recurse -Filter  '*.sql') {
+    $n = 0
+    foreach  ($ligne in Get-Content $f.FullName) {
+        $n++
+        $code = ($ligne -replace '\{#.*?#\}', '') -replace '--.*$', ''
+        if ($code -match $motifInstable) { $instables += "$($f.Name):$n $($ligne.Trim())" }
+    }
+}
+if ($instables.Count -eq 0) { Ok "aucune fonction instable dans les modeles" }
+else { Echec "$($instables.Count) fonction(s) instable(s) dans les modeles" ; Detail $instables }
 
 # ============================================================================
 Section "9. Etat Git"

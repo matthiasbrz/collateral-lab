@@ -14,6 +14,6 @@ SELECT
     round(quantile_cont(f.prix_m2, 0.50), 0) AS prix_m2_median,
     round(quantile_cont(f.prix_m2, 0.25), 0) AS prix_m2_q1,
     round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3
-FROM {{ ref('stg_mutations_filtrees') }} f
+FROM {{ ref('int_mutations_filtrees') }} f
 LEFT JOIN {{ ref('dim_commune') }} d USING (code_commune)
 GROUP BY 1, 2, 3, 4

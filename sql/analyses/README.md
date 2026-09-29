@@ -1,0 +1,1 @@
+requetes exploratoires des semaines 1 et 2, ecrites sur le schema main avant le portage ; ne s'executent plus depuis le 21/09/2026, conservees comme trace.
