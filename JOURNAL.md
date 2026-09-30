@@ -121,7 +121,7 @@ Ce qu'il ne remplace pas - la liste honnête :
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
-## Bilan Horaire à Semaine 4
+## Bilan Horaire à Semaine 7
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -130,6 +130,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S4 | ~9 h | pause | ~9 h | 10 h + 5 h |
 | S5 | ~7 h | pause | ~7 h | 10 h |
 | S6 | ~6 h | pause | ~6 h | 10 h |
+| S7 | ~5 h | pause | ~5 h | 7 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -259,3 +260,25 @@ Un motif de recherche testé sur un positif connu a révélé six lignes qu'il a
 ## 2026-09-29 - S7-J3 : Solder les deux constats à moitié
 Trois echécs, une cause. "dbt build" en code 2 - projet illisible - a entraîné le compteur et la signature.
 Le rituel présente les conséquences au même niveau que la cause ; il faut lire le premier échec dans l'ordre d'exécution.
+
+## 2026-09-30 - S7-J4 : Le test du tiers
+Point de contrôle S7
+Critère | Etat | Date
+Le test du tiers a eu lieu, chronométré avant et après | avant : 1 réponse juste sur 3 au premier écran, mesure de l'auteur. Après : 3 sur 3 au premier écran. | 26/09 - 30/09
+Les noms disent ce que font les objets | "collateral.load", "int_mutations_filtrees", "seuil_publication" en variable | 28/09 - 29/09
+Les deux constats S5 soldés par des contrôles vus en rouge | liste blanche de la racine, fonctions instables - S6 à 4 sur 4 | 29/09
+Chaque séance terminée par une branche fusionnée | J1, J2 et J3 oui, J4 ce soir | -
+Constats de la semaine :
+ - Le README mentait à quatre endroits - le fichier le plus lu, le seul qu'aucun contrôle ne surveillait.
+ - Un motif de recherche avait manqué six lignes, révélées par un test sur un positif connu.
+ - 'verif_clone' lancé sans '-Branche' a testé l'ancien 'main' : un contrôle vert qui regardait ailleurs.
+ - Un renommage a retiré neuf tests en silence, attrapé par le compteur du 22/09. Un doublon YAML, lui, à été bruyant.
+ - 'sql/analyses' cassé depuis le 21/09, découvert huit jours plus tard.
+ - Le catalogue publié avait deux semaines de retard - republié aujourd'hui, à la main.
+Constats ouverts, reportés :
+ - versions non épinglées, 'requirements.txt' à solder
+ - publication manuelle du catalogue - le retard découvert ce matin en est la démonstration
+ - les commandes du README ne sont pas celles qu'exécute 'verif_clone'
+ - le rituel présente une cascade comme trois échecs
+ - 'sql/analyses/' vers le dossier 'analyses/' de dbt
+ - le chiffre du premier écran, à mettre à jour à la livraison DVF d'octobre.
