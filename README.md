@@ -2,11 +2,13 @@
 
 Pour une commune et un type de bien, quelle est la valeur de référence au m², comment a-t-elle evolué sur 12 mois, et avec quelle fiabilité ?
 
-**Rouen, appartements : 2 664 €/m²** — médiane sur les 12 mois à fin décembre 2025,
-calculée sur 1 921 ventes. Évolution sur un an : +0,6 %.
-*Données DVF, millésime d'avril 2026.*
+**Exemple de résultat — Rouen, appartements : 2 664 €/m²**, médiane sur les 12 mois
+à fin décembre 2025, calculée sur 1 921 ventes — la cellule la plus fiable du
+dernier mois. Évolution sur un an : +0,6 %. *Données DVF, millésime d'avril 2026.*
 
-## Pourquoi c'est juste
+## Ce qui est vérifié
+
+Le calcul fait exactement ce qui est spécifié, et le refait à l'identique.
 
 - **Reproductible** — un clone neuf rejoue toute la chaine et vérifie le resultat
   en une commande : [`scripts/verif_clone.ps1`](scripts/verif_clone.ps1).
@@ -16,6 +18,13 @@ calculée sur 1 921 ventes. Évolution sur un an : +0,6 %.
   publication : [`transform/`](transform/).
 - **Documente** — catalogue et graphe de lignee publiés :
   [matthiasbrz.github.io/collateral-lab](https://matthiasbrz.github.io/collateral-lab/).
+
+## Ce qui ne l'est pas
+
+La valeur n'a pas de vérité de référence. Elle dépend des règles de filtrage
+retenues et des limites des données DVF : délai de publication, biais de
+composition, aucune qualification du bien. Ces choix sont chiffrés dans les
+[règles de filtrage](docs/regles_filtrage.md) et les [limites connues](docs/limites.md).
 
 ## Lancer
 
