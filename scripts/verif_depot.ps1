@@ -129,7 +129,7 @@ if ($absents) {
 # sans qu'aucun motif ne l'aurait vu revenir.
 $racineAutorisee = @(
     '.gitignore', '.vscode', 'JOURNAL.md', 'LICENSE', 'README.md',
-    'pyproject.toml', 'requirements.txt',
+    'pyproject.toml', 'constraints.txt',
     'data', 'docs', 'scripts', 'sql', 'src', 'tests', 'transform'
 )
 $racineSuivie = @(& git ls-files | ForEach-Object { ($_ -split '/')[0] } | Sort-Object -Unique)

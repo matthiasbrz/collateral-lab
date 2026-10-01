@@ -123,3 +123,10 @@ identiques par signature avant suppression ; le dixième n'avait pas d'équivale
 signature du mart, 104679694271579681982287, est la même avant et après.
 'collateral.build' ne construit plus rien - il charge les sources brutes. Son nom ment
 depuis ce matin.
+
+## Figer les dependances directes et transitives
+Versions exactes de toutes les dependances, directes et transitives.
+Pourquoi pas uniquement les directes ? Risque qu'une version tierce casse dbt en CI, un jour, sans changement. Ce qui n'est pas declare derive.
+Genere le 01/10/2026 par : python -m pip freeze --exclude-editabl
+Usage : pip install -e "".[dev]"" -c constraints.txt
+A regenerer dans le meme commit que tout changement dans pyproject.toml.
