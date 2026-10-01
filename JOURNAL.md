@@ -282,3 +282,9 @@ Constats ouverts, reportés :
  - le rituel présente une cascade comme trois échecs
  - 'sql/analyses/' vers le dossier 'analyses/' de dbt
  - le chiffre du premier écran, à mettre à jour à la livraison DVF d'octobre.
+
+## 2026-10-01 - S8-J1 : Trois réponses écrites, puis les versions
+DVF - consultation du 01/10/2026 a 09h00
+ - page DVF geolocalises, dernière mise à jour affichée : https://www.data.gouv.fr/datasets/demandes-de-valeurs-foncieres-geolocalisees
+ - fichiers geo-dvf/latest/csv : https://files.data.gouv.fr/geo-dvf/latest/csv/2025/departements/, date des fichiers: 2026-05-18
+ - livraison d'octobre : non publiée
