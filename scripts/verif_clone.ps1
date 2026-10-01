@@ -135,7 +135,6 @@ if (-not (Test-Path $python)) { Terminer 1 "interpreteur introuvable apres creat
 # On appelle l'interpreteur par son chemin plutot que d'activer le venv :
 # l'activation modifierait la session appelante.
 Etape "mise a jour de pip" { & $python -m pip install --quiet --upgrade pip } -Silencieux
-Etape "pip install -e .[dev]" { & $python -m pip install --quiet -e '.[dev]' } -Silencieux
 Etape "pip install -e .[dev] -c constraints.txt" { & $python -m pip install -e ".[dev]" -c constraints.txt } -Silencieux
 
 

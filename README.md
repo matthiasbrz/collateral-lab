@@ -28,7 +28,7 @@ composition, aucune qualification du bien. Ces choix sont chiffrés dans les
 
 ## Lancer
 
-    py -m venv .venv ; .\.venv\Scripts\Activate.ps1 ; pip install -e ".[dev]"
+    py -m venv .venv ; .\.venv\Scripts\Activate.ps1
     python -m pip install -e ".[dev]" -c constraints.txt
     python -m collateral.download ; python -m collateral.load
     cd transform ; dbt build --profiles-dir .
