@@ -1,0 +1,5 @@
+python -m pip install -e ".[dev]" -c constraints.txt
+python -m collateral.download
+python -m collateral.load
+cd transform
+dbt build --profiles-dir .

@@ -28,12 +28,22 @@ composition, aucune qualification du bien. Ces choix sont chiffrés dans les
 
 ## Lancer
 
-    py -m venv .venv ; .\.venv\Scripts\Activate.ps1
-    python -m pip install -e ".[dev]" -c constraints.txt
-    python -m collateral.download ; python -m collateral.load
-    cd transform ; dbt build --profiles-dir .
+Prérequis : Python 3.12 et un environnement virtuel actif.
 
-*Commandes PowerShell. Sous macOS ou Linux : `python3 -m venv .venv` et `source .venv/bin/activate`.*
+- Windows (PowerShell) : `py -m venv .venv ; .\.venv\Scripts\Activate.ps1`
+- macOS / Linux : `python3 -m venv .venv ; source .venv/bin/activate`
+
+Puis, depuis la racine du dépôt :
+
+<!-- lancer:debut -->
+python -m pip install -e ".[dev]" -c constraints.txt
+python -m collateral.download
+python -m collateral.load
+cd transform
+dbt build --profiles-dir .
+<!-- lancer:fin -->
+
+Ces commandes sont exécutées telles quelles par 'scripts/verif_clone.ps1'.
 
 ## En savoir plus
 
