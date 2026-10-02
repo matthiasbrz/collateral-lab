@@ -156,6 +156,8 @@ try {
 }
 
 # Controles propres au lanceur, apres les commandes du README.
+$dbt = Join-Path $travail '.venv\Scripts\dbt.exe'
+if (-not (Test-Path $dbt)) { Terminer 1 "dbt introuvable : $dbt" }
 Set-Location (Join-Path $travail 'transform')
 Etape "dbt source freshness" { & $dbt source freshness --profiles-dir . }
 Set-Location $travail

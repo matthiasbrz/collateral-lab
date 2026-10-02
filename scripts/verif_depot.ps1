@@ -171,7 +171,7 @@ if (-not $debut -or -not $fin -or $fin -le $debut) {
         ForEach-Object { $_.TrimEnd() } | Where-Object { $_ })
     $ecarts = @(Compare-Object $fichier $bloc -SyncWindow 0)
     if ($ecarts.Count -eq 0) {
-        Ok "bloc Lander du README identique a scripts\lancer.txt ($($fichier.Count) commandes)"
+        Ok "bloc Lancer du README identique a scripts\lancer.txt ($($fichier.Count) commandes)"
     } else {
         Echec "bloc Lancer du README different de scripts\lancer.txt"
         Detail ($ecarts | ForEach-Object { "$($_.SideIndicator) $($_.InputObject)" })
@@ -403,7 +403,7 @@ if ($branche -ne 'main') {
 
 # gh-pages est une branche orpheline : main..gh-pages compterait tous ses commits.
 $locales = @(& git for-each-ref --format='%(refname:short)' refs/heads/ |
-    where-Object { $_ -notin @('main', 'gh-pages') })
+    where-Object { $_ -notin @('main', 'gh-pages', $branche) })
 $enAvance = @() ; $fusionnees = @()
 foreach ($b in $locales) {
     $n = [int]((& git rev-list --count "main..$b") -join '').Trim()
