@@ -288,3 +288,13 @@ DVF - consultation du 01/10/2026 a 09h00
  - page DVF geolocalises, dernière mise à jour affichée : https://www.data.gouv.fr/datasets/demandes-de-valeurs-foncieres-geolocalisees
  - fichiers geo-dvf/latest/csv : https://files.data.gouv.fr/geo-dvf/latest/csv/2025/departements/, date des fichiers: 2026-05-18
  - livraison d'octobre : non publiée
+Une installation sans verrou aurait pris 13 versions transitives différentes de celles de ma machine, dont le parseur de dbt. Mesuré le jour même où j'ai décidé de les figer.
+
+## 2026-10-02 - S8-J2 : Un README qui ne peut plus mentir
+Mensonge du 26/09 | Attrapé ?
+"pip install -r requirements.txt", "python src/build.py" | oui - commandes du bloc, différentes du fichier exécuté
+"python -m collateral.tests_donnees" | oui - même raison
+"pytest # 16 tests unitaires" | à moitié - la commande, oui ; le nombre, non
+"dbt introduit en semaine 10" | non - de la prose, hors du bloc
+Ce contrôle prouve la cohérence, pas la vérité. Si le fichier et le README disent la même chose fausse, il passe. C'est "verif_clone", en exécutant le fichier, qui en prouve la justesse.
+Tout ce qui est en prose lui échappe : les dates, les comptes comme "44 tests au 26/09", le chiffre de Rouen qui veillera à la livraison DVF.

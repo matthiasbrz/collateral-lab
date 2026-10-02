@@ -155,6 +155,28 @@ $testsUnitaires = Compter (Join-Path $racine 'tests\unitaires') '^test.*\.py$'
 if ($testsUnitaires.Count -gt 0) { Ok "$($testsUnitaires.Count) fichiers de tests unitaires" }
 else { Echec "aucun fichier tests\unitaires\test_*.py" }
 
+# Le bloc "Lancer" du README doit etre identique au fichier execute par
+# verif_clone. Constat du 26/09 : le README mentait a quatre endroits, dont
+# une commande qui echouait.
+$readme = @(Get-Content (Join-Path $racine 'README.md') -Encoding UTF8)
+$debut = ($readme | Select-String -SimpleMatch '<!-- lancer:debut -->' | Select-Object -First 1).LineNumber
+$fin = ($readme | Select-String -SimpleMatch '<!-- lancer:fin -->' | Select-Object -First 1).LineNumber
+$fichier = @(Get-Content (Join-Path $racine 'scripts\lancer.txt') | ForEach-Object { $_.TrimEnd() } | Where-Object { $_ })
+
+if (-not $debut -or -not $fin -or $fin -le $debut) {
+    Echec "README : marqueurs lancer:debut / lancer:fin introuvables"
+} else {
+    $bloc = @($readme[$debut..($fin -2)] |
+        Where-Object { $_ -notmatch '^\s*```'} |
+        ForEach-Object { $_.TrimEnd() } | Where-Object { $_ })
+    $ecarts = @(Compare-Object $fichier $bloc -SyncWindow 0)
+    if ($ecarts.Count -eq 0) {
+        Ok "bloc Lander du README identique a scripts\lancer.txt ($($fichier.Count) commandes)"
+    } else {
+        Echec "bloc Lancer du README different de scripts\lancer.txt"
+        Detail ($ecarts | ForEach-Object { "$($_.SideIndicator) $($_.InputObject)" })
+    }
+}
 
 # ============================================================================
 Section "4. Fichiers parasites"

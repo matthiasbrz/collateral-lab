@@ -135,27 +135,31 @@ if (-not (Test-Path $python)) { Terminer 1 "interpreteur introuvable apres creat
 # On appelle l'interpreteur par son chemin plutot que d'activer le venv :
 # l'activation modifierait la session appelante.
 Etape "mise a jour de pip" { & $python -m pip install --quiet --upgrade pip } -Silencieux
-Etape "pip install -e .[dev] -c constraints.txt" { & $python -m pip install -e ".[dev]" -c constraints.txt } -Silencieux
-
 
 # ============================================================================
-Titre "3. Chaine complete"
+Titre "3. Chaine complete - les commandes du README, telles quelles"
 # ============================================================================
+# Chaque ligne scripts\lancer.txt est executee comme un humain la taperait
+# apres avoir active son environnement. Activer est le travail du lanceur :
+# on place les executables du venv en tete du PATH, le temps de l'execution.
+$commandes = @(Get-Content (Join-Path $travail 'scripts\lancer.txt') | Where-Object { $_.Trim() })
+if ($commandes.Count -eq 0) { Terminer 1 "scripts\lancer.txt vide ou introuvable" }
 
-$dbt = Join-Path $travail '.venv\Scripts\dbt.exe'
+$pathOrigine = $env:PATH
+$env:PATH = (Join-Path $travail '.venv\Scripts') + ';' + $env:PATH
+Push-Location $travail
+try {
+    foreach ($c in $commandes) { Etape $c ([scriptblock]::Create($c)) }
+} finally {
+    Pop-Location
+    $env:PATH = $pathOrigine
+}
 
-Etape "collateral.download" { & $python -m collateral.download }
-Etape "collateral.load"    { & $python -m collateral.load }
-
-# dbt-duckdb resout 'path' par rapport au repertoire courant, pas a profiles.yml.
-# On se place dans transform/ pour que ../collateral.duckdb designe la racine.
+# Controles propres au lanceur, apres les commandes du README.
 Set-Location (Join-Path $travail 'transform')
 Etape "dbt source freshness" { & $dbt source freshness --profiles-dir . }
-Etape "dbt build" { & $dbt build --profiles-dir . }
 Set-Location $travail
-
 Etape "pytest" { & $python -m pytest -q }
-
 
 # ============================================================================
 Titre "4. Signature du mart"
