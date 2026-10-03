@@ -43,7 +43,8 @@ cd transform
 dbt build --profiles-dir .
 <!-- lancer:fin -->
 
-Ces commandes sont exécutées telles quelles par 'scripts/verif_clone.ps1'.
+Ces commandes sont exécutées telles quelles par `scripts/verif_clone.ps1`,
+et sous Linux par la CI à chaque fusion dans `main`.
 
 ## En savoir plus
 
