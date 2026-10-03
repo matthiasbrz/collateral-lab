@@ -401,9 +401,8 @@ if ($branche -ne 'main') {
     }
 }
 
-# gh-pages est une branche orpheline : main..gh-pages compterait tous ses commits.
 $locales = @(& git for-each-ref --format='%(refname:short)' refs/heads/ |
-    where-Object { $_ -notin @('main', 'gh-pages', $branche) })
+    where-Object { $_ -notin @('main', $branche) })
 $enAvance = @() ; $fusionnees = @()
 foreach ($b in $locales) {
     $n = [int]((& git rev-list --count "main..$b") -join '').Trim()

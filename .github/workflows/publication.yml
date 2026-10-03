@@ -38,7 +38,7 @@ jobs:
           mkdir -p site
           cp transform/target/index.html transform/target/manifest.json transform/target/catalog.json site/
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
@@ -54,4 +54,4 @@ jobs:
       url: ${{ steps.deploiement.outputs.page_url }}
     steps:
       - id: deploiement
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
