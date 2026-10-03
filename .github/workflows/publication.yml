@@ -1,0 +1,57 @@
+# Reconstruit toute la chaine sur Linux a chaque fusion dans main, puis
+# republie le catalogue dbt. Les commandes sont celles du README, executees
+# telles quelles depuis scripts/lancer.txt.
+name: construction-et-publication
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Commandes du README, telles quelles
+        run: bash -ex scripts/lancer.txt
+
+      - name: Generation du catalogue
+        working-directory: transform
+        run: dbt docs generate --profiles-dir .
+
+      - name: Assemblage du site
+        run: |
+          mkdir -p site
+          cp transform/target/index.html transform/target/manifest.json transform/target/catalog.json site/
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploiement:
+    needs: construction
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4
