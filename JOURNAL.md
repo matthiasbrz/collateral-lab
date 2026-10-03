@@ -298,3 +298,9 @@ Mensonge du 26/09 | Attrapé ?
 "dbt introduit en semaine 10" | non - de la prose, hors du bloc
 Ce contrôle prouve la cohérence, pas la vérité. Si le fichier et le README disent la même chose fausse, il passe. C'est "verif_clone", en exécutant le fichier, qui en prouve la justesse.
 Tout ce qui est en prose lui échappe : les dates, les comptes comme "44 tests au 26/09", le chiffre de Rouen qui veillera à la livraison DVF.
+
+## 2026-10-03 - S8-J3 : Chaque fusion reconstruit tout
+Première exécution de `lancer.txt`sous Linux, verte du premier coup de construction. Chaîne complète en 58s, catalogue republié automatiquement, date de génération vérifiable par URL.
+Les deux actions de l'exemple officiel GitHub étaient dépréciées. Ce sont les annotations de la CI qui l'ont signalé, pas la documentation.
+`gh-pages`supprimée : plus aucune publication de dépend d'un geste manuel.
+
