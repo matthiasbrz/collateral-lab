@@ -304,3 +304,9 @@ Première exécution de `lancer.txt`sous Linux, verte du premier coup de constru
 Les deux actions de l'exemple officiel GitHub étaient dépréciées. Ce sont les annotations de la CI qui l'ont signalé, pas la documentation.
 `gh-pages`supprimée : plus aucune publication de dépend d'un geste manuel.
 
+## 2026-10-05 - S8-J4 : Le vrai tiers, et la livraison comme événement
+Premier retour de pair : un collègue a lu le README en 4 min 15 et répondu aux trois questions. Sa seule erreur, confondre les deux scripts de vérification, est un écart qu'aucun auteur ne peut voir.
+La version des sources est déclarée. Une empreinte différente fait échouer le téléchargement, y compris sur un fichier déjà présent — vu en rouge.
+La CI de la PR a confirmé la déclaration sur un téléchargement neuf sous Linux. La prochaine livraison DVF sera un échec explicite, pas une divergence silencieuse.
+Le test en rouge a d'abord attrapé une vérification non branchée : altérée, l'empreinte passait. Sans ce test, la journée pouvait se clore sur un contrôle que rien n'appelait.
+
