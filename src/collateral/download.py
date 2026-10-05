@@ -13,7 +13,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-from collateral import journal
+from collateral import empreintes, journal
 from collateral.config import (
     DEPARTEMENT,
     DOSSIER_DATA,
@@ -142,9 +142,12 @@ def sources_manquantes(dossier: Path = DOSSIER_DATA) -> list[str]:
 if __name__ == "__main__":
     journal.configurer()
     try:
-        for annee in MILLESIMES:
-            download_dvf(DEPARTEMENT, annee)
-        download_cog()
+        attendues = empreintes.lire_attendues()
+        chemins = [download_dvf(DEPARTEMENT, annee) for annee in MILLESIMES]
+        chemins.append(download_cog())
+        for chemin in chemins:
+            empreintes.verifier(chemin, attendues)
+        logger.info("empreintes conformes : %d fichier(s)", len(chemins))
     except RuntimeError as erreur:
         logger.error("%s", erreur)
         sys.exit(1)
