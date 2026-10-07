@@ -121,7 +121,7 @@ Ce qu'il ne remplace pas - la liste honnête :
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
-## Bilan Horaire à Semaine 7
+## Bilan Horaire à Semaine 8
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -131,6 +131,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S5 | ~7 h | pause | ~7 h | 10 h |
 | S6 | ~6 h | pause | ~6 h | 10 h |
 | S7 | ~5 h | pause | ~5 h | 7 h |
+| S8 | ~6 h | pause | ~6 h | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -310,3 +311,19 @@ La version des sources est déclarée. Une empreinte différente fait échouer l
 La CI de la PR a confirmé la déclaration sur un téléchargement neuf sous Linux. La prochaine livraison DVF sera un échec explicite, pas une divergence silencieuse.
 Le test en rouge a d'abord attrapé une vérification non branchée : altérée, l'empreinte passait. Sans ce test, la journée pouvait se clore sur un contrôle que rien n'appelait.
 
+## 2026-10-07 - S8-J6 : La démonstration, et le contrôle S8
+Point de contrôle S8 :
+Un clone installe exactement les versions épinglées - tenu, 01/10. `constraints.txt` ; `verif_clone.ps1` affiche `dbt=1.12.4`.
+Chaque fusion reconstruit la chaîne sous Linux et republie le catalogue - tenu, 03/10. Runs n° 3, 4 et 7 ; `generated_at`.
+La CI exécute les commandes mêmes du README - tenu, 03/10. `bash -ex scripts/lancer.txt`, contrôlé contre le README depuis le 02/10.
+Une nouvelle livraison DVF devient un échec explicite - tenu, 05/10. Vu en rouge sur un fichier déjà présent ; confirmé par la CI de la PR sur un téléchargement neuf.
+Un collègue a lu le README - tenu, 05/10. 4 min 15, trois réponses, une erreur de nom de script.
+La démonstration répétée deux fois, chronométrée - aujourd'hui, 6min et 4min50.
+Les constats ouverts :
+La signature n'est pas comparée en CI - décision du 06/10 de ne pas toucher `publication.yml`.
+La définition de la signature est peut-être dupliquée entre `verif_depot` et `verif_clone`.
+`Etape` ne détecte pas les erreurs PowerShell, seulement le codes retour des programmes externes (02/10).
+La ligne de versions de `verif_clone` n'est pas comparée à `constraints.txt`.
+Les noms `verif_depot` et `verif_clone` se confondent - relevé le 05/10.
+La procédure de publication manuelle du 15/09, à dater comme historique ; la cause de la première tentative du run n° 3.
+La cascade du rituel, `sql/analyses/`, le chiffre du premier écran à la livraison d'octobre.
