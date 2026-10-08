@@ -1,6 +1,7 @@
 # Reconstruit toute la chaine sur Linux a chaque fusion dans main, puis
 # republie le catalogue dbt. Les commandes sont celles du README, executees
 # telles quelles depuis scripts/lancer.txt.
+# Detection d'une nouvelle livraison chaque lundi.
 name: construction-et-publication
 
 on:

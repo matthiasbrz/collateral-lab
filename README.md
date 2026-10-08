@@ -47,7 +47,7 @@ dbt build --profiles-dir .
 <!-- lancer:fin -->
 
 Ces commandes sont exécutées telles quelles par `scripts/verif_clone.ps1`,
-et sous Linux par la CI à chaque fusion dans `main`.
+et sous Linux par la CI à chaque fusion dans `main`, et chaque lundi pour détecter une nouvelle livraison DVF.
 
 ## En savoir plus
 
