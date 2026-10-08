@@ -1,5 +1,8 @@
 # collateral-lab
 
+[![qualité du code](https://github.com/matthiasbrz/collateral-lab/actions/workflows/qualite.yml/badge.svg?branch=main)](https://github.com/matthiasbrz/collateral-lab/actions/workflows/qualite.yml)
+[![construction et publication](https://github.com/matthiasbrz/collateral-lab/actions/workflows/publication.yml/badge.svg?branch=main)](https://github.com/matthiasbrz/collateral-lab/actions/workflows/publication.yml)
+
 Pour une commune et un type de bien, quelle est la valeur de référence au m², comment a-t-elle evolué sur 12 mois, et avec quelle fiabilité ?
 
 **Exemple de résultat — Rouen, appartements : 2 664 €/m²**, médiane sur les 12 mois
