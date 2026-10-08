@@ -24,7 +24,7 @@ DOSSIER_PLANS = RACINE / "docs" / "plans"
 BASE_DUCKDB = RACINE / "collateral.duckdb"
 
 # --- Perimetre --------------------------------------------------------------
-DEPARTEMENT = '76'
+DEPARTEMENT = "76"
 MILLESIMES = (2023, 2024, 2025)
 MILLESIME_COG = 2026
 
