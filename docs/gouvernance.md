@@ -9,3 +9,6 @@ Ces données ayant un caractère sensible, il est nécessaire de savoir qui util
 de données et de chemins locaux dans 'static_index.html' : aucune occurence.
 Le site publie noms de colonnes, types, statistiques de table et SQL compilé
 des modèles - ce dernier étant déjà public dans le dépôt.
+
+- 03/10/2026 : publication automatisée par la CI à chaque fusion dans `main` (`index.html`, `manifest.json`, `catalogue.json`) ; branche `gh-pages` supprimée. 
+Contrôle refait sur `manifest.json` et `catalogue.json` publiés : aucune occurence de Rouen, Le Havre, 76540 ni de chemin du runner.
