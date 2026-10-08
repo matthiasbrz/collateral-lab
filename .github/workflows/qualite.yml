@@ -1,0 +1,36 @@
+# Juge le code, pas la donnee : lint, format et tests unitaires, sans aucun
+# telechargement. Distinct de publication.yml (decision du 08/10/2026) : un
+# fichier, un badge. Quand une livraison DVF fera echouer la construction,
+# ce badge-ci restera vert et dira que le code n'y est pour rien.
+name: qualite-du-code
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verification:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      # Meme installation que la premiere ligne de scripts/lancer.txt.
+      - name: Installation sous contraintes
+        run: python -m pip install -e ".[dev]" -c constraints.txt
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Format
+        run: ruff format --check .
+
+      - name: Tests unitaires
+        run: pytest
