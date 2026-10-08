@@ -327,3 +327,14 @@ La ligne de versions de `verif_clone` n'est pas comparée à `constraints.txt`.
 Les noms `verif_depot` et `verif_clone` se confondent - relevé le 05/10.
 La procédure de publication manuelle du 15/09, à dater comme historique ; la cause de la première tentative du run n° 3.
 La cascade du rituel, `sql/analyses/`, le chiffre du premier écran à la livraison d'octobre.
+
+## 2026-10-08 - S9-J1 : Deux demandes, puis une CI qui juge le code
+Constats :
+N° | Constat | Statut proposé | Raison
+1 | Signature non comparée en CI | accepté | Décision du 06/10. Le récit et la fiche disent "reconstruite et testée sous Linux", pas "même résultat".
+2 | Définition de la signature dupliquée | reporté au 15/10 | Ce n'est plus un "peut-être" : il existe trois définitions actives, identiques au 08/10. `controle_signature()` (`src/collateral/controle.py`, 1. 33), `verif_depot.ps1` 1. 305 et `verif_clone.ps1` 1. 175. Les deux scripts n'appellent pas la fonction qui existe déjà : ils devront l'appeler.
+3 | `Etape` ne voit pas les erreurs PowerShell | accepté | La garde `Test-Path $dbt` du 02/10 couvre le seul cas rencontré. Le cas général reste une issue.
+4 | Versions de `verif_clone` non comparées à `constraints.txt` | accepté | L'installation se fait déjà sous `-c constraints.txt`. La ligne affichée n'est qu'une information, pas une garantie.
+5 | `verif_depot` et `verif_clone` confondus | reporté au 22/10 | C'est le seul constat venu d'un tiers. Un renommage touche le README et les deux scripts : il a sa place dans la semaine de mise en présentation.
+6 | Publication manuelle du 15/09 à dater | soldé aujourd'hui | Aucune procédure manuelle ne subsiste hors du journal. Mais `docs/gouvernance.md` s'arrête au contrôle du 15/09 sur `static_index.html` : il lui manque la suite.
+7 | Cause de la 1ere tentative du run n° 3 | soldé en une minute | Onglet Actions -> run n° 3 -> menu "Latest #2" -> "Attempt #1" -> l'étape en échec. Une ligne au journal.
