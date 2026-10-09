@@ -337,4 +337,8 @@ N° | Constat | Statut | Raison
 4 | Versions de `verif_clone` non comparées à `constraints.txt` | accepté | L'installation se fait déjà sous `-c constraints.txt`. La ligne affichée n'est qu'une information, pas une garantie.
 5 | `verif_depot` et `verif_clone` confondus | reporté au 22/10 | C'est le seul constat venu d'un tiers. Un renommage touche le README et les deux scripts : il a sa place dans la semaine de mise en présentation.
 6 | Publication manuelle du 15/09 à dater | soldé aujourd'hui | ligne datée du 03/10 ajoutée à `docs/gouvernance.md` (d5c936a)
-7 | Cause de la 1ere tentative du run n° 3 | soldé en une minute | Onglet Actions -> run n° 3 -> menu "Latest #2" -> "Attempt #1" -> l'étape en échec. Une ligne au journal. Node.js 20 is deprecated
+7 | Cause de la 1ere tentative du run n° 3 | soldé | Aucun échec : la première tentative est verte, c'était une relance manuelle.
+
+CI qualité distincte de la construction : lint, format et 31 tests unitaires à chaque PR, verdict en ~25s. Vue en rouge sur la PR n°48 (format) pendant que la construction restait verte : chaque workflow a son verdict.
+Publication externe non visée ; positionnement 2027 traité à l'EAEC. Deux badges verts en tête du README.
+Deux pushes directs sur `main` dans la même matinée : règle sur `main` (PR et vérification qualité obligatoires), prouvée le jour même par un push refusé (GH013).
