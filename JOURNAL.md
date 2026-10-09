@@ -342,3 +342,8 @@ N° | Constat | Statut | Raison
 CI qualité distincte de la construction : lint, format et 31 tests unitaires à chaque PR, verdict en ~25s. Vue en rouge sur la PR n°48 (format) pendant que la construction restait verte : chaque workflow a son verdict.
 Publication externe non visée ; positionnement 2027 traité à l'EAEC. Deux badges verts en tête du README.
 Deux pushes directs sur `main` dans la même matinée : règle sur `main` (PR et vérification qualité obligatoires), prouvée le jour même par un push refusé (GH013).
+
+## 2026-10-09 - S9-J2 : Kimball avant le code
+Conception de l'étoile écrite avant toute ligne de SQL : grain = une mutation retenue, trois dimensions, inventaire des 20 colonnes.
+Dimension temps au jour, décidée sur le SQL des marts : aucun mart ne lit le jour, tous ont besoin d'un calendrier mensuel complet, garanti aujourd'hui par les données, demain par construction.
+Type de bien : dimension. Première PR sous la règle du 08/10 : la vérification qualité y est marquée "Required".
