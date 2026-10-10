@@ -9,11 +9,12 @@ SELECT
     f.code_commune,
     d.nom_commune,
     f.type_local,
-    f.mois,
+    t.mois,
     count(*) AS nb_mutations,
     round(quantile_cont(f.prix_m2, 0.50), 0) AS prix_m2_median,
     round(quantile_cont(f.prix_m2, 0.25), 0) AS prix_m2_q1,
     round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3
-FROM {{ ref('int_mutations_filtrees') }} f
-LEFT JOIN {{ ref('dim_commune') }} d USING (code_commune)
+FROM {{ ref('fct_mutations') }} f
+JOIN {{ ref('dim_temps') }} t ON t.date_jour = f.date_mutation
+LEFT JOIN {{ ref('dim_commune') }} d ON d.code_commune = f.code_commune
 GROUP BY 1, 2, 3, 4

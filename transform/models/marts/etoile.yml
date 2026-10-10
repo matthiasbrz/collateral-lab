@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: dim_commune
+    description: >
+      Une commune de plein exercice au millesime 2026.
+
+      Source : Code officiel geographique de l'Insee. Le filtre TYPECOM = 'COM'
+      exclut communes deleguees, associees et arrondissements municipaux.
+      34 875 communes, conforme au decompte officiel au 01/01/2026.
+    columns:
+      - name: code_commune
+        description: Code INSEE. Cle de la dimension.
+        data_tests:
+          - unique
+          - not_null
+      - name: nom_commune
+        description: >
+          Libelle au millesime 2026. Diverge du libelle porte par DVF pour les
+          communes renommes : 19 changements de nom sur le millesime.
+        data_tests: [not_null]
+      - name: millesime_cog
+        description: Millesime du referentiel, declare en variable dbt.
+        data_tests: [not_null]
+
+  - name: dim_temps
+    description: >
+      Un jour calendaire, de la premiere a la derniere date_mutation des faits.
+    columns:
+      - name: date_jour
+        data_tests: [unique, not_null]
+
+  - name: dim_type_bien
+    columns:
+      - name: type_local
+        data_tests:
+          - unique
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Maison', 'Appartement']
+
+  - name: fct_mutations
+    columns:
+      - name: id_mutation
+        data_tests: [unique, not_null]
+      # relationships ignore les NULL : chaque cle a aussi son not_null.
+      - name: date_mutation
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: { to: ref('dim_temps'), field: date_jour }
+      - name: code_commune
+        data_tests:
+         - not_null
+         - relationships:
+              arguments: { to: ref('dim_commune'), field: code_commune }
+              config:
+                # Le Heron (76358) : meme tolerance que les deux tests existants.
+                severity: warn
+                error_if: ">5"
+                warn_if: ">0"
+      - name: type_local
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: { to: ref('dim_type_bien'), field: type_local }
