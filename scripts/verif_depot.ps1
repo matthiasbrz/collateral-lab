@@ -339,7 +339,7 @@ if ($modeles.Count -eq 0) {
     Echec "aucun modele sous transform\models - le controle n'a rien examine"
 } else {
     # Toute table du projet citee sans ref() ni source() est une arete manquante.
-    $motifEnDur = '(FROM|JOIN)\s+(raw_|stg_|int_|agg_|dim_|mart_|ref_)'
+    $motifEnDur =   '(FROM|JOIN)\s+(\w+\.)?(raw_|stg_|int_|fct_|agg_|dim_|mart_|ref_)'
     $enDur = @($modeles | Select-String -Pattern $motifEnDur)
 
     if ($enDur) {
