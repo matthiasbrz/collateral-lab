@@ -350,3 +350,9 @@ Type de bien : dimension. Première PR sous la règle du 08/10 : la vérificatio
 
 ## 2026-10-10 - S9-J3 : l'étoile
 Rangé dans marts/, dim_commune lit source() directement, alors que la convention dbt réserve les sources à la couche staging.
+fait : 13 modèles et 58 tests, PASS=68 WARN=3 ; cardinalité vue en rouge ; dim_temps sans trou sur 1 095 jours ; mensuel identique ; catalogue publié avec l’étoile.
+constat : dbt.stg_mutations_filtrees, orphelin du 29/09 au 10/10, supprimé. Contrôle candidat : comparer les tables du schéma dbt au manifeste. Statut à poser au J6.
+coincé : deux écarts à l’attendu passés sans arrêt (voir ci-dessous).
+J’annonçais exactement six lignes dans git status. Il y en avait sept, à cause de JOURNAL.md, et le git add -A a quand même suivi : la ligne du journal est partie dans le commit des modèles.
+Sans conséquence ici, mais c’est le même scénario que les 11 tables au lieu de 10 ce matin.
+La règle 13 ne consiste pas à lancer git status, mais à le lire en le comparant à ce qu’on attend.
