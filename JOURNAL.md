@@ -347,3 +347,6 @@ Deux pushes directs sur `main` dans la même matinée : règle sur `main` (PR et
 Conception de l'étoile écrite avant toute ligne de SQL : grain = une mutation retenue, trois dimensions, inventaire des 20 colonnes.
 Dimension temps au jour, décidée sur le SQL des marts : aucun mart ne lit le jour, tous ont besoin d'un calendrier mensuel complet, garanti aujourd'hui par les données, demain par construction.
 Type de bien : dimension. Première PR sous la règle du 08/10 : la vérification qualité y est marquée "Required".
+
+## 2026-10-10 - S9-J3 : l'étoile
+Rangé dans marts/, dim_commune lit source() directement, alors que la convention dbt réserve les sources à la couche staging.
