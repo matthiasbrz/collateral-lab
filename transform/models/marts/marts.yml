@@ -24,9 +24,8 @@ models:
       - name: type_local
         data_tests:
           - not_null
-          - accepted_values:
-              arguments:
-                values: ['Maison', 'Appartement']
+          - relationships:
+              arguments: { to: ref('dim_type_bien'), field: type_local }
       - name: mois
         data_tests: [not_null]
       - name: nb_mutations
@@ -56,8 +55,8 @@ models:
       - name: type_local
         data_tests:
           - not_null
-          - accepted_values:
-              arguments: { values: ['Maison', 'Appartement'] }
+          - relationships:
+              arguments: { to: ref('dim_type_bien'), field: type_local }
       - name: mois
         data_tests: [not_null]
       - name: prix_m2_median_12m

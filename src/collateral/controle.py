@@ -1,5 +1,6 @@
 """Preuves de non-regression sur les relations de l'entrepot."""
 
+import argparse
 import logging
 import sys
 from dataclasses import dataclass, field
@@ -134,12 +135,18 @@ def relations_communes(con, gauche: str = "main", droite: str = "dbt") -> list[s
 if __name__ == "__main__":
     from collateral.db import connexion
 
+    parser = argparse.ArgumentParser(description="Compare des relations entre deux schemas.")
+    parser.add_argument("tables", nargs="*", help="defaut : toutes les relations communes")
+    parser.add_argument("--gauche", default="main", help="schema de reference (defaut : main)")
+    parser.add_argument("--droite", default="dbt", help="schema compare (defaut : dbt)")
+    args = parser.parse_args()
+
     with connexion(lecture_seule=True) as con:
-        tables = sys.argv[1:] or relations_communes(con)
+        tables = args.tables or relations_communes(con, args.gauche, args.droite)
         if not tables:
             print("Aucune relation commune aux deux schemas.", file=sys.stderr)
             sys.exit(2)
-        resultats = [comparer(con, t) for t in tables]
+        resultats = [comparer(con, t, args.gauche, args.droite) for t in tables]
 
     for r in resultats:
         print(r)
