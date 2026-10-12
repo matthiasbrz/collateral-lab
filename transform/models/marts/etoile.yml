@@ -31,6 +31,10 @@ models:
         data_tests: [unique, not_null]
 
   - name: dim_type_bien
+    description: >
+      Tout bien qui ne peut pas etre deplace ou qui est rattache de maniere fixe au sol.
+
+      Uniquement utilise ici : Maison, Appartement
     columns:
       - name: type_local
         data_tests:
@@ -41,6 +45,8 @@ models:
                 values: ['Maison', 'Appartement']
 
   - name: fct_mutations
+    description: >
+      Transfert de propriete d'un bien immobilier d'une personne (physique ou morale) a une autre.
     columns:
       - name: id_mutation
         data_tests: [unique, not_null]
