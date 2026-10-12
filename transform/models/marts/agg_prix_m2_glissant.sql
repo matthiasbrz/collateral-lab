@@ -6,12 +6,19 @@
 -- Intermediaire assume : 468 775 lignes, soit 10,05 mois de reference par
 -- transaction en moyenne.
 
-WITH calendrier AS (
-    SELECT DISTINCT mois FROM {{ ref('int_mutations_filtrees') }}
+WITH faits AS (
+    SELECT f.id_mutation, f.code_commune, f.type_local, f.prix_m2, t.mois
+    FROM {{ ref('fct_mutations') }} f
+    JOIN {{ ref('dim_temps') }} t ON t.date_jour = f.date_mutation
 ),
 
+calendrier AS (
+    SELECT DISTINCT mois FROM {{ ref('dim_temps') }}
+),
+
+-- Couples observes dans les faits, pas dim_commune x dim_type_bien.
 perimetre AS (
-    SELECT DISTINCT code_commune, type_local FROM {{ ref('int_mutations_filtrees') }}
+    SELECT DISTINCT code_commune, type_local FROM faits
 ),
 
 squelette AS (
@@ -30,7 +37,7 @@ glissant AS (
         round(quantile_cont(f.prix_m2, 0.25), 0) AS prix_m2_q1_12m,
         round(quantile_cont(f.prix_m2, 0.75), 0) AS prix_m2_q3_12m
     FROM squelette s
-    LEFT JOIN {{ ref('int_mutations_filtrees') }} f
+    LEFT JOIN faits f
         ON f.code_commune = s.code_commune
         AND f.type_local = s.type_local
         AND f.mois BETWEEN s.mois - INTERVAL 11 MONTH AND s.mois
