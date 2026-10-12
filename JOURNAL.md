@@ -350,7 +350,7 @@ Type de bien : dimension. Première PR sous la règle du 08/10 : la vérificatio
 
 ## 2026-10-10 - S9-J3 : l'étoile
 Rangé dans marts/, dim_commune lit source() directement, alors que la convention dbt réserve les sources à la couche staging.
-fait : 13 modèles et 58 tests, PASS=68 WARN=3 ; cardinalité vue en rouge ; dim_temps sans trou sur 1 095 jours ; mensuel identique à l’étalon avant, 10/10, prouvé après fusion à entre 11h15 et 11h18 ; catalogue publié avec l’étoile. motif du rituel vu en rouge sur `FROM dbt.fct_mutations`
+fait : 13 modèles et 58 tests, PASS=68 WARN=3 ; cardinalité vue en rouge ; dim_temps sans trou sur 1 095 jours ; mensuel identique à l’étalon avant, 10/10, prouvé après fusion entre 11h15 et 11h18 ; catalogue publié avec l’étoile. motif du rituel vu en rouge sur `FROM dbt.fct_mutations`
 constat : dbt.stg_mutations_filtrees, orphelin du 29/09 au 10/10, supprimé. Contrôle candidat : comparer les tables du schéma dbt au manifeste. Statut à poser au J6.
 coincé : deux écarts à l’attendu passés sans arrêt (voir ci-dessous).
 Le plan annonçait exactement six lignes dans git status. Il y en avait sept, à cause de JOURNAL.md, et le git add -A a quand même suivi : la ligne du journal est partie dans le commit des modèles.
@@ -358,4 +358,7 @@ Sans conséquence ici, mais c’est le même scénario que les 11 tables au lieu
 La règle 13 ne consiste pas à lancer git status, mais à le lire en le comparant à ce qu’on attend.
 
 ## 2026-10-12 - S9-J4 : les marts lisent l'étoile
+fait : branche `feat/etoile-marts`. Tous les marts lisent l’étoile. Le glissant lit `fct_mutations` et `dim_temps`, et la comparaison donne 10/10 avec les signatures attendues (glissant, évolution, mart). `int_mutations_filtrees` n’a plus qu’un enfant. dbt ls ne rend que 2 lignes. L’étoile est dans le catalogue en ligne. La comparaison est devenue une commande avant sa troisième exécution. Les trois listes sont devenues des `relationships` : toujours 58 tests, tous verts. Le schéma `avant` est supprimé
+constat : aucune exécution `schedule` entre la n° 32 (samedi, 11:20) et la n° 33 (ce matin). Le déclencheur est pourtant correct : `cron: "17 6 * * 1"` est sur `main` depuis le 08/10. La documentation GitHub le prévoit : une exécution planifiée peut être abandonnée quand la plateforme est surchargée. La détection de la livraison DVF n’a pas manqué pour autant. L’exécution n° 34 de 11:12 a retéléchargé les sources et validé leurs empreintes : la livraison d’octobre n’était pas encore publiée à cette heure-là. Revérifier lundi 19/10 à 8h17.
+coincé : RAS
 `int_mutations_filtrees` calcule encore `mois`, `annee` et `trimestre`, alors qu'aucun modèle ne les lit plus depuis le rebranchement du glissant. Les retirer changerait sa structure et sa signature : statut à poser au J6, pas aujourd'hui.

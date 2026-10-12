@@ -32,8 +32,9 @@ models:
 
   - name: dim_type_bien
     description: >
-      Tout bien qui ne peut pas etre deplace ou qui est rattache de maniere fixe au sol.
+      Un type de bien du perimetre (regle 4). Cle naturelle : le libelle DVF.
 
+      Tout bien qui ne peut pas etre deplace ou qui est rattache de maniere fixe au sol.
       Uniquement utilise ici : Maison, Appartement
     columns:
       - name: type_local
@@ -46,6 +47,8 @@ models:
 
   - name: fct_mutations
     description: >
+      Une mutation retenue apres les regles 1 a 6. Trois cles, six mesures, id_mutation en dimension degeneree.
+
       Transfert de propriete d'un bien immobilier d'une personne (physique ou morale) a une autre.
     columns:
       - name: id_mutation
@@ -58,8 +61,8 @@ models:
               arguments: { to: ref('dim_temps'), field: date_jour }
       - name: code_commune
         data_tests:
-         - not_null
-         - relationships:
+          - not_null
+          - relationships:
               arguments: { to: ref('dim_commune'), field: code_commune }
               config:
                 # Le Heron (76358) : meme tolerance que les deux tests existants.
