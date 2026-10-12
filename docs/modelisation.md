@@ -38,9 +38,9 @@
  Ni `current_date`, ni une plage plus large écrite en dur : `current_date` est une fonction instable de par son fonctionnement, et une plage plus large écrite en dur verrait des mois de 2026 entrer dans le squelette du glissant, avec des fenêtres encore pleines de ventes de 2025. Le mart gagnerait des cellules, et la signature bougerait.
 
 ### Type de bien : Dimension
- - Ce que dit le SQL : deux valeurs ; clé de regroupement partout ; liste `['Maison', 'Appartement`] répétée dans trois tests.
+ - Ce que dit le SQL : deux valeurs ; clé de regroupement partout ; liste `['Maison', 'Appartement']` répétée dans trois tests.
  - Décision : dimension
- - Raison : les trois tests sont devenus des `relationships` le 12/10. La liste reste écrite dans la règle 4 et dans le test d'entonnoir. Les `relationships` garantissent que les faits ne sortent pas de la dimension.
+ - Raison : La liste autorisée devient une donnée, avec son ordre d’affichage. Les trois tests sont devenus des `relationships` le 12/10. La liste reste écrite dans la règle 4 et dans le test d'entonnoir. Les `relationships` garantissent que les faits ne sortent pas de la dimension.
 
 ### Les trois mesures qu'aucun mart ne lit
  - `nb_locaux_principaux`, `nb_pieces`, `nb_dependances` : dans la table de faits, raison : métriques associées à une observation de la table de faits.
@@ -57,4 +57,4 @@
 
 ## Références
  - Kimball Dimensional Modeling Techniques (https://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf)
- - The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling, by Ralph Kimball (Author), Margy Ross (Author) 
+ - The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling, Kimball et Ross, 3ᵉ édition, Wiley, 2013.
