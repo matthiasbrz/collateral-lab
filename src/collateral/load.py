@@ -4,7 +4,13 @@ import logging
 import sys
 
 from collateral import journal
-from collateral.config import DOSSIER_DATA, DOSSIER_SQL, FICHIER_COG, MOTIF_DVF
+from collateral.config import (
+    DOSSIER_DATA,
+    DOSSIER_SQL,
+    FICHIER_COG,
+    FICHIER_COG_ANTERIEUR,
+    MOTIF_DVF,
+)
 from collateral.db import connexion
 from collateral.download import sources_manquantes
 from collateral.integrite import verifier
@@ -27,7 +33,8 @@ def verifier_sources() -> None:
         )
     for chemin in sorted(DOSSIER_DATA.glob(MOTIF_DVF)):
         verifier(chemin)
-    verifier(DOSSIER_DATA / FICHIER_COG, entete_attendu="TYPECOM")
+    for fichier in (FICHIER_COG, FICHIER_COG_ANTERIEUR):
+        verifier(DOSSIER_DATA / fichier, entete_attendu="TYPECOM")
 
 
 def main() -> int:

@@ -49,15 +49,16 @@ def test_contenu_cog_refuse_une_archive_a_deux_csv():
 def test_sources_manquantes_tout_present(tmp_path):
     (tmp_path / "dvf_76_2025.csv.gz").write_bytes(b"")
     (tmp_path / "v_commune_2026.csv").write_bytes(b"")
+    (tmp_path / "v_commune_2024.csv").write_bytes(b"")
     assert sources_manquantes(tmp_path) == []
 
 
 def test_sources_manquantes_dossier_vide(tmp_path):
-    assert len(sources_manquantes(tmp_path)) == 2
+    assert len(sources_manquantes(tmp_path)) == 3
 
 
 def test_sources_manquantes_cog_absent(tmp_path):
     (tmp_path / "dvf_76_2025.csv.gz").write_bytes(b"")
     manquants = sources_manquantes(tmp_path)
-    assert len(manquants) == 1
-    assert "COG" in manquants[0]
+    assert len(manquants) == 2
+    assert all("COG" in m for m in manquants)

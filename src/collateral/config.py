@@ -32,6 +32,10 @@ MILLESIME_COG = 2026
 URL_DVF = "https://files.data.gouv.fr/geo-dvf/latest/csv"
 URL_COG = "https://www.insee.fr/fr/statistiques/fichier/8740222/v_commune_2026.csv"
 FICHIER_COG = f"v_commune_{MILLESIME_COG}.csv"
+# Dernier millesime ou Le Heron (76358) est une commune de plein exercice.
+MILLESIME_COG_ANTERIEUR = 2024
+URL_COG_ANTERIEUR = "https://www.insee.fr/fr/statistiques/fichier/7766585/v_commune_2024.csv"
+FICHIER_COG_ANTERIEUR = f"v_commune_{MILLESIME_COG_ANTERIEUR}.csv"
 MOTIF_DVF = "dvf_*.csv.gz"
 
 # --- Gouvernance ------------------------------------------------------------

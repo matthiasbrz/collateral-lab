@@ -18,9 +18,10 @@ from collateral.config import (
     DEPARTEMENT,
     DOSSIER_DATA,
     FICHIER_COG,
+    FICHIER_COG_ANTERIEUR,
     MILLESIMES,
-    MOTIF_DVF,
     URL_COG,
+    URL_COG_ANTERIEUR,
     URL_DVF,
 )
 from collateral.integrite import verifier
@@ -67,16 +68,16 @@ def download_dvf(code_departement: str, annee: int) -> Path:
     return _telecharger(url, DOSSIER_DATA / f"dvf_{code_departement}_{annee}.csv.gz")
 
 
-def download_cog() -> Path:
+def download_cog(url: str = URL_COG, fichier: str = FICHIER_COG) -> Path:
     """Telecharge le referentiel COG. L'Insee sert un CSV brut ou une archive zip."""
-    cible = DOSSIER_DATA / FICHIER_COG
+    cible = DOSSIER_DATA / fichier
     if cible.exists():
         logger.info("deja present, ignore : %s", cible.name)
         return cible
 
     DOSSIER_DATA.mkdir(parents=True, exist_ok=True)
-    logger.info("telechargement : %s", URL_COG)
-    requete = urllib.request.Request(URL_COG, headers={"User-Agent": "collateral-lab"})
+    logger.info("telechargement : %s", url)
+    requete = urllib.request.Request(url, headers={"User-Agent": "collateral-lab"})
     with urllib.request.urlopen(requete) as reponse:
         contenu = reponse.read()
 
@@ -132,10 +133,9 @@ def contenu_cog(donnees: bytes) -> bytes:
 def sources_manquantes(dossier: Path = DOSSIER_DATA) -> list[str]:
     """Rend la liste des sources absentes du dossier, vide si tout est present."""
     manquants = []
-    if not list(dossier.glob(MOTIF_DVF)):
-        manquants.append(f"fichiers DVF ({MOTIF_DVF})")
-    if not (dossier / FICHIER_COG).exists():
-        manquants.append(f"referentiel COG ({FICHIER_COG})")
+    for fichier in (FICHIER_COG, FICHIER_COG_ANTERIEUR):
+        if not (dossier / fichier).exists():
+            manquants.append(f"referentiel COG ({fichier})")
     return manquants
 
 
@@ -145,6 +145,7 @@ if __name__ == "__main__":
         attendues = empreintes.lire_attendues()
         chemins = [download_dvf(DEPARTEMENT, annee) for annee in MILLESIMES]
         chemins.append(download_cog())
+        chemins.append(download_cog(URL_COG_ANTERIEUR, FICHIER_COG_ANTERIEUR))
         for chemin in chemins:
             empreintes.verifier(chemin, attendues)
         logger.info("empreintes conformes : %d fichier(s)", len(chemins))
