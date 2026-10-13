@@ -365,3 +365,6 @@ coincé : RAS
 
 ## 2026-10-13 - S9-J5 : accélération A, l'histoire de Le Héron
 "Go : J1 à J4 validés"
+fait : branches `feat/cog-2024` et `feat/snapshot-cog`. Lecture page dbt sur les snapshots, récupérer millesime antérieur à la fusion et déclarer son empreinte, snapshot du COG brut, test singulier qui consomme le snapshot et prouve la transition, nouveau compteur dans rituel.
+constat : le contrôle des tables orphelines devra compter les snapshots : `snap_cog_communes` n'est pas un modèle et apparaîtrait comme orpheline.
+coincé : pytest KO si test dossier_vide == 2
