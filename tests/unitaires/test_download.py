@@ -54,7 +54,7 @@ def test_sources_manquantes_tout_present(tmp_path):
 
 
 def test_sources_manquantes_dossier_vide(tmp_path):
-    assert len(sources_manquantes(tmp_path)) == 2
+    assert len(sources_manquantes(tmp_path)) == 3
 
 
 def test_sources_manquantes_cog_absent(tmp_path):
@@ -62,3 +62,12 @@ def test_sources_manquantes_cog_absent(tmp_path):
     manquants = sources_manquantes(tmp_path)
     assert len(manquants) == 2
     assert all("COG" in m for m in manquants)
+
+
+def test_sources_manquantes_dvf_absent(tmp_path):
+    """Regression du 13/10 : le controle DVF avait disparu, dossier_vide passait quand meme."""
+    (tmp_path / "v_commune_2026.csv").write_bytes(b"")
+    (tmp_path / "v_commune_2024.csv").write_bytes(b"")
+    manquants = sources_manquantes(tmp_path)
+    assert len(manquants) == 1
+    assert "DVF" in manquants[0]
