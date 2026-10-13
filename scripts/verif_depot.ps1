@@ -290,14 +290,20 @@ if ($Rapide) {
 # Regle 15 : un test dont la cible disparait n'echoue pas, il cesse d'exister.
     # Le graphe est compare a une valeur declaree, mise a jour dans le meme
     # commit que tout ajout ou retrait voulu.
-    $m = [regex]::Match(($sortieDbt | Out-String), 'Found (\d+) models?, (\d+) data tests?')
+    # dbt ordonne sa ligne "Found" selon l'ordre d'analyse : le snapshot y passe
+    # avant ou apres les tests. Chaque compteur est lu par son nom (13/10).
+    $ligneFound = [regex]::Match(($sortieDbt | Out-String), 'Found [^\r\n]*')
+    $compte = foreach ($type in 'models?', 'snapshots?', 'data tests?') {
+        $trouve = [regex]::Match($ligneFound.Value, "(\d+) $type\b")
+        if ($trouve.Success) { $trouve.Groups[1].Value } else { 'absent' }
+    }
     $attendu = ((Get-Content (Join-Path $racine 'docs\graphe_attendu.txt') -Raw).Trim()) -split '\s+'
-    if (-not $m.Success) {
+    if (-not $ligneFound.Success) {
         Echec "compteur dbt introuvable dans la sortie"
-    } elseif ($m.Groups[1].Value -eq $attendu[0] -and $m.Groups[2].Value -eq $attendu[1]) {
-        Ok "graphe conforme : $($attendu[0]) modeles, $($attendu[1]) tests"
+    } elseif (($compte -join ' ') -eq ($attendu -join ' ')) {
+        OK "graphe conforme : $($compte[0]) modeles, $($compte[1]) snapshot(s), $($compte[2]) tests"
     } else {
-        Echec "graphe : $($m.Groups[1].Value) modeles / $($m.Groups[2].Value) tests, attendu $($attendu[0]) / $($attendu[1])"
+        Echec "graphe : $($compte -join ' / '), attendu $($attendu -join ' / ') (modeles / snapshots / tests)"
         Detail "ecart voulu : mettre a jour docs\graphe_attendu.txt dans le meme commit"
     }
 
