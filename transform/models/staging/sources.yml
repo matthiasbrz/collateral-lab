@@ -28,3 +28,7 @@ sources:
           Code officiel geographique, millesime 2026, charge tel quel.
           Contient les communes de plein exercice, les communes deleguees et
           associees, et les arrondissements municipaux : voir TYPECOM.
+      - name: raw_communes_2024
+        description: >
+          Code officiel geographique, millesime 2024 : le dernier ou Le Heron
+          (76358) est une commune. Lu par le snapshot seul.
