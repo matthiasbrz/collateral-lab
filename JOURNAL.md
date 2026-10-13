@@ -362,3 +362,6 @@ fait : branche `feat/etoile-marts`. Tous les marts lisent l’étoile. Le glissa
 constat : aucune exécution `schedule` entre la n° 32 (samedi, 11:20) et la n° 33 (ce matin). Le déclencheur est pourtant correct : `cron: "17 6 * * 1"` est sur `main` depuis le 08/10. La documentation GitHub le prévoit : une exécution planifiée peut être abandonnée quand la plateforme est surchargée. La détection de la livraison DVF n’a pas manqué pour autant. L’exécution n° 34 de 11:12 a retéléchargé les sources et validé leurs empreintes : la livraison d’octobre n’était pas encore publiée à cette heure-là. Revérifier lundi 19/10 à 8h17.
 coincé : RAS
 `int_mutations_filtrees` calcule encore `mois`, `annee` et `trimestre`, alors qu'aucun modèle ne les lit plus depuis le rebranchement du glissant. Les retirer changerait sa structure et sa signature : statut à poser au J6, pas aujourd'hui.
+
+## 2026-10-13 - S9-J5 : accélération A, l'histoire de Le Héron
+"Go : J1 à J4 validés"
