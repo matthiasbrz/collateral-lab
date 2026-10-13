@@ -20,6 +20,7 @@ from collateral.config import (
     FICHIER_COG,
     FICHIER_COG_ANTERIEUR,
     MILLESIMES,
+    MOTIF_DVF,
     URL_COG,
     URL_COG_ANTERIEUR,
     URL_DVF,
@@ -133,6 +134,8 @@ def contenu_cog(donnees: bytes) -> bytes:
 def sources_manquantes(dossier: Path = DOSSIER_DATA) -> list[str]:
     """Rend la liste des sources absentes du dossier, vide si tout est present."""
     manquants = []
+    if not list(dossier.glob(MOTIF_DVF)):
+        manquants.append(f"fichiers DVF ({MOTIF_DVF})")
     for fichier in (FICHIER_COG, FICHIER_COG_ANTERIEUR):
         if not (dossier / fichier).exists():
             manquants.append(f"referentiel COG ({fichier})")
