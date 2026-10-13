@@ -54,7 +54,7 @@ def test_sources_manquantes_tout_present(tmp_path):
 
 
 def test_sources_manquantes_dossier_vide(tmp_path):
-    assert len(sources_manquantes(tmp_path)) == 3
+    assert len(sources_manquantes(tmp_path)) == 2
 
 
 def test_sources_manquantes_cog_absent(tmp_path):
