@@ -12,3 +12,5 @@ des modèles - ce dernier étant déjà public dans le dépôt.
 
 - 03/10/2026 : publication automatisée par la CI à chaque fusion dans `main` (`index.html`, `manifest.json`, `catalog.json`) ; branche `gh-pages` supprimée. 
 Contrôle refait sur `manifest.json` et `catalog.json` publiés : aucune occurence de Rouen, Le Havre, 76540 ni de chemin du runner.
+
+- 15/10/2026 : une publication se vérifie par le `generated_at` des artefacts publiés (`manifest.json`) ou par l'exécution CI, jamais par une page affichée, qui peut venir d'un cache. Fausse alerte du 14/10.
