@@ -40,3 +40,7 @@ MOTIF_DVF = "dvf_*.csv.gz"
 
 # --- Gouvernance ------------------------------------------------------------
 SEUIL_PUBLICATION = 5
+
+# -- Non-regression-----------------------------------------------------------
+# Relation dont la signature fait foi, comparee a docs/signature_attendue.txt.
+RELATION_SIGNEE = "dbt.mart_prix_m2_reference"

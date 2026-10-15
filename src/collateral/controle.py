@@ -133,13 +133,25 @@ def relations_communes(con, gauche: str = "main", droite: str = "dbt") -> list[s
 
 
 if __name__ == "__main__":
+    from collateral.config import RELATION_SIGNEE
     from collateral.db import connexion
 
     parser = argparse.ArgumentParser(description="Compare des relations entre deux schemas.")
     parser.add_argument("tables", nargs="*", help="defaut : toutes les relations communes")
     parser.add_argument("--gauche", default="main", help="schema de reference (defaut : main)")
     parser.add_argument("--droite", default="dbt", help="schema compare (defaut : dbt)")
+    parser.add_argument(
+        "--signature",
+        action="store_true",
+        help=f"affiche la signature de {RELATION_SIGNEE} et s'arrete",
+    )
     args = parser.parse_args()
+
+    if args.signature:
+        with connexion(lecture_seule=True) as con:
+            lignes, somme = signature(con, RELATION_SIGNEE)
+            print(lignes, somme)
+            sys.exit(0)
 
     with connexion(lecture_seule=True) as con:
         tables = args.tables or relations_communes(con, args.gauche, args.droite)
