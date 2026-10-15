@@ -374,12 +374,12 @@ temps passé : 1h45
 ## 2026-10-14 - S9-J6 : défendre l'étoile, et le contrôle S9
 Faits :
 Critère | Etat | Date
-Chaque PR lance lint, tests unitaires et `dbt build` sous Linux, avec les badges au README | tenu | 08/10. La qualité a été vue en rouge sur la PR n°48 ; la construction tourne sur chaque PR depuis le 03/10. Etat du badge construction ce matin : selon l'étape 1.
-Un modèle en étoile alimente les marts, signature inchangée | tenu | 12/10. `int_mutations_filtrees+1` ne rend que 2 lignes ; 10/10 identiques à l'étalon ; 11383 cellules, `10467969427157968192287`
+Chaque PR lance lint, tests unitaires et `dbt build` sous Linux, avec les badges au README | tenu | 08/10. La qualité a été vue en rouge sur la PR n°48 ; la construction tourne sur chaque PR depuis le 03/10. Etat du badge construction le 14/10 : vert, exécution n°46, puis publication de 15:58 après la PR n°62.
+Un modèle en étoile alimente les marts, signature inchangée | tenu | 12/10. `int_mutations_filtrees+1` ne rend que 2 lignes ; 10/10 identiques à l'étalon ; 11383 cellules, `104679694271579681982287`
 Le choix de chaque dimension est écrit et justifiable à l'oral | écrit le 09/10 et mis à l'état réel le 12/10 | oral aujourd'hui, 1min puis 1min40
 Accélération A, le snapshot | tenu | 13/10. La fusion est capturée de 2024 à 2026 ; le test est vert en local et en CI (catalogue de 16:58 avec le snapshot) ; 1h45 pour 1h30.
 Constats S9 :
-Constat | Date | Statut proposé | Raison ou suite
+Constat | Date | Statut | Raison ou suite
 `dim_commune` lit `source()` depuis marts/ | 10/10 | accepté | Sa forme définitive viendra avec l'historique (SCD2). Un `stg_` ajouté aujourd'hui serait à refaire.
 Orphelin `stg_mutations_filtrees` | 10/10 | soldé le 10/10 | Supprimé.
 Contrôle candidat : tables du schéma `dbt` contre le manifeste, snapshots compris | 10/10 | reporté en S10 | Avec l'incrémental, qui créera de nouvelles tables.
@@ -390,4 +390,6 @@ Contrôle DVF supprimé, test ajusté à tort | 13/10 | soldé le 13/10 | PR n°
 Deux écarts à l'attendu passés sans arrêt | 10/10 | soldé le 12/10 | Les `git status` annoncés tombent juste depuis le J4.
 Glissant et évolution non documentés dans le catalogue | 12/10 | reporté en S11 | Semaine de mise en présentation.
 Rejouer le passage 2024 corrompt l'historique du snapshot | 13/10 | accepté | La ligne est réservée aux bases neuves, le snapshot le dit, et le test "version à rebours" le détecte.
-Publication non faite après la PR n°61 | 13/10 | à établir | Voir l'étape 1.
+Publication non faite après la PR n°61 | 13/10 | soldé le 14/10 | Fausse alerte : catalogue lu en cache. L'exécution n°46, qui suit la PR n°61, était verte ; relu sans cache, le catalogue en ligne datait du 14/10 à 15:58 (`generated_at`).
+`dim_type_bien` lue seulement par quatre tests `relationships` | 14/10 | accepté | Contrat du domaine : ses lecteurs sont les tests qui le font respecter. Aucun mart n'a besoin de la joindre tant que sa clé se suffit à elle-même.
+`ordre_affichage` lue par rien | 14/10 | reporté au 20/10 | Supprimée au J5 avec les colonnes inertes : aucune couche d'affichage dans le projet, on l'ajoutera avec son consommateur. `docs/modelisation.md` l.43 la cite encore dans la raison de la dimension : à corriger dans le même commit.
