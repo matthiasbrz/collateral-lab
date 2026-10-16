@@ -16,4 +16,4 @@ SELECT
     nb_locaux_principaux,
     nb_pieces,
     nb_dependances
-FROM {{ ref('int_mutations_filtree') }}
+FROM {{ ref('int_mutations_filtrees') }}
