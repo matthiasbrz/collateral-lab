@@ -1,5 +1,5 @@
-# Juge le code, pas la donnee : lint, format et tests unitaires, sans aucun
-# telechargement. Distinct de publication.yml (decision du 08/10/2026) : un
+# Juge le code, pas la donnee : lint, format, tests unitaires, et analyse du projet dbt, 
+# sans aucun telechargement. Distinct de publication.yml (decision du 08/10/2026) : un
 # fichier, un badge. Quand une livraison DVF fera echouer la construction,
 # ce badge-ci restera vert et dira que le code n'y est pour rien.
 name: qualite-du-code
@@ -34,3 +34,7 @@ jobs:
 
       - name: Tests unitaires
         run: pytest
+
+      - name: Projet dbt
+        working-directory: transform
+        run: dbt parse --profiles-dir .
