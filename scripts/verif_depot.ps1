@@ -307,6 +307,12 @@ if ($Rapide) {
         Detail "ecart voulu : mettre a jour docs\graphe_attendu.txt dans le meme commit"
     }
 
+    # Relations orphelines : toute relation de la base doit figurer au manifeste
+    # que dbt build vient d'ecrire (17/10, constat du 10/10).
+    $orphelines = @(& python -m collateral.orphelines 2>&1)
+    if ($LASTEXITCODE -eq 0) { Ok "aucune relation orpheline" }
+    else { Echec "relations hors manifeste, ou controle illisible" ; Detail $orphelines }
+
     # Signature : preuve mecanique de non-regression (regle 9).
     # Une seule definition, collateral.controle.signature() (constat S8 n. 2, 15/10).
     $signatureObtenue = ((& python -m collateral.controle --signature 2>&1) -join '').Trim()
