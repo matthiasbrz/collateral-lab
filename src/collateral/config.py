@@ -44,3 +44,8 @@ SEUIL_PUBLICATION = 5
 # -- Non-regression-----------------------------------------------------------
 # Relation dont la signature fait foi, comparee a docs/signature_attendue.txt.
 RELATION_SIGNEE = "dbt.mart_prix_m2_reference"
+
+# --- Entrepot -----------------------------------------------------------------
+# Ce que dbt declare, reecrit par chaque commande dbt. Toute relation de la base
+# doit y figurer : controle des relations orphelines (17/10).
+MANIFESTE_DBT = RACINE / "transform" / "target" / "manifest.json"
