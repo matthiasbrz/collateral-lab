@@ -130,3 +130,6 @@ Pourquoi pas uniquement les directes ? Risque qu'une version tierce casse dbt en
 Genere le 01/10/2026 par : python -m pip freeze --exclude-editabl
 Usage : pip install -e "".[dev]"" -c constraints.txt
 A regenerer dans le meme commit que tout changement dans pyproject.toml.
+
+## Constat S11
+Le commentaire de la cible `dev` ("la chaîne Python et dbt coexistent", "bascule prévue au J5") est périmé depuis le 21/09.

@@ -70,5 +70,9 @@ Au 19/10, sur les données réelles :
  - Sur la base existante, la première construction a demandé un `--full-refresh` ; la signature du mart reste `11383 104679694271579681982287`.
  - Une seconde exécution sans changement passe par la branche incrémentale (requête de détection dans le SQL compilé, `delete` puis `insert` dans le SQL exécuté) : aucun fichier à retraiter, signature de `stg_mutations` identique avant et après.
  - `on_schema_change='fail'` vu en rouge : une colonne ajoutée fait échouer le modèle au lieu d'être ignorée.
+Au 19/10, sur une livraison simulée (`python -m collateral.simulation`) :
+ - 3 ventes retirées et 3 ajoutées en 2023, 3 valeurs foncières modifiées en 2024, 2025 intact ;
+ - l'incrémental (schéma `dbt`) est identique au full refresh (schéma `plein`) : 13/13 relations ;
+ - calibrage : `merge` sur `id_mutation` rend "non identique", `stg_mutations` en volumétrie : les ventes retirées survivent.
 
-Pas encore prouvé : l'exactitude face à une livraison qui ajoute, modifie et retire des ventes. C'est la simulation du J4 ; la CI, qui part d'une base neuve, ne la prouvera jamais.
+Pas encore prouvé : la vraie livraison d'octobre. Combien de fichiers changent, l'hypothèse de l'en-tête gzip, le déplacement des seuils et de la signature du mart. La CI, qui part d'une base neuve, ne parcourt jamais la branche incrémentale.
