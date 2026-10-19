@@ -2,10 +2,10 @@
 -- Verifie le 16/08/2026 : 0 mutation porte plusieurs valeurs foncieres distinctes.
 -- Aucun filtre metier ici : les exclusions sont dans int_mutations_filtrees.sql
 --
--- Incremental depuis le 17/10, conception : docs/incremental.md.
+-- Incremental depuis le 19/10, conception : docs/incremental.md.
 -- Un millesime se reconstruit en entier quand l'empreinte de son fichier change.
 -- Tout changement de ce SQL impose un --full-refresh : la detection voit les
--- fichiers, pas le code.
+-- fichiers, pas le code. Un commentaire n'en demande pas.
 
 {{ config(
     materialized='incremental',

@@ -3,7 +3,7 @@
 CREATE OR REPLACE TABLE raw_mutations AS
 SELECT 
     *,
-    parse_filename(filename) AS fichier, -- provenance de la ligne (17/10)
+    parse_filename(filename) AS fichier, -- provenance de la ligne (19/10)
     now() AS charge_le
 FROM read_csv(
     'data/raw/dvf_*.csv.gz',
