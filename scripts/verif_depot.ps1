@@ -189,10 +189,13 @@ $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '__pycache
 $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '.ruff_cache' -ErrorAction SilentlyContinue
 $parasites += Get-ChildItem -Path $racine -Recurse -Directory -Filter '.pytest_cache' -ErrorAction SilentlyContinue
 $parasites = @($parasites | Where-Object { $_ -and $_.FullName -notlike "*\.venv\*" })
-# Bases DuckDB egarees : une seule est legitime.
+# Bases DuckDB egarees : une seule est legitime, avec son WAL. Un WAL contient
+# des ecritures validees pas encore reportees dans la base : le supprimer les
+# perd, DuckDB le rejoue a la prochaine ouverture (constat du 15/10).
 $baseLegitime = Join-Path $racine 'collateral.duckdb'
+$legitimes = @($baseLegitime, "$baseLegitime.wal")
 $parasites += Get-ChildItem -Path $racine -Recurse -Include '*.duckdb', '*.duckdb.wal' -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -ne $baseLegitime }
+    Where-Object { $_.FullName -notin $legitimes }
 
 if ($parasites) {
     if ($Nettoyer) {
