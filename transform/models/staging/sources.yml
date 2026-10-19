@@ -32,3 +32,15 @@ sources:
         description: >
           Code officiel geographique, millesime 2024 : le dernier ou Le Heron
           (76358) est une commune. Lu par le snapshot seul.
+      - name: raw_fichiers
+        description: >
+          Une ligne par fichier DVF charge : millesime et empreinte SHA-256.
+          Lu par stg_mutations pour savoir quels millesimes reconstruire.
+        columns:
+          - name: millesime
+            description : >
+              La conception suppose un fichier par millesime, et une cle jamais
+              nulle : un millesime nul ne serait jamais remplace, il s'empilerait.
+            data_tests:
+              - unique
+              - not_null

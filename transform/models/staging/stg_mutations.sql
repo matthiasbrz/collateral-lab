@@ -1,8 +1,38 @@
 -- Grain : une ligne = une mutation (id_mutation)
 -- Verifie le 16/08/2026 : 0 mutation porte plusieurs valeurs foncieres distinctes.
 -- Aucun filtre metier ici : les exclusions sont dans int_mutations_filtrees.sql
+--
+-- Incremental depuis le 17/10, conception : docs/incremental.md.
+-- Un millesime se reconstruit en entier quand l'empreinte de son fichier change.
+-- Tout changement de ce SQL impose un --full-refresh : la detection voit les
+-- fichiers, pas le code.
 
-WITH entete AS (
+{{ config(
+    materialized='incremental',
+    incremental_strategy='delete+insert',
+    unique_key='millesime',
+    on_schema_change='fail'
+) }}
+
+WITH a_traiter AS (
+    -- Fichiers dont l'empreinte differe de celle dont leur millesime a ete
+    -- construit, ou dont le millesime manque. Premiere construction : tous.
+    SELECT f.fichier, f.millesime, f.empreinte
+    FROM {{ source('brut', 'raw_fichiers') }} f
+    {% if is_incremental() %}
+    LEFT JOIN (SELECT DISTINCT millesime, empreinte_source FROM {{ this }}) t
+        ON t.millesime = f.millesime
+    WHERE t.empreinte_source IS DISTINCT FROM f.empreinte
+    {% endif %}
+),
+
+lignes AS (
+    SELECT r.*, a.millesime, a.empreinte AS empreinte_source
+    FROM {{ source('brut', 'raw_mutations') }} r
+    JOIN a_traiter a USING (fichier)
+),
+
+entete AS (
     SELECT
         id_mutation,
         min(date_mutation)              AS date_mutation,
@@ -13,8 +43,10 @@ WITH entete AS (
         count(DISTINCT code_commune)    AS nb_communes,
         count(DISTINCT nature_mutation) AS nb_natures,
         count(DISTINCT date_mutation)   AS nb_dates,
-        count(*)                        AS nb_lignes_source
-    FROM {{ source('brut', 'raw_mutations') }}
+        count(*)                        AS nb_lignes_source,
+        min(millesime)                  AS millesime,
+        min(empreinte_source)           AS empreinte_source
+    FROM lignes
     GROUP BY id_mutation
 ),
 
@@ -28,7 +60,7 @@ locaux AS (
         type_local,
         surface_reelle_bati,
         nombre_pieces_principales
-    FROM {{ source('brut', 'raw_mutations') }}
+    FROM lignes
     WHERE type_local IS NOT NULL
 ),
 
