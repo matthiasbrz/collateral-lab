@@ -38,7 +38,7 @@ sources:
           Lu par stg_mutations pour savoir quels millesimes reconstruire.
         columns:
           - name: millesime
-            description : >
+            description: >
               La conception suppose un fichier par millesime, et une cle jamais
               nulle : un millesime nul ne serait jamais remplace, il s'empilerait.
             data_tests:

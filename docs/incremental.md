@@ -1,7 +1,6 @@
 # Incrémental : conception
 
-Conception du 16/10/2026, construite le 17/10 : voir
-"Ce qui est prouvé"
+Conception du 16/10/2026, construite le 19/10 : voir "Ce qui est prouvé.
 
 ## Ce qu'une livraison change
 Les fichiers mis a disposition font l’objet d’une mise a jour semestrielle, en avril et en octobre.
@@ -58,13 +57,14 @@ C'est un changement de définition (la règle 6), donc de signature. Il se fera 
 Une fois les bornes par millésime en place, la chaîne devient locale jusqu'à `int_mutations_filtrees`, et l'incrémental pourra y descendre. On le décidera à ce moment-là, pas avant.
 
 ## Limites de cette conception
-- Une modification du SQL de `stg_mutations` ne déclenche rien : la détection porte sur les fichiers, pas sur le code. Les millésimes déjà construits garderaient l'ancienne logique. Tout changement de ce modèle impose un `--full-refresh`, dans la même séance.
+- Une modification de la logique de `stg_mutations` ne déclenche rien : la détection porte sur les fichiers, pas sur le code. Les millésimes déjà construits garderaient l'ancienne logique. Tout changement de ce modèle impose un `--full-refresh`, dans la même séance ; un commentaire, non.
 - Un millésime retiré de la configuration (`MILLESIMES`) n'est pas supprimé : `delete+insert` ne touche que les clés présentes dans le lot. Il faut alors un `--full-refresh`.
 
 ## Ce qu'on n'attend pas de l'incrémental
 Aucun gain de temps à cette volumétrie, seulement l'exactitude. Si la vraie livraison change tous les fichiers, tout sera reconstruit : la décision de garder l'incrémental se prendra sur cette mesure.
 
-## Ce qui est prouvé au 17/10
+## Ce qui est prouvé
+Au 19/10, sur les données réelles :
  - Construit : `raw_fichiers`, la provenance de chaque ligne dans `raw_mutations`, `stg_mutations` en `delete+insert` par millésime.
  - Les empreintes de `raw_fichiers` sont celles de `docs/empreintes_attendues.txt`, pour les trois fichiers.
  - Sur la base existante, la première construction a demandé un `--full-refresh` ; la signature du mart reste `11383 104679694271579681982287`.
