@@ -4,6 +4,7 @@ Aucune valeur litterale ne doit subsister ailleurs dans le code Python.
 Les litteraux des fichiers SQL ne sont pas couverts : voir l'issue ouverte.
 """
 
+import tempfile
 from pathlib import Path
 
 
@@ -49,3 +50,8 @@ RELATION_SIGNEE = "dbt.mart_prix_m2_reference"
 # Ce que dbt declare, reecrit par chaque commande dbt. Toute relation de la base
 # doit y figurer : controle des relations orphelines (17/10).
 MANIFESTE_DBT = RACINE / "transform" / "target" / "manifest.json"
+
+# --- Simulation
+# Hors du depot : aucune donnee simulee ne peut y etre versionnee (regle 4), et
+# la base de simulation echappe aux controles de la base principale (19/10).
+DOSSIER_SIMULATION = Path(tempfile.gettempdir()) / "collateral-simulation"

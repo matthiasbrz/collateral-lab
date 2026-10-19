@@ -9,3 +9,16 @@ collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient au
       # directe des deux sorties. Bascule prevue au J5.
       schema: dbt
       threads: 4
+    # Base de simulation, hors depot : COLLATERAL_SIMULATION est fixee par
+    # python -m collateral.simulation (19/10). Sans elle, ces cibles echouent
+    # au lieu de creer une base dans le depot.
+    simulation:
+      type: duckdb
+      path: "{{ env_var('COLLATERAL_SIMULATION') }}"
+      schema: dbt
+      threads: 4
+    simulation_plein:
+      type: duckdb
+      path: "{{ env_var('COLLATERAL_SIMULATION') }}"
+      schema: plein
+      threads: 4
