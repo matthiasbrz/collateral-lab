@@ -412,3 +412,6 @@ Ce que fait `on_schema_change` par défaut : `on_schema_change='ignore'` une nou
 ## 2026-10-17 - S10-J3 : D'abord les tables orphelines, puis `stg_mutations` en incrémental
 fait : PR n°69 (17/10), contrôle des relations orphelines : premier passage sans orpheline sur ce PC, vu en rouge sur `dbt.temoin_orpheline` ; PR n°70 (19/10), `stg_mutations` en `delete+insert` par millésime : un `--full-refresh` sur la base existante, signature du mart inchangée, seconde exécution sans fichier à retraiter, `on_schema_change` vu en rouge (colonne témoin) ; preuves datées dans `docs/incremental.md` ; 1h40 (17/10 et 19/10).
 constat : Environnement existant, deux gestes de plus | 19/10 | reporté en S11 | Sur l'autre PC, après le `git pull` : un `dbt build --full-refresh --select stg_mutations+`, car la table existante ferait échouer la branche incrémentale, puis le premier passage du contrôle des orphelines. A écrire avec la procédure de mise à jour d'un environnement existant.
+
+## 2026-10-19 - S10-J4 : le passage du lundi, puis la livraison simulée.
+fait : PR n°72, construction-et-publication #71 en vert ; PR n°73, constat WAL soldé, simulation nouvelle livraison effectuée avec 13/13 relations identiques ; htemps passé : 1h26
