@@ -1,7 +1,7 @@
 # Incrémental : conception
 
-Conception du 16/10/2026, complétée le même jour ; rien n'est encore construit.
-Le J3 dira ce qui est prouvé, et ce qui ne l'est pas encore.
+Conception du 16/10/2026, construite le 17/10 : voir
+"Ce qui est prouvé"
 
 ## Ce qu'une livraison change
 Les fichiers mis a disposition font l’objet d’une mise a jour semestrielle, en avril et en octobre.
@@ -63,3 +63,12 @@ Une fois les bornes par millésime en place, la chaîne devient locale jusqu'à 
 
 ## Ce qu'on n'attend pas de l'incrémental
 Aucun gain de temps à cette volumétrie, seulement l'exactitude. Si la vraie livraison change tous les fichiers, tout sera reconstruit : la décision de garder l'incrémental se prendra sur cette mesure.
+
+## Ce qui est prouvé au 17/10
+ - Construit : `raw_fichiers`, la provenance de chaque ligne dans `raw_mutations`, `stg_mutations` en `delete+insert` par millésime.
+ - Les empreintes de `raw_fichiers` sont celles de `docs/empreintes_attendues.txt`, pour les trois fichiers.
+ - Sur la base existante, la première construction a demandé un `--full-refresh` ; la signature du mart reste `11383 104679694271579681982287`.
+ - Une seconde exécution sans changement passe par la branche incrémentale (requête de détection dans le SQL compilé, `delete` puis `insert` dans le SQL exécuté) : aucun fichier à retraiter, signature de `stg_mutations` identique avant et après.
+ - `on_schema_change='fail'` vu en rouge : une colonne ajoutée fait échouer le modèle au lieu d'être ignorée.
+
+Pas encore prouvé : l'exactitude face à une livraison qui ajoute, modifie et retire des ventes. C'est la simulation du J4 ; la CI, qui part d'une base neuve, ne la prouvera jamais.

@@ -35,3 +35,11 @@ models:
           Surface batie des locaux principaux, dependances exclues.
           Convention : la dependance entre au numerateur du prix du m2,
           pas au denominateur.
+      - name: millesime
+        description: >
+          Annee du fichier DVF d'origine. Cle de remplacement de l'incremental :
+          un millesime se reconsruit en entier (docs/incremental.md).
+      - name: empreinte_source
+        description: >
+          SHA-256 du fichier dont la ligne est issue, au moment de sa construction.
+          Un millesime dont le fichier change d'empreinte est reconstruit.
