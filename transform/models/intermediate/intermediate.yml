@@ -19,11 +19,6 @@ models:
         data_tests: [not_null]
       - name: surface_bati
         data_tests: [not_null]
-      - name: mois
-        description: >
-          Premier jour du mois de la mutation. Cle temporelle des agregats
-          glissants sur 12 mois.
-        data_tests: [not_null]
       - name: type_local
         data_tests:
           - not_null
