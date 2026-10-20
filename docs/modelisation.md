@@ -14,7 +14,7 @@
 `id_mutation` : Dimension dégénérée
 `date_mutation`, `code_commune`, `type_local` : Clés vers `dim_temps`, `dim_commune`, `dim_type_bien` 
 `valeur_fonciere`, `surface_bati`, `prix_m2`, `nb_locaux_principaux`, `nb_pieces`, `nb_dependances` : Mesures
-`mois`, `annee`, `trimestre` : Attributs de `dim_temps`. Ils restent calculés dans `int_mutations_filtrees`, aucun modèle ne les lit depuis le 12/10.
+`mois`, `annee`, `trimestre` : Attributs de `dim_temps`. Retirés d'`int_mutations_filtrees` le 20/10 : aucun modèle ne les y lisait depuis le 12/10.
 `code_departement` : Attribut déjà présent dans `dim_commune`
 `nature_mutation`, `nb_communes`, `nb_natures`, `nb_types_principaux` : Constantes après filtrage (règles 1, 1 bis, 2, 4) : hors de l'étoile
 `nb_dates`, `nb_lignes_source` : Traçabilité de l'entonnoir : hors de l'étoile
@@ -40,7 +40,7 @@
 ### Type de bien : Dimension
  - Ce que dit le SQL : deux valeurs ; clé de regroupement partout ; liste `['Maison', 'Appartement']` répétée dans trois tests.
  - Décision : dimension
- - Raison : La liste autorisée devient une donnée, avec son ordre d’affichage. Les trois tests sont devenus des `relationships` le 12/10. La liste reste écrite dans la règle 4 et dans le test d'entonnoir. Les `relationships` garantissent que les faits ne sortent pas de la dimension.
+ - Raison : La liste autorisée devient une donnée. Son ordre d'affichage, que rien ne lisait, est retiré le 20/10 : il reviendra avec son consommateur. Les trois tests sont devenus des `relationships` le 12/10. La liste reste écrite dans la règle 4 et dans le test d'entonnoir. Les `relationships` garantissent que les faits ne sortent pas de la dimension.
 
 ### Les trois mesures qu'aucun mart ne lit
  - `nb_locaux_principaux`, `nb_pieces`, `nb_dependances` : dans la table de faits, raison : métriques associées à une observation de la table de faits.
