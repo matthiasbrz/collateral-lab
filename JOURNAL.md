@@ -331,7 +331,7 @@ La cascade du rituel, `sql/analyses/`, le chiffre du premier écran à la livrai
 
 ## 2026-10-08 - S9-J1 : Deux demandes, puis une CI qui juge le code
 Constats :
-N °| Constat | Statut | Raison
+n °| Constat | Statut | Raison
 1 | Signature non comparée en CI | accepté | Décision du 06/10. Le récit et la fiche disent "reconstruite et testée sous Linux", pas "même résultat".
 2 | Définition de la signature dupliquée | reporté au 15/10 | Ce n'est plus un "peut-être" : il existe trois définitions actives, identiques au 08/10. `controle.signature()` (`src/collateral/controle.py`, l. 33), `verif_depot.ps1` l. 305 et `verif_clone.ps1` l. 175. Les deux scripts n'appellent pas la fonction qui existe déjà : ils devront l'appeler.
 3 | `Etape` ne voit pas les erreurs PowerShell | accepté | La garde `Test-Path $dbt` du 02/10 couvre le seul cas rencontré. Le cas général reste une issue.
