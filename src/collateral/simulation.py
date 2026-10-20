@@ -11,8 +11,8 @@ Une seule commande, rejouable a chaque changement (regle 12) :
 4. construit l'incremental (schema dbt) puis un full refresh (schema plein) ;
 5. compare les deux, relation par relation. Code retour 0 si tout est identique.
 
-Seul ce script est versionne : la livraison simulee n'existe que le temps d'une
-execution, dans DOSSIER_SIMULATION.
+Seul ce script est versionne : la livraison simulee vit hors depot, dans
+DOSSIER_SIMULATION, jusqu'a l'execution suivante, qui la recree.
 """
 
 import csv
@@ -75,7 +75,7 @@ def majorer(valeur: str) -> str:
     """+10 %, dans le format du fichier : un format change ferait changer le type infere."""
     nombre = float(valeur) * 1.1
     if "." in valeur:
-        return f"{nombre: .{len(valeur.split('.')[1])}f}"
+        return f"{nombre:.{len(valeur.split('.')[1])}f}"
     return str(round(nombre))
 
 
