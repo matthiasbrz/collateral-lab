@@ -315,7 +315,7 @@ Le test en rouge a d'abord attrapé une vérification non branchée : altérée,
 ## 2026-10-07 - S8-J6 : La démonstration, et le contrôle S8
 Point de contrôle S8 :
 Un clone installe exactement les versions épinglées - tenu, 01/10. `constraints.txt` ; `verif_clone.ps1` affiche `dbt=1.12.4`.
-Chaque fusion reconstruit la chaîne sous Linux et republie le catalogue - tenu, 03/10. Runs n° 3, 4 et 7 ; `generated_at`.
+Chaque fusion reconstruit la chaîne sous Linux et republie le catalogue - tenu, 03/10. Runs n°3, 4 et 7 ; `generated_at`.
 La CI exécute les commandes mêmes du README - tenu, 03/10. `bash -ex scripts/lancer.txt`, contrôlé contre le README depuis le 02/10.
 Une nouvelle livraison DVF devient un échec explicite - tenu, 05/10. Vu en rouge sur un fichier déjà présent ; confirmé par la CI de la PR sur un téléchargement neuf.
 Un collègue a lu le README - tenu, 05/10. 4 min 15, trois réponses, une erreur de nom de script.
@@ -326,19 +326,19 @@ La définition de la signature est peut-être dupliquée entre `verif_depot` et 
 `Etape` ne détecte pas les erreurs PowerShell, seulement le codes retour des programmes externes (02/10).
 La ligne de versions de `verif_clone` n'est pas comparée à `constraints.txt`.
 Les noms `verif_depot` et `verif_clone` se confondent - relevé le 05/10.
-La procédure de publication manuelle du 15/09, à dater comme historique ; la cause de la première tentative du run n° 3.
+La procédure de publication manuelle du 15/09, à dater comme historique ; la cause de la première tentative du run n°3.
 La cascade du rituel, `sql/analyses/`, le chiffre du premier écran à la livraison d'octobre.
 
 ## 2026-10-08 - S9-J1 : Deux demandes, puis une CI qui juge le code
 Constats :
-N° | Constat | Statut | Raison
+n °| Constat | Statut | Raison
 1 | Signature non comparée en CI | accepté | Décision du 06/10. Le récit et la fiche disent "reconstruite et testée sous Linux", pas "même résultat".
 2 | Définition de la signature dupliquée | reporté au 15/10 | Ce n'est plus un "peut-être" : il existe trois définitions actives, identiques au 08/10. `controle.signature()` (`src/collateral/controle.py`, l. 33), `verif_depot.ps1` l. 305 et `verif_clone.ps1` l. 175. Les deux scripts n'appellent pas la fonction qui existe déjà : ils devront l'appeler.
 3 | `Etape` ne voit pas les erreurs PowerShell | accepté | La garde `Test-Path $dbt` du 02/10 couvre le seul cas rencontré. Le cas général reste une issue.
 4 | Versions de `verif_clone` non comparées à `constraints.txt` | accepté | L'installation se fait déjà sous `-c constraints.txt`. La ligne affichée n'est qu'une information, pas une garantie.
 5 | `verif_depot` et `verif_clone` confondus | reporté au 22/10 | C'est le seul constat venu d'un tiers. Un renommage touche le README et les deux scripts : il a sa place dans la semaine de mise en présentation.
 6 | Publication manuelle du 15/09 à dater | soldé aujourd'hui | ligne datée du 03/10 ajoutée à `docs/gouvernance.md` (d5c936a)
-7 | Cause de la 1ere tentative du run n° 3 | soldé | Aucun échec : la première tentative est verte, c'était une relance manuelle.
+7 | Cause de la 1ere tentative du run n°3 | soldé | Aucun échec : la première tentative est verte, c'était une relance manuelle.
 
 CI qualité distincte de la construction : lint, format et 31 tests unitaires à chaque PR, verdict en ~25s. Vue en rouge sur la PR n°48 (format) pendant que la construction restait verte : chaque workflow a son verdict.
 Publication externe non visée ; positionnement 2027 traité à l'EAEC. Deux badges verts en tête du README.
@@ -360,7 +360,7 @@ La règle 13 ne consiste pas à lancer git status, mais à le lire en le compara
 
 ## 2026-10-12 - S9-J4 : les marts lisent l'étoile
 fait : branche `feat/etoile-marts`. Tous les marts lisent l’étoile. Le glissant lit `fct_mutations` et `dim_temps`, et la comparaison donne 10/10 avec les signatures attendues (glissant, évolution, mart). `int_mutations_filtrees` n’a plus qu’un enfant. dbt ls ne rend que 2 lignes. L’étoile est dans le catalogue en ligne. La comparaison est devenue une commande avant sa troisième exécution. Les trois listes sont devenues des `relationships` : toujours 58 tests, tous verts. Le schéma `avant` est supprimé
-constat : aucune exécution `schedule` entre la n° 32 (samedi, 11:20) et la n° 33 (ce matin). Le déclencheur est pourtant correct : `cron: "17 6 * * 1"` est sur `main` depuis le 08/10. La documentation GitHub le prévoit : une exécution planifiée peut être abandonnée quand la plateforme est surchargée. La détection de la livraison DVF n’a pas manqué pour autant. L’exécution n° 34 de 11:12 a retéléchargé les sources et validé leurs empreintes : la livraison d’octobre n’était pas encore publiée à cette heure-là. Revérifier lundi 19/10 à 8h17.
+constat : aucune exécution `schedule` entre la n°32 (samedi, 11:20) et la n°33 (ce matin). Le déclencheur est pourtant correct : `cron: "17 6 * * 1"` est sur `main` depuis le 08/10. La documentation GitHub le prévoit : une exécution planifiée peut être abandonnée quand la plateforme est surchargée. La détection de la livraison DVF n’a pas manqué pour autant. L’exécution n°34 de 11:12 a retéléchargé les sources et validé leurs empreintes : la livraison d’octobre n’était pas encore publiée à cette heure-là. Revérifier lundi 19/10 à 8h17.
 coincé : RAS
 `int_mutations_filtrees` calcule encore `mois`, `annee` et `trimestre`, alors qu'aucun modèle ne les lit plus depuis le rebranchement du glissant. Les retirer changerait sa structure et sa signature : statut à poser au J6, pas aujourd'hui.
 
@@ -395,12 +395,12 @@ Publication non faite après la PR n°61 | 13/10 | soldé le 14/10 | Fausse aler
 `ordre_affichage` lue par rien | 14/10 | reporté au 20/10 | Supprimée au J5 avec les colonnes inertes : aucune couche d'affichage dans le projet, on l'ajoutera avec son consommateur. `docs/modelisation.md` l.43 la cite encore dans la raison de la dimension : à corriger dans le même commit.
 
 ## 2026-10-15 - S10-J1 : Solder, et une seule signature
-fait : la dette soldée (PR n° 63) ; le constat S8 n° 2 soldé le 15/10 (PR n° 64) ; arrêt à l’étape 3.3, fichier v_commune_2024.csv manquant (dev entre deux PCs entre les deux jours) ; la livraison DVF, toujours absente le 15/10 vers 20:05 : le clone neuf a retéléchargé les sources et les empreintes sont conformes ; 1h15
-constat : Un environnement existant ne reçoit ni la nouvelle source ni le passage 2024 du snapshot | 15/10 | reporté en S11 | Sur cette machine, aucune exécution dbt entre le 12/10 et le 15/10 au soir : git pull a apporté les PR n° 58 et 59, pas le fichier ni l’historique. load l’a signalé, puis transition_le_heron. Réparé le 15/10 : téléchargement, suppression du snapshot, passage 2024, rituel vert. Aucune donnée perdue. Le README ne décrit que le clone neuf : la mise à jour d’un environnement existant reste à écrire, avec le « que faire » que le test du snapshot ne donne pas. ; -Nettoyer supprime le WAL de la base légitime | 15/10 | reporté au 19/10 | Le filtre des bases égarées n’exclut que collateral.duckdb. Un WAL laissé par une session interrompue contient des écritures validées : le supprimer les perd, et l’historique du snapshot ne se reconstruit pas par dbt build. D’ici là, rituel sans -Nettoyer.
-la PR n° 64 a été fusionnée à 20:04, avant le verdict du clone neuf et avant le rouge.
+fait : la dette soldée (PR n°63) ; le constat S8 n°2 soldé le 15/10 (PR n°64) ; arrêt à l’étape 3.3, fichier v_commune_2024.csv manquant (dev entre deux PCs entre les deux jours) ; la livraison DVF, toujours absente le 15/10 vers 20:05 : le clone neuf a retéléchargé les sources et les empreintes sont conformes ; 1h15
+constat : Un environnement existant ne reçoit ni la nouvelle source ni le passage 2024 du snapshot | 15/10 | reporté en S11 | Sur cette machine, aucune exécution dbt entre le 12/10 et le 15/10 au soir : git pull a apporté les PR n°58 et 59, pas le fichier ni l’historique. load l’a signalé, puis transition_le_heron. Réparé le 15/10 : téléchargement, suppression du snapshot, passage 2024, rituel vert. Aucune donnée perdue. Le README ne décrit que le clone neuf : la mise à jour d’un environnement existant reste à écrire, avec le « que faire » que le test du snapshot ne donne pas. ; -Nettoyer supprime le WAL de la base légitime | 15/10 | reporté au 19/10 | Le filtre des bases égarées n’exclut que collateral.duckdb. Un WAL laissé par une session interrompue contient des écritures validées : le supprimer les perd, et l’historique du snapshot ne se reconstruit pas par dbt build. D’ici là, rituel sans -Nettoyer.
+la PR n°64 a été fusionnée à 20:04, avant le verdict du clone neuf et avant le rouge.
 
 ## 2026-10-16 - S10-J2 : Parser à chaque PR, concevoir l'incrémental
-fait : PR n° 66, dbt parse dans la vérification qualité : vu en rouge sur un ref() vers un modèle inexistant (étape « Projet dbt », 31 s, code 2, fusion bloquée), annulé, fusionné à 08:30 ; livraison : page du jeu géolocalisé consultée à 08:31, la mise à jour du 16/10 porte sur la documentation, fichiers servis datés du 18/05/2026, pas de livraison d’octobre ; PR n° 67, docs/incremental.md, complété le jour même ; 56 min.
+fait : PR n°66, dbt parse dans la vérification qualité : vu en rouge sur un ref() vers un modèle inexistant (étape « Projet dbt », 31 s, code 2, fusion bloquée), annulé, fusionné à 08:30 ; livraison : page du jeu géolocalisé consultée à 08:31, la mise à jour du 16/10 porte sur la documentation, fichiers servis datés du 18/05/2026, pas de livraison d’octobre ; PR n°67, docs/incremental.md, complété le jour même ; 56 min.
 constat : `docs/architecture.md` mêle l'historique daté et des sections non datées devenues fausse | 16/10 | reporté en S11 | "Ce qui reste côté Python après bascule" cite `sql/01_raw_communes.sql`, qui n'existe plus ; "Ecarté d'ici le 10 octobre" a passé sa date et range encore les snapshots parmi les renoncements, alors que `snap_cog_communes` tourne depuis le 13/10 ; "Contrôle freshness" parle de `build.py`. Semaine de mise en présentation.
 demain : les tables orphelines d'abord, puis le modèle incrémental, construit exactement comme le document le décrit.
 Documentation dbt : quatre questions à résoudre par écrit :
@@ -414,4 +414,6 @@ fait : PR n°69 (17/10), contrôle des relations orphelines : premier passage sa
 constat : Environnement existant, deux gestes de plus | 19/10 | reporté en S11 | Sur l'autre PC, après le `git pull` : un `dbt build --full-refresh --select stg_mutations+`, car la table existante ferait échouer la branche incrémentale, puis le premier passage du contrôle des orphelines. A écrire avec la procédure de mise à jour d'un environnement existant.
 
 ## 2026-10-19 - S10-J4 : le passage du lundi, puis la livraison simulée.
-fait : PR n°72, construction-et-publication #71 en vert ; PR n°73, constat WAL soldé, simulation nouvelle livraison effectuée avec 13/13 relations identiques ; htemps passé : 1h26
+fait : passage planifié soldé, n°71 de construction-et-publication, déclenchée par `schedule`, verte, à 15:26 (13:26 UTC) sur `c7030cd` : empreintes conformes, pas de livraison d'octobre à cette heure-là ; PR n°71, corrections du J3 ; PR n°72, constat WAL du 15/10 soldé, vu sur un WAL vide factice ; PR n°73, `python -m collateral.simulation` : incrémental identique au full refresh, 13/13 et code 0, calibrage `merge` sur `id_mutation` 4/13 et code 1 ; 1h26.
+constat : Le passage planifié est en retard, pas abandonné | 19/10 | soldé le 19/10, sans changement | Pour une cron à 06:17 UTC : n°37 le 12/10 à 17h35 (15:35 UTC), n°71 le 19/10 à 15:26 (13:26 UTC), sept à neuf heures de retard. Le constat du 12/10 concluait à un abandon : il a été écrit avant la n°37. La détection est hebdomadaire et ce retard ne la fait pas manquer : la cron reste. Un abandon ne se conclut qu'après la fin du lundi.
+constat : Le commentaire de la cible `dev` de `transform/profiles.yml` est périmé depuis le 21/09 | 19/10 | reporté en S11 | "La chaîne Python et dbt coexistent", "bascule prévue au J5" : la chaîne Python a été supprimée le 21/09. Même passe que le constat `docs/architecture.md` du 16/10, qui y gagne deux erreurs de la section des dépendances figées : `--exclude-editabl`, `"".[dev]""`.
