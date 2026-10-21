@@ -331,7 +331,7 @@ La cascade du rituel, `sql/analyses/`, le chiffre du premier écran à la livrai
 
 ## 2026-10-08 - S9-J1 : Deux demandes, puis une CI qui juge le code
 Constats :
-N °| Constat | Statut | Raison
+N° | Constat | Statut | Raison
 1 | Signature non comparée en CI | accepté | Décision du 06/10. Le récit et la fiche disent "reconstruite et testée sous Linux", pas "même résultat".
 2 | Définition de la signature dupliquée | reporté au 15/10 | Ce n'est plus un "peut-être" : il existe trois définitions actives, identiques au 08/10. `controle.signature()` (`src/collateral/controle.py`, l. 33), `verif_depot.ps1` l. 305 et `verif_clone.ps1` l. 175. Les deux scripts n'appellent pas la fonction qui existe déjà : ils devront l'appeler.
 3 | `Etape` ne voit pas les erreurs PowerShell | accepté | La garde `Test-Path $dbt` du 02/10 couvre le seul cas rencontré. Le cas général reste une issue.
@@ -419,5 +419,5 @@ constat : Le passage planifié est en retard, pas abandonné | 19/10 | soldé le
 constat : Le commentaire de la cible `dev` de `transform/profiles.yml` est périmé depuis le 21/09 | 19/10 | reporté en S11 | "La chaîne Python et dbt coexistent", "bascule prévue au J5" : la chaîne Python a été supprimée le 21/09. Même passe que le constat `docs/architecture.md` du 16/10, qui y gagne deux erreurs de la section des dépendances figées : `--exclude-editabl`, `"".[dev]""`.
 
 ## 2026-10-20 - S10-J5 : les colonnes inertes, et le chapitre 1
-fait : PR n°77, colonnes inertes retirées : `mois`, `annee`, `trimestre` d'`int_mutations_filtrees` (constat du 12/10 soldé) et `ordre_affichage` de `dim_type_bien` (constat du 14/10 soldé) ; aucun lecteur, prouvé avant suppression par `dbt ls` et `git grep` ; contre l'étalon `avant` : 12/14 identiques, les deux écarts sont les colonnes retirées, colonnes restantes de même signature ; mart `11383 104679694271579681982287` ; graphe `13 1 60` ; trois lignes hors dépôt ; 21/10 midi, Reis & Housley ch. 1 lu en entier, trois lignes hors dépôt ; 2h10.
+fait : PR n°77, colonnes inertes retirées : `mois`, `annee`, `trimestre` d'`int_mutations_filtrees` (constat du 12/10 soldé) et `ordre_affichage` de `dim_type_bien` (constat du 14/10 soldé) ; aucun lecteur, prouvé avant suppression par `dbt ls` et `git grep` ; contre l'étalon `avant` : 12/14 identiques, les deux écarts sont les colonnes retirées, colonnes restantes de même signature ; mart `11383 104679694271579681982287` ; graphe `13 1 60` ; 21/10 midi, Reis & Housley ch. 1 lu en entier, trois lignes hors dépôt ; 2h10.
 constat : `docs/modelisation.md` l. 25 annonce encore le snapshot comme traitement prévu | 20/10 | reporté en S11 | Le snapshot tourne depuis le 13/10, mais `dim_commune` lit toujours le COG 2026 : l'écart Le Héron reste toléré (WARN). Avec `sql/analyses/05_matrice_type_annee.sql` l. 13-14, où `volume_2024` et `volume_2025` comptent 2023 : trace morte, mais publique. Même passe que les constats du 16/10 et du 19/10.
