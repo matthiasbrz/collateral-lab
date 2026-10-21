@@ -133,7 +133,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S7 | ~5 h | pause | ~5 h | 7 h |
 | S8 | ~6 h | pause | ~6 h | 10 h |
 | S9 | ~7 h 30 | pause | ~7 h 30 | 10 h |
-| 10 | ~9 h | pause | ~9 h | 10 h |
+| S10 | ~9 h | arrêté | ~9 h | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -417,26 +417,27 @@ constat : Environnement existant, deux gestes de plus | 19/10 | reporté en S11 
 ## 2026-10-19 - S10-J4 : le passage du lundi, puis la livraison simulée.
 fait : passage planifié soldé, n°71 de construction-et-publication, déclenchée par `schedule`, verte, à 15:26 (13:26 UTC) sur `c7030cd` : empreintes conformes, pas de livraison d'octobre à cette heure-là ; PR n°71, corrections du J3 ; PR n°72, constat WAL du 15/10 soldé, vu sur un WAL vide factice ; PR n°73, `python -m collateral.simulation` : incrémental identique au full refresh, 13/13 et code 0, calibrage `merge` sur `id_mutation` 4/13 et code 1 ; 1h26.
 constat : Le passage planifié est en retard, pas abandonné | 19/10 | soldé le 19/10, sans changement | Pour une cron à 06:17 UTC : n°37 le 12/10 à 17h35 (15:35 UTC), n°71 le 19/10 à 15:26 (13:26 UTC), sept à neuf heures de retard. Le constat du 12/10 concluait à un abandon : il a été écrit avant la n°37. La détection est hebdomadaire et ce retard ne la fait pas manquer : la cron reste. Un abandon ne se conclut qu'après la fin du lundi.
-constat : Le commentaire de la cible `dev` de `transform/profiles.yml` est périmé depuis le 21/09 | 19/10 | reporté en S11 | "La chaîne Python et dbt coexistent", "bascule prévue au J5" : la chaîne Python a été supprimée le 21/09. Même passe que le constat `docs/architecture.md` du 16/10, qui y gagne deux erreurs de la section des dépendances figées : `--exclude-editabl`, `"".[dev]""`.
+constat : Le commentaire de la cible `dev` de `transform/profiles.yml` est périmé depuis le 21/09 | 19/10 | reporté en S11 | "La chaîne Python et dbt coexistent", "bascule prévue au J5" : la chaîne Python a été supprimée le 21/09. Même passe que le constat `docs/architecture.md` du 16/10, qui y gagne deux erreurs de la section des dépendances figées : `----exclude-editabl`, `"".[dev]""`.
 
 ## 2026-10-20 - S10-J5 : les colonnes inertes, et le chapitre 1
 fait : PR n°77, colonnes inertes retirées : `mois`, `annee`, `trimestre` d'`int_mutations_filtrees` (constat du 12/10 soldé) et `ordre_affichage` de `dim_type_bien` (constat du 14/10 soldé) ; aucun lecteur, prouvé avant suppression par `dbt ls` et `git grep` ; contre l'étalon `avant` : 12/14 identiques, les deux écarts sont les colonnes retirées, colonnes restantes de même signature ; mart `11383 104679694271579681982287` ; graphe `13 1 60` ; 21/10 midi, Reis & Housley ch. 1 lu en entier, trois lignes hors dépôt ; 2h10.
 constat : `docs/modelisation.md` l. 25 annonce encore le snapshot comme traitement prévu | 20/10 | reporté en S11 | Le snapshot tourne depuis le 13/10, mais `dim_commune` lit toujours le COG 2026 : l'écart Le Héron reste toléré (WARN). Avec `sql/analyses/05_matrice_type_annee.sql` l. 13-14, où `volume_2024` et `volume_2025` comptent 2023 : trace morte, mais publique. Même passe que les constats du 16/10 et du 19/10.
 
 ## 2026-10-21 - S10-J6 : Le cycle de vie, et le contrôle S10
-Point de controle S10 :
+fait : point de contrôle et bilan horaire S10 ; S11 écrite ; livraison d'octobre toujours absente le 21/10 à 15:25 (construction n°85 verte, empreintes conformes) ; 24 min. Le soir : Reis & Housley ch. 1 et 2 lus, collateral-lab situé dans le cycle de vie | partiel | 21/10. Ch. 1 le 21/10 à midi ; ch. 2 jusqu'à « Data Management », la suite en tête de la S11 ; `docs/cycle-de-vie.md`, première version. 1h24.
+Point de contrôle S10 :
 Critère | Etat | Date
-La signature n'est définie qu'à un endroit | tenu | 15/10. PR n°64 : `controle.signature()`, que `verif_deoit` et `verif_clone` appellent par `--signature` ; trois appels, une valeur ; vu en rouge.
-Chaque PR parse le projet dbt | tenu | 16/10. PR n°66 : `dbt_parse` dans le job exigé `verification` ; vu en rouge sur un `ref()` vers un modèle inexistant, fusion bloquée.
+La signature n'est définie qu'à un endroit | tenu | 15/10. PR n°64 : `controle.signature()`, que `verif_depot` et `verif_clone` appellent par `--signature` ; trois appels, une valeur ; vu en rouge.
+Chaque PR parse le projet dbt | tenu | 16/10. PR n°66 : `dbt parse` dans le job exigé `verification` ; vu en rouge sur un `ref()` vers un modèle inexistant, fusion bloquée.
 Une table orpheline fait échouer le rituel | tenu | 17/10. PR n°69 : toute relation de la base doit figurer au manifeste, sources comprises ; vu en rouge sur `dbt.temoin_orpheline`.
 Les colonnes inertes ont disparu, signature du mart inchangée | tenu | 20/10. PR n°77 : 12/14 identiques à l'étalon `avant`, les deux écarts sont les colonnes retirées ; `11383 104679694271579681982287` ; graphe `13 1 60`.
-L'incrémental rend exactement le full refresh, vu en rouge sur une stratégie naïve | prouvé sur livraison simulée le 19/10, en attente de la livraison réelle | 19/10. PR n°70 et 73 ; `delete+insert` par millésime ; `python -m collateral.simulation` 13/13, code 0 ; `merge` syr `id_mutation` 4/13, code 1.
+L'incrémental rend exactement le full refresh, vu en rouge sur une stratégie naïve | prouvé sur livraison simulée le 19/10, en attente de la livraison réelle | 19/10. PR n°70 et 73 ; `delete+insert` par millésime ; `python -m collateral.simulation` 13/13, code 0 ; `merge` sur `id_mutation` 4/13, code 1.
 Reis & Housley ch. 1 et 2 lus, collateral-lab situé dans le cycle de vie | partiel | 21/10. Ch. 1 le 21/10 à midi ; ch. 2 pas encore (15:50).
 Les deux dates fixes | tenues | 15/10 : constat S8 n°2 soldé (PR n°64). 19/10 : passage planifié soldé, n°71 verte, en retard et non abandonné.
 Constats en fin de S10 :
 Constat | Date | Statut | Suite
 Environnement existant : nouvelle source, passage 2024, `--full-refresh` de `stg_mutations`, premier passage des orphelines | 15/10 et 19/10 | reporté en S11 | Procédure de mise à jour au README ; à appliquer sur l'autre PC.
-`docs/architecture.md` en partie périmé, avec `exclude-editabl` et `"".[dev]""` | 16/10 et 19/10 | reporté en S11 | Semaine de mise en présentation.
+`docs/architecture.md` en partie périmé, avec `--exclude-editabl` et `"".[dev]""` | 16/10 et 19/10 | reporté en S11 | Semaine de mise en présentation.
 Commentaire de la cible `dev` de `profiles.yml` | 19/10 | reporté en S11 | Même passe.
 `docs/modelisation.md` l. 25 et `sql/analyses/05` l. 13-14 | 20/10 | reporté en S11 | Même passe.
 Glissant et évolution non documentés au catalogue | 12/10 | reporté en S11 | Même passe.
@@ -444,5 +445,3 @@ Noms `verif_depot` et `verif_clone` | 05/10 | reporté au 22/10 | Seul constat v
 Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté (`docs/incremental.md`).
 Livraison DVF d'octobre | 12/08 | en attente | Absente le 21/10 à 15:25 (construction n°85 verte) ; détection chaque lundi, avec plusieurs heures de retard.
 Acceptés, inchangés : signature non comparée en CI (S8 n°1), `Etape` et les erreurs PowerShell, versions de `verif_clone`, `dim_commune` lit `source()` depuis marts/, rejouer le passage 2024, `dim_type_bien` lue par quatre tests.
-
-fait : point de contrôle et bilan horaire S10 ; S11 écrite ; livraison d'octobre toujours absente le 21/10 à 15:25 (construction n°85 verte, empreintes comformes) ; 24min.
