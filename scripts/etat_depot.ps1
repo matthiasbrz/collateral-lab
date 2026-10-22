@@ -17,9 +17,9 @@
     Saute la reconstruction de l'entrepot et les tests de donnees.
 
 .EXAMPLE
-    .\scripts\verif_depot.ps1
-    .\scripts\verif_depot.ps1 -Nettoyer
-    .\scripts\verif_depot.ps1 -Rapide
+    .\scripts\etat_depot.ps1
+    .\scripts\etat_depot.ps1 -Nettoyer
+    .\scripts\etat_depot.ps1 -Rapide
 #>
 
 [CmdletBinding()]
@@ -156,7 +156,7 @@ if ($testsUnitaires.Count -gt 0) { Ok "$($testsUnitaires.Count) fichiers de test
 else { Echec "aucun fichier tests\unitaires\test_*.py" }
 
 # Le bloc "Lancer" du README doit etre identique au fichier execute par
-# verif_clone. Constat du 26/09 : le README mentait a quatre endroits, dont
+# reproduction_clone_neuf. Constat du 26/09 : le README mentait a quatre endroits, dont
 # une commande qui echouait.
 $readme = @(Get-Content (Join-Path $racine 'README.md') -Encoding UTF8)
 $debut = ($readme | Select-String -SimpleMatch '<!-- lancer:debut -->' | Select-Object -First 1).LineNumber

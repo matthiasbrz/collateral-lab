@@ -14,7 +14,7 @@ dernier mois. Évolution sur un an : +0,6 %. *Données DVF, millésime d'avril 2
 Le calcul fait exactement ce qui est spécifié, et le refait à l'identique.
 
 - **Reproductible** — un clone neuf rejoue toute la chaine et vérifie le resultat
-  en une commande : [`scripts/verif_clone.ps1`](scripts/verif_clone.ps1).
+  en une commande : [`scripts/reproduction_clone_neuf.ps1`](scripts/reproduction_clone_neuf.ps1).
 - **Non-regressif** — la signature du mart est fixée depuis le 28/08/2026 et a
   traversé un changement complet d'outil : [`docs/signature_attendue.txt`](docs/signature_attendue.txt).
 - **Teste** — 44 tests de données au 26/09/2026, dont un qui rend exécutable la règle de
@@ -47,7 +47,7 @@ dbt snapshot --vars "{millesime_snapshot: 2024}" --profiles-dir .
 dbt build --profiles-dir .
 <!-- lancer:fin -->
 
-Ces commandes sont exécutées telles quelles par `scripts/verif_clone.ps1`,
+Ces commandes sont exécutées telles quelles par `scripts/reproduction_clone_neuf.ps1`,
 et sous Linux par la CI à chaque fusion dans `main`, et chaque lundi pour détecter une nouvelle livraison DVF.
 
 ## En savoir plus

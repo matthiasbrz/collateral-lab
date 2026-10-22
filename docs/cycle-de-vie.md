@@ -18,7 +18,7 @@ Première version du 21/10/2026, d'après le chapitre 2 de *Fundamentals of Data
 |---|---|---|---|
 | Sécurité | Aucun secret dans le dépôt ; données non versionnées, raison RGPD écrite (`docs/gouvernance.md`) ; workflows en `contents: read` ; `main` protégée par PR et vérification exigée | couvert | Règle de moindre privilège : n'accéder qu'à la donnée strictement nécessaire, uniquement au moment nécessaire. |
 | Gestion des données | Qualité : 60 tests, dont l'entonnoir et le seuil de publication ; modélisation : `docs/modelisation.md` ; règles chiffrées : `docs/regles_filtrage.md` ; lignage : le DAG du catalogue ; historique : le snapshot du COG | à compléter en S11 | à compléter en S11 |
-| DataOps | CI qualité (ruff, pytest, `dbt parse`) et construction sous Linux ; rituel `verif_depot` (graphe, orphelines, signature) ; `verif_clone` ; simulation de livraison ; constats datés au journal | à compléter en S11 | à compléter en S11 |
+| DataOps | CI qualité (ruff, pytest, `dbt parse`) et construction sous Linux ; rituel `etat_depot` (graphe, orphelines, signature) ; `reproduction_clone_neuf` ; simulation de livraison ; constats datés au journal | à compléter en S11 | à compléter en S11 |
 | Architecture des données | Base locale sur un seul poste ; frontière Python / dbt du 08/09 ; `docs/architecture.md`, en partie périmé (constat du 16/10) | à compléter en S11 | à compléter en S11 |
 | Orchestration | Une séquence linéaire (`scripts/lancer.txt`), un déclencheur hebdomadaire en CI, le DAG de dbt dans la transformation ; aucun orchestrateur | à compléter en S11 | à compléter en S11 |
 | Génie logiciel | Paquet Python (`src/`), 38 tests unitaires, ruff, versions épinglées (`constraints.txt`), PR et CI | à compléter en S11 | à compléter en S11 |

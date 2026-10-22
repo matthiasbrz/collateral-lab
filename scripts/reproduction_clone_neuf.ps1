@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Le seul controle qui prouve qu'un tiers peut reproduire le projet.
-    Contrairement a verif_depot.ps1, celui-ci s'arrete a la premiere etape
+    Contrairement a etat_depot.ps1, celui-ci s'arrete a la premiere etape
     en echec : chaque etape depend de la precedente, poursuivre n'apprendrait
     rien.
 
@@ -21,9 +21,9 @@
     Conserve le dossier temporaire meme en cas de succes.
 
 .EXAMPLE
-    .\scripts\verif_clone.ps1
-    .\scripts\verif_clone.ps1 -Branche feat/tests-unitaires
-    .\scripts\verif_clone.ps1 -Conserver
+    .\scripts\reproduction_clone_neuf.ps1
+    .\scripts\reproduction_clone_neuf.ps1 -Branche feat/tests-unitaires
+    .\scripts\reproduction_clone_neuf.ps1 -Conserver
 #>
 
 [CmdletBinding()]
@@ -172,7 +172,7 @@ if (-not (Test-Path $fichierSignature)) {
     Terminer 1 "docs\signature_attendue.txt absent du depot. Il doit etre versionne."
 }
 
-# Meme definition que verif_depot : collateral.controle.signature() (15/10).
+# Meme definition que etat_depot : collateral.controle.signature() (15/10).
 $obtenue = ((& $python -m collateral.controle --signature 2>&1) -join '').Trim()
 if ($LASTEXITCODE -ne 0) {
     Note $obtenue
