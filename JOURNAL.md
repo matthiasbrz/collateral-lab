@@ -445,3 +445,7 @@ Noms `verif_depot` et `verif_clone` | 05/10 | reporté au 22/10 | Seul constat v
 Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté (`docs/incremental.md`).
 Livraison DVF d'octobre | 12/08 | en attente | Absente le 21/10 à 15:25 (construction n°85 verte) ; détection chaque lundi, avec plusieurs heures de retard.
 Acceptés, inchangés : signature non comparée en CI (S8 n°1), `Etape` et les erreurs PowerShell, versions de `verif_clone`, `dim_commune` lit `source()` depuis marts/, rejouer le passage 2024, `dim_type_bien` lue par quatre tests.
+
+## 2026-10-22 - S11-J1 : Solder, puis deux noms qui se distinguent
+fait : Reis & Housley ch. 2, Data Management lu ; PC perso remis à niveau, base neuve par les commandes du README, signature `11383 104679694271579681982287`, rituel vert ; PR n°83, dette S10 soldée ; PR n°84, `verif_depot` → `etat_depot` et `verif_clone` → `reproduction_clone_neuf` (constat S8 n°5 soldé le 22/10) : anciens noms seulement au journal, les deux contrôles verts sous leurs nouveaux noms ; 58min.
+constat : Environnement existant, deux gestes de plus | 19/10 | appliqué le 22/10 sur l'autre PC, procédure au README le 23/10 ; orphelines au premier passage : aucune ; `dbt build` sur l'ancienne base ; remise à niveau par une base neuve.
