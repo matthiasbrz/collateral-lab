@@ -1,4 +1,4 @@
-collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient aucun secret - juste un chemin de fichier local - et le versionner est ce qui permettra à verif_clone.ps1 de faire tourner dbt depuis un clone neuf.
+collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient aucun secret - juste un chemin de fichier local - et le versionner est ce qui permettra à reproduction_clone_neuf.ps1 de faire tourner dbt depuis un clone neuf.
   target: dev
   outputs:
     dev:
