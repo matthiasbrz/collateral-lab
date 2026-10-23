@@ -17,7 +17,7 @@ Le calcul fait exactement ce qui est spécifié, et le refait à l'identique.
   en une commande : [`scripts/reproduction_clone_neuf.ps1`](scripts/reproduction_clone_neuf.ps1).
 - **Non-regressif** — la signature du mart est fixée depuis le 28/08/2026 et a
   traversé un changement complet d'outil : [`docs/signature_attendue.txt`](docs/signature_attendue.txt).
-- **Teste** — 44 tests de données au 26/09/2026, dont un qui rend exécutable la règle de
+- **Teste** — 60 tests de données au 23/10/2026, dont un qui rend exécutable la règle de
   publication : [`transform/`](transform/).
 - **Documente** — catalogue et graphe de lignee publiés :
   [matthiasbrz.github.io/collateral-lab](https://matthiasbrz.github.io/collateral-lab/).
@@ -39,16 +39,44 @@ Prérequis : Python 3.12 et un environnement virtuel actif.
 Puis, depuis la racine du dépôt :
 
 <!-- lancer:debut -->
+```
 python -m pip install -e ".[dev]" -c constraints.txt
 python -m collateral.download
 python -m collateral.load
 cd transform
 dbt snapshot --vars "{millesime_snapshot: 2024}" --profiles-dir .
 dbt build --profiles-dir .
+```
 <!-- lancer:fin -->
 
 Ces commandes sont exécutées telles quelles par `scripts/reproduction_clone_neuf.ps1`,
 et sous Linux par la CI à chaque fusion dans `main`, et chaque lundi pour détecter une nouvelle livraison DVF.
+
+### Mettre à jour un environnement existant
+
+`git pull` met à jour le code, pas la base : `collateral.duckdb` garde l'état de la dernière construction sur ce poste. Après un `git pull`, depuis la racine :
+
+```
+python -m pip install -e ".[dev]" -c constraints.txt
+python -m collateral.download
+python -m collateral.load
+cd transform ; dbt build --profiles-dir . ; cd ..
+.\scripts\etat_depot.ps1
+```
+
+Si `dbt build` échoue sur `stg_mutations`, le seul modèle incrémental :
+
+- `Binder Error: Referenced column "empreinte_source" not found in FROM clause!` : la table existante date d'avant l'incrémental (19/10) ;
+- `The source and target schemas on this incremental model are out of sync!` : le schéma du modèle a changé, et `on_schema_change: fail` refuse de l'ignorer ;
+
+alors : `dbt build --full-refresh --select stg_mutations+`, puis le rituel, qui contrôle aussi les relations orphelines.
+
+Poste resté longtemps sans construire, ou au moindre doute : base neuve. Elle ne contient que du dérivé (brut rechargé depuis des fichiers aux empreintes déclarées, modèles depuis le code, snapshot rejoué par le passage 2024). Supprimer la base et son WAL ensemble, jamais le WAL seul :
+
+- Windows : `Remove-Item .\collateral.duckdb, .\collateral.duckdb.wal -ErrorAction SilentlyContinue`
+- macOS / Linux : `rm -f collateral.duckdb collateral.duckdb.wal`
+
+puis les commandes de « Lancer ». Appliqué le 22/10/2026 sur un poste dont la base datait du 17/10 : `Binder Error`, aucune relation orpheline, base neuve, signature retrouvée.
 
 ## En savoir plus
 

@@ -24,11 +24,12 @@ Deux chaines coexistent volontairement pendant la transition, dans deux
 schemas distincts. Chaque modele porte est prouve identique a son equivalent
 Python par comparaison de signature, pas par relecture.
 
-## Ce qui reste cote Python apres bascule
+## Ce qui reste cote Python, etat au 23/10/2026
 
-- telechargement des sources (reseau)
-- controle d'integrite avant lecture (disque)
-- chargement brut dans l'entrepot (sql/00_raw_mutations.sql, sql/01_raw_communes.sql)
+- telechargement des sources (reseau), atomique depuis le 01/09
+- controle d'integrite avant lecture (disque), et version declaree par empreintes SHA-256 depuis le 05/10
+- chargement brut dans l'entrepot `sql/00_*.sql` (`raw_mutations`, `raw_communes`, `raw_communes_2024`, `raw_fichiers`)
+- controles qui ne sont pas des tests de donnees : signature et comparaison (`colltareal.controle`), relations orphelines (`collateral.orphelines`), livraison simulée (`collateral.simulation`)
 - tests unitaires du code Python (pytest)
 
 ## Ce qui passe sous dbt
@@ -37,7 +38,7 @@ Python par comparaison de signature, pas par relecture.
 - tests de donnees, generiques et singuliers
 - documentation et lignes
 
-## Decoupages imposes par la frontiere
+## Decoupages imposes par la frontiere - prevus le 08/09, faits avant la bascule du 21/09.
 
 - sql/01_dim_commune.sql fait trois choses : charger, filtrer, renommer.
   Il se coupe en un chargement brut (Python) et un modele dim_commune (dbt).
@@ -64,18 +65,22 @@ le nom du fichier, var('millesime_cog') pour la colonne. La duplication ne
 disparait pas, elle se deplace sur la frontiere - une valeur au lieu d'un
 bloc SQL.
 
-## Bascule
+## Bascule - faite le 21/09/2026
 
-Condition : les neuf modeles portes, chaque signature identique a son
-equivalent Python. Prevu en semaien 5.
-A la bascule : suppression de tests_donnees.py, de la numerotation des
-scripts, et passage de dbt-duckdb en dependance de production.
+Condition posee : les neuf modeles portes, chaque signature identique a son
+equivalent Python. Prevu en semaien 5, faite en semaine 6 (voir "Etat au 21/09/2026").
+Fait : `tests_donnees.py` supprime le 21/09 ; `sql/01` a `sql/08` supprimes le 21/09 ;
+dbt-duckdb en dependance d'execution le 01/10. La numerotation ne survit que dans le
+prefixe `00_` des scripts d'ingestion.
 
-## Dette de nommage
+## Dette de nommage - soldee le 29/09/2026
 
-"int_mutations_filtrees" depend desormais d'un modele "int_", ce qui inverse la convention dbt - staging, puis intermediaire, puis marts.
-Le nom ne peut pas changer aujourd'hui (11/09/2026) : il doit correspondre a "main.int_mutations_filtrees" pour que "comparer()" fonctionne.
-Il changera a la bascule, quand les noms Python disparaitront.
+`stg_mutations_filtrees` dependait d'un modele `int_`, ce qui inversait la
+convention dbt - staging, puis intermediaire, puis marts.
+Le nom ne pouvait pas changer le 11/09/2026 : il devait correspondre a
+`main.stg_mutations_filtrees` pour que `comparer()` fonctionne.
+Renommé `int_mutations_filtrees` le 29/09, apres la bascule. Le remplacement
+global du meme jour avait aussi reecrit ce paragraphe : texte retabli le 23/10.
 
 ## Controle freshness
 
@@ -83,17 +88,23 @@ Age du chargement : mesure. 'charge_le' dit quand l'entrepot a ete reconstruit.
 Age du fichier : non mesure. Un fichier telecharge le 15 aout peut avoir ete charge ce matin.
 Age du millesime : non mesure, et c'est celui vraiment interessant. Savoir si on tourne sur la derniere livraison 
 publiee exige de consulter data.gouv.fr, ce qu'aucun controle de fraicheur ne sait faire.
-Consequence pratique : 'build.py' recharge les table brutes a chaque execution, donc le controle sera vert en permanence.
+Depuis le 05/10, la version est declaree : les empreintes de docs/empreintes_attendues.txt font echouer le telechargement
+sur toute autre version, et la CI le verifie chaque lundi.
+Consequence pratique : collateral.load (ex-build.py, renomme le 28/09) recharge les tables brutes a chaque execution, donc
+le controle sera vert en permanence.
 Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six mois plus tard sans savoir a quoi s'attendre.
 
-## Ecarte d'ici le 10 octobre, a reprendre ensuite
+## Renonce, etat au 23/10/2026
 
-- Portage sur entrepot cloud et orchestration (paliers 2 et 3 du sujet initial).
-  Motif : ne rentre pas avant l'echeance. A reeexaminer au point de controle 2.
-- Snapshots dbt et SCD2 sur dim_commune, malgre le cas Morville-le-Heron.
-  La dette est declaree par un seuil de test, elle tient jusque-la.
-- dbt-utils. Un paquet externe le mois de l'entretien est une variable de trop.
+- Entrepot cloud. Motif d'origine : ne rentre pas avant l'echeance ; la volumetrie tient dans une base locale.
+- Orchestration : revient au palier 2 de la roadmap, apres la S12.
+- dbt-utils. Un paquet externe le mois de l'entretien est une variable en trop.
 - Extension a d'autres departements. Le volume ne prouverait rien de plus.
+- Optimisation du glissant (defauts 2 et 3 ci-dessous) et `--warn-error-options`.
+
+Historique : section ouverte sous le titre "Ecarte d'ici le 10 octobre" ; les snapshots
+en sont sorties le 13/10 (`snap_cog_communes`). `dim_commune` ne lit pas encore 
+cet historique ; voir `docs/modelisation.md`, "Ecart".
 
 ## Defauts connus des modeles a porter - releves le 17/09/2026
 
@@ -109,9 +120,14 @@ resultat. Correction apres la bascule (S7), jamais pendant.
 | ref_seuils_dispersion | 'current_date' rend la table non deterministe | 11/09 | S7 |
 | ref_seuils_dispersion | aucun modele ne la consomme | 26/08 | a trancher au J4 |
 
+Status au 23/10/2026 : jointure vers `dim_commune` absente du modele actuel (le glissant lit l'etoile depuis le 12/10) ;
+`INTERVAL` et sous-requete scalaire toujours presents, renonces avec l'optimisation du glissant ; seuil de publication en
+`var('seuil_publication')` depuis le 28/09 ; `current_date` retire en portage (aucune fonction instable : controle par le rituel) ;
+`ref_seuils_dispersion` gardee comme feuille assumee, decision du 19/09.
+
 ## Scripts sans equivalent modele
 sql/00_raw_*.sql reste Python - ingestion, par la frontiere du 8 septembre.
-sql/01 a sql/08 portes, supprimes lundi.
+sql/01 a sql/08 portes, supprimes le 21/09.
 sql/analyses/ (6 fichiers) gardes - ils produisent des rapports, pas des relations. Un script de profilage n'a rien a faire dans un graphe de transformation.
 sql/perf/ (6 fichiers) supprimes - dbt ecrit deja le SQL compile de chaque modele dans 'target/compiled', qui est exactement ce que ces copies contenaient. Ils sont perimes depuis le portage.
 src/collateral/plan.py, mesure.py, profil.py gardes - outil de diagnostic, pas des transformations.
@@ -127,6 +143,6 @@ depuis ce matin.
 ## Figer les dependances directes et transitives
 Versions exactes de toutes les dependances, directes et transitives.
 Pourquoi pas uniquement les directes ? Risque qu'une version tierce casse dbt en CI, un jour, sans changement. Ce qui n'est pas declare derive.
-Genere le 01/10/2026 par : python -m pip freeze --exclude-editabl
-Usage : pip install -e "".[dev]"" -c constraints.txt
+Genere le 01/10/2026 par : python -m pip freeze --exclude-editable
+Usage : pip install -e ".[dev]" -c constraints.txt
 A regenerer dans le meme commit que tout changement dans pyproject.toml.

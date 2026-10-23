@@ -1,12 +1,13 @@
-collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient aucun secret - juste un chemin de fichier local - et le versionner est ce qui permettra à reproduction_clone_neuf.ps1 de faire tourner dbt depuis un clone neuf.
+collateral: # Le profil vit dans le depot, pas dans '~/.dbt/'. Il ne contient aucun secret - juste un chemin de fichier local - et le versionner est ce qui permet à reproduction_clone_neuf.ps1 de faire tourner dbt depuis un clone neuf.
   target: dev
   outputs:
     dev:
       type: duckdb
       path: ../collateral.duckdb
-      # Schema distinct de main : la chaine Python et dbt coexistent
-      # dans la meme base sans se marcher dessus. Permet la comparaison
-      # directe des deux sorties. Bascule prevue au J5.
+      # Schema dbt, distinct de main : main recoit le brut charge par Python
+      # (sql/00_*.sql), dbt ecrit ici ses modeles et son snapshot - la
+      # frontiere du 08/09. Jusqu'a la bascule du 21/09, il separait aussi
+      # les deux chaines, pour comparer leurs sorties.
       schema: dbt
       threads: 4
     # Base de simulation, hors depot : COLLATERAL_SIMULATION est fixee par
