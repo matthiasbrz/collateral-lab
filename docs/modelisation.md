@@ -22,7 +22,7 @@
 ## Ecart
  - Le Héron (76358) : 5 mutations portent un code absent du COG 2026. La clé orpheline est tolérée (WARN).
  - Kimball garantirait l'intégrité référentielle, par une ligne "inconnu" ou par l'historique de la dimension.
- - Le traitement prévu est le snapshot, au J5 ou en S10.
+ - Depuis le 13/10, le snapshot `snap_cog_communes` capture la fusion (passage 2024, puis COG 2026), verifiee par le test `transition_le_heron`. `dim_commune` lit encore le seul COG 2026 : la tolerance rest (WARN).
 
 ## Arbitrages
 
