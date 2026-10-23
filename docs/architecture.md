@@ -29,7 +29,7 @@ Python par comparaison de signature, pas par relecture.
 - telechargement des sources (reseau), atomique depuis le 01/09
 - controle d'integrite avant lecture (disque), et version declaree par empreintes SHA-256 depuis le 05/10
 - chargement brut dans l'entrepot `sql/00_*.sql` (`raw_mutations`, `raw_communes`, `raw_communes_2024`, `raw_fichiers`)
-- controles qui ne sont pas des tests de donnees : signature et comparaison (`colltareal.controle`), relations orphelines (`collateral.orphelines`), livraison simulée (`collateral.simulation`)
+- controles qui ne sont pas des tests de donnees : signature et comparaison (`collateral.controle`), relations orphelines (`collateral.orphelines`), livraison simulée (`collateral.simulation`)
 - tests unitaires du code Python (pytest)
 
 ## Ce qui passe sous dbt
@@ -68,7 +68,7 @@ bloc SQL.
 ## Bascule - faite le 21/09/2026
 
 Condition posee : les neuf modeles portes, chaque signature identique a son
-equivalent Python. Prevu en semaien 5, faite en semaine 6 (voir "Etat au 21/09/2026").
+equivalent Python. Prevu en semaine 5, faite en semaine 6 (voir "Etat au 21/09/2026").
 Fait : `tests_donnees.py` supprime le 21/09 ; `sql/01` a `sql/08` supprimes le 21/09 ;
 dbt-duckdb en dependance d'execution le 01/10. La numerotation ne survit que dans le
 prefixe `00_` des scripts d'ingestion.
@@ -103,7 +103,7 @@ Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six m
 - Optimisation du glissant (defauts 2 et 3 ci-dessous) et `--warn-error-options`.
 
 Historique : section ouverte sous le titre "Ecarte d'ici le 10 octobre" ; les snapshots
-en sont sorties le 13/10 (`snap_cog_communes`). `dim_commune` ne lit pas encore 
+en sont sortis le 13/10 (`snap_cog_communes`). `dim_commune` ne lit pas encore 
 cet historique ; voir `docs/modelisation.md`, "Ecart".
 
 ## Defauts connus des modeles a porter - releves le 17/09/2026
@@ -120,7 +120,7 @@ resultat. Correction apres la bascule (S7), jamais pendant.
 | ref_seuils_dispersion | 'current_date' rend la table non deterministe | 11/09 | S7 |
 | ref_seuils_dispersion | aucun modele ne la consomme | 26/08 | a trancher au J4 |
 
-Status au 23/10/2026 : jointure vers `dim_commune` absente du modele actuel (le glissant lit l'etoile depuis le 12/10) ;
+Statut au 23/10/2026 : jointure vers `dim_commune` absente du modele actuel (le glissant lit l'etoile depuis le 12/10) ;
 `INTERVAL` et sous-requete scalaire toujours presents, renonces avec l'optimisation du glissant ; seuil de publication en
 `var('seuil_publication')` depuis le 28/09 ; `current_date` retire en portage (aucune fonction instable : controle par le rituel) ;
 `ref_seuils_dispersion` gardee comme feuille assumee, decision du 19/09.
