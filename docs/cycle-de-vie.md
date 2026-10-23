@@ -1,6 +1,6 @@
 # collateral-lab dans le cycle de vie du data engineering
 
-Première version du 21/10/2026, d'après le chapitre 2 de *Fundamentals of Data Engineering* (Reis & Housley, 2022).
+Première version du 21/10/2026, complétée le 23/10 : cinq étapes et six courants, d'après le chapitre 2 de *Fundamentals of Data Engineering* (Reis & Housley, 2022).
 
 ## Les cinq étapes
 
@@ -16,12 +16,12 @@ Première version du 21/10/2026, d'après le chapitre 2 de *Fundamentals of Data
 
 | Courant | Où dans collateral-lab | État | Raison |
 |---|---|---|---|
-| Sécurité | Aucun secret dans le dépôt ; données non versionnées, raison RGPD écrite (`docs/gouvernance.md`) ; workflows en `contents: read` ; `main` protégée par PR et vérification exigée | couvert | Règle de moindre privilège : n'accéder qu'à la donnée strictement nécessaire, uniquement au moment nécessaire. |
-| Gestion des données | Qualité : 60 tests, dont l'entonnoir et le seuil de publication ; modélisation : `docs/modelisation.md` ; règles chiffrées : `docs/regles_filtrage.md` ; lignage : le DAG du catalogue ; historique : le snapshot du COG | partiel | Qualité vérifiée avec 60 tests ; modélisation décrite dans `docs/modelisation.md` ; lignage visible via catalogue republié à chaque fusion (13/10) et la provenance `fichier` (09/10) ; historique consultable via snapshot (13/10) ; données privées et non exploitées (`docs/gouvernance.md`) ; Il manque un MDM (Master Data Management), un seul responsable. |
-| DataOps | CI qualité (ruff, pytest, `dbt parse`) et construction sous Linux ; rituel `verif_depot` (graphe, orphelines, signature) ; `verif_clone` ; simulation de livraison ; constats datés au journal | couvert | CI qualité exigée (08/10) et `dbt parse` (16/10, PR n°66) ; construction et publication (03/10) ; rituel : signature unique (15/10, PR n°64) et orphelines (17/10, PR n°69) ; livraison simulée (19/10, PR n°73), détection chaque lundi |
-| Architecture des données | Base locale sur un seul poste ; frontière Python / dbt du 08/09 ; `docs/architecture.md`, en partie périmé (constat du 16/10) | partiel | Les neufs principes arrivent le 26/10 ; aujourd'hui seule une base en local et la frontière Python / dbt (08/09) |
-| Orchestration | Une séquence linéaire (`scripts/lancer.txt`), un déclencheur hebdomadaire en CI, le DAG de dbt dans la transformation ; aucun orchestrateur | renoncé | séquence linéaire lancée par la CI à chaque fusion et chaque lundi ; le DAG de dbt orchestre déjà la transformation. |
+| Sécurité | Aucun secret dans le dépôt ; données non versionnées, raison RGPD écrite (`docs/gouvernance.md`) ; workflows en `contents: read` ; `main` protégée par PR et vérification exigée | couvert | Moindre privilège appliqué : workflows en lecture seule (`contents: read`), aucun secret à protéger ; données publiques mais personnelles, donc jamais versionnées (raison RGPD, `docs/gouvernance.md`) ; `main` protégée depuis le 08/10. |
+| Gestion des données | Qualité : 60 tests, dont l'entonnoir et le seuil de publication ; modélisation : `docs/modelisation.md` ; règles chiffrées : `docs/regles_filtrage.md` ; lignage : le DAG du catalogue ; historique : le snapshot du COG | partiel | Qualité vérifiée avec 60 tests ; modélisation décrite dans `docs/modelisation.md` ; lignage visible via le catalogue republié à chaque fusion (03/10) et la provenance `fichier` (19/10) ; historique consultable via snapshot (13/10) ; vie privée : aucune donnée versionnée, aucun agrégat publié sous cinq ventes (`docs/gouvernance.md`, test depuis le 19/09) ; il manque un MDM (Master Data Management), et il n'y a qu'un seul responsable. |
+| DataOps | CI qualité (ruff, pytest, `dbt parse`) et construction sous Linux ; rituel `etat_depot` (graphe, orphelines, signature) ; `reproduction_clone_neuf` ; simulation de livraison ; constats datés au journal | couvert | CI qualité exigée (08/10) et `dbt parse` (16/10, PR n°66) ; construction et publication (03/10) ; rituel : signature unique (15/10, PR n°64) et orphelines (17/10, PR n°69) ; livraison simulée (19/10, PR n°73), détection chaque lundi |
+| Architecture des données | Base locale sur un seul poste ; frontière Python / dbt du 08/09 ; `docs/architecture.md`, remis à jour le 23/10 | partiel | Les neuf principes arrivent le 26/10 ; aujourd'hui seule une base en local et la frontière Python / dbt (08/09) |
+| Orchestration | Une séquence linéaire (`scripts/lancer.txt`), un déclencheur hebdomadaire en CI, le DAG de dbt dans la transformation ; aucun orchestrateur | renoncé | Séquence linéaire lancée par la CI à chaque fusion et chaque lundi ; le DAG de dbt orchestre déjà la transformation. Revient au palier 2 de la roadmap, après la S12. |
 | Génie logiciel | Paquet Python (`src/`), 38 tests unitaires, ruff, versions épinglées (`constraints.txt`), PR et CI | couvert | un paquet `src/`, 38 tests unitaires, ruff, versions épinglées (01/10), PR et vérification exigées (08/10, push direct refusé). |
 
 ## Ce que ce tableau ne dit pas encore
-- Les cinq courants à partir de la gestion des données : lecture arrêtée à cette section le 21/10, suite en tête de la S11.
+- Les neuf principes d'architecture (26/10) et les choix technologiques (28/10), à venir dans `docs/architecture.md`.
