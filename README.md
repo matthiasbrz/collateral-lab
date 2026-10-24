@@ -29,6 +29,8 @@ retenues et des limites des données DVF : délai de publication, biais de
 composition, aucune qualification du bien. Ces choix sont chiffrés dans les
 [règles de filtrage](docs/regles_filtrage.md) et les [limites connues](docs/limites.md).
 
+Confrontée le 24/10/2026 aux prix publiés par les notaires de l'Eure et de la Seine-Maritime : <k> cellules sur 3 dans la tolérance de ±10 % déclarée avant comparaison ; <écart hors tolérance éventuel, tel quel> ([docs/validation.md](docs/validation.md)).
+
 ## Lancer
 
 Prérequis : Python 3.12 et un environnement virtuel actif.
