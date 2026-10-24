@@ -452,3 +452,7 @@ constat : Environnement existant, deux gestes de plus | 19/10 | appliqué le 22/
 
 ## 2026-10-23 - S11-J2 : La fin du chapitre 2, et ce qui est périmé
 fait : Reis & Housley ch. 2 lu en entier ; PR n°86, `docs/cycle-de-vie.md` : dette du 22/10 soldée (trois raisons d'étapes encore des définitions, remplacées le 23/10), puis les six courants, chacun avec une raison ; PR n°87, péremption : `docs/architecture.md` (neuf sections corrigées ou datées, dont `--exclude-editable` et `".[dev]"`), commentaire de la cible dev, `docs/modelisation.md` l. 25, `sql/analyses/05` annoté ; README : bloc Lancer rendu en code (paragraphe depuis le 02/10), 60 tests, procédure de mise à jour d'un environnement existant ; nouveaux noms des scripts distingués par un tiers (réponse du 22/10/2026) ; 1h09.
+
+## 2026-10-24 - S11-J3 : Une source qu'on ne contrôle pas
+fait : PR n°90, validation externe : tolérance ±10 % commitée et poussée à 16:55 avant lecture des chiffres, <k>/3 cellules dans la tolérance, <écarts tels quels> ; corrections du J2 : PR n°89, 12 min ; 34min.
+constat : Le commentaire de `mart_prix_m2_reference.sql` (l. 11-12) dit le seuil de publication « en dur », alors qu'il est en `var('seuil_publication')` depuis le 28/09 | 24/10 | reporté au 28/10 | À corriger avec le catalogue, même famille : la documentation des marts.
