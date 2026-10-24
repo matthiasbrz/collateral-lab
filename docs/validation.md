@@ -12,3 +12,12 @@
 - Raison : les deux chiffres ne mesurent pas exactement la même chose. Différences possibles, connues avant de regarder et à vérifier dans leur note de méthode : base exhaustive des actes (DVF) contre base des notaires ; surface réelle bâtie contre surface habitable ; valeur foncière qui inclut les dépendances de la mutation ; logements récents gardés par le projet si les notaires ne publient que l'ancien ; écrêtage p1/p99 du projet. Chacune peut déplacer une médiane de quelques pour cent. 10 % laisse la place à leur cumul et reste un vrai test : une erreur d'unité, de surface ou de périmètre le ferait échouer.
 - Bruit d'échantillonnage du projet, mesuré à part (IC 95 % de la médiane, rangs binomiaux) : ± 2,3 %, ± 2,6 %, ± 3,0 %. Il doit rester petit devant la tolérance.
 - Verdict par cellule : dans la tolérance, hors tolérance, ou non comparable. Résultat publié tel quel.
+
+## Sources
+| Cellule | Chiffre publié | Nature | Période | Publié le | Lien (page) | Définitions : base, ancien, surface, prix |
+
+## Comparaison
+| Cellule | Fenêtre du projet | Projet (ventes) | Publié | Écart | Verdict |
+
+## Écarts de périmètre
+- un point par différence, chacun vérifié dans la note de méthode ou marqué « non documenté par la source »
