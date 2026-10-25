@@ -31,6 +31,12 @@ composition, aucune qualification du bien. Ces choix sont chiffrés dans les
 
 Confrontée le 24/10/2026 aux prix publiés par les notaires de l'Eure et de la Seine-Maritime : <k> cellules sur 3 dans la tolérance de ±10 % déclarée avant comparaison ; <écart hors tolérance éventuel, tel quel> ([docs/validation.md](docs/validation.md)).
 
+Confrontée le 24/10/2026 aux prix médians publiés par les notaires de l'Eure et de la
+Seine-Maritime (base Perval, ventes du 01/07/2024 au 30/06/2025) : 2 sur 2 cellules
+comparables dans la tolérance de ±10 % déclarée avant comparaison (Rouen, appartements -0,0 % ; Le Havre, appartements +1,8 %) ; la troisième
+cellule du protocole, Le Havre maisons, n'est pas publiée par la source
+([validation externe](docs/validation.md)).
+
 ## Lancer
 
 Prérequis : Python 3.12 et un environnement virtuel actif.
@@ -86,6 +92,7 @@ puis les commandes de « Lancer ». Appliqué le 22/10/2026 sur un poste dont la
 - [Architecture et frontière Python / dbt](docs/architecture.md)
 - [Règles de filtrage et volumes écartés](docs/regles_filtrage.md)
 - [Référentiel des communes](docs/dimension_commune.md)
+- [Validation externe : les prix des notaires](docs/validation.md)
 
 **Fiabilité**
 - [Gouvernance des données](docs/gouvernance.md)
