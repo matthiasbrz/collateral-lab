@@ -8,6 +8,27 @@ dbt transforme ce qui est deja dans l'entrepot et prouve que le resultat tient.
 La ligne de partage est l'entrepot : rien n'y entre par dbt, rien ne s'y
 transforme par Python.
 
+## Type d'architecture et principes, état au 26/10/2026
+
+Les neuf principes de Reis & Housley (*Fundamentals of Data Engineering*, ch. 3), chacun
+rattaché à une décision datée du projet, ou à la raison pour laquelle il ne s'applique pas.
+
+**Type** : Entrepôt de données local. Les données ingestées en entrée sont structurées (format csv), et sont transformées via le langage structré SQL.
+
+**Ce qu'il n'est pas** : Entrepôt cloud lac de données, <types écartés>, parce que <raison : un choix à cette échelle, pas une limite>.
+
+| Principe | Décision du projet, ou raison de ne pas s'appliquer | Preuve |
+|---|---|---|
+| 1. Choisir les composants communs avec soin | x | x |
+| 2. Prévoir la panne | mis en place | détection hebdomadaire de nouvelle livraison, vérification à chaque fusion de l'intégrité du projet |
+| 3. Concevoir pour passer à l'échelle | ne s’applique pas ici, parce qu'il n'est pas prévu d'intégrer plus de données (uniquement mutations du département 76) | - |
+| 4. L'architecture est du leadership | mis en place | projet mené seul et en partant d'une architecture neuve : je suis l'ingénieur mais aussi l'architecte dans ce cas-là |
+| 5. Toujours architecturer | mis en place | actions/décisions réversibles |
+| 6. Des systèmes faiblement couplés | ne s’applique pas ici, parce que toute l'architecture (base de données, serveur de calcul) repose dans un seul et même ordinateur | - |
+| 7. Des décisions réversibles | mis en place | `docs/incremental.md` : full refresh toujours possible |
+| 8. La sécurité d'abord | mis en place | aucune donnée personnelle n'est ici utilisé, il n'est pas possible de tracer une personne avec les données utilisées |
+| 9. Adopter le FinOps | ne s’applique pas ici, parce qu'aucun coût financier n'a été utilise pour la mise en place de ce projet (si ce n'est à minima un PC...) | -|
+
 ## Historique — la transition, 08/09 → 21/09
     reseau                  disque                      entrepot DuckDB
     ------                  ------                      ---------------
