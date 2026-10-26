@@ -29,8 +29,6 @@ retenues et des limites des données DVF : délai de publication, biais de
 composition, aucune qualification du bien. Ces choix sont chiffrés dans les
 [règles de filtrage](docs/regles_filtrage.md) et les [limites connues](docs/limites.md).
 
-Confrontée le 24/10/2026 aux prix publiés par les notaires de l'Eure et de la Seine-Maritime : <k> cellules sur 3 dans la tolérance de ±10 % déclarée avant comparaison ; <écart hors tolérance éventuel, tel quel> ([docs/validation.md](docs/validation.md)).
-
 Confrontée le 24/10/2026 aux prix médians publiés par les notaires de l'Eure et de la
 Seine-Maritime (base Perval, ventes du 01/07/2024 au 30/06/2025) : 2 sur 2 cellules
 comparables dans la tolérance de ±10 % déclarée avant comparaison (Rouen, appartements -0,0 % ; Le Havre, appartements +1,8 %) ; la troisième
