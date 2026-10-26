@@ -1,3 +1,8 @@
+> **Historique : relevé antérieur au 01/09/2026, conservé tel quel.** Depuis : téléchargement
+> atomique (01/09) ; source indisponible, base verrouillée et script en échec signalés avec
+> leur cause et le geste à faire (`collateral.download`, `collateral.db`, `collateral.sql`) ;
+> nouvelle livraison détectée par empreintes SHA-256 (05/10) ; `on_schema_change: fail` (17/10).
+
 Rupture | Probabilité | Comportement actuel
 Téléchargement interrompu | élevée | fichier partiel écrit à l'emplacement final, puis ignoré à vie par le test d'idempotence
 Base verrouillée par une autre session | élevée | duckdb.IOException brute, aucune indication
