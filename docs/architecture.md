@@ -13,21 +13,27 @@ transforme par Python.
 Les neuf principes de Reis & Housley (*Fundamentals of Data Engineering*, ch. 3), chacun
 rattaché à une décision datée du projet, ou à la raison pour laquelle il ne s'applique pas.
 
-**Type** : Entrepôt de données local. Les données ingestées en entrée sont structurées (format csv), et sont transformées via le langage structré SQL.
+**Type** : un entrepôt de données local et mono-nœud. Un seul fichier DuckDB sur un poste,
+alimenté par lot depuis des CSV (DVF, COG de l'Insee), transformé en SQL déclaratif par dbt,
+modélisé en étoile et publié en marts.
 
-**Ce qu'il n'est pas** : Entrepôt cloud lac de données, <types écartés>, parce que <raison : un choix à cette échelle, pas une limite>.
+**Ce qu'il n'est pas** : ni entrepôt cloud, ni lac de données, ni architecture Lambda ou Kappa,
+ni data mesh. Un département, une livraison par semestre, un seul domaine et une seule
+personne : à cette échelle, un nœud suffit (la médiane glissante tourne en 0,08 s,
+`docs/performance.md`), rien n'arrive en flux, et il n'y a ni domaines ni équipes à fédérer.
+C'est un choix à cette échelle, pas une limite (« Renonce, etat au 23/10/2026 »).
 
 | Principe | Décision du projet, ou raison de ne pas s'appliquer | Preuve |
 |---|---|---|
-| 1. Choisir les composants communs avec soin | x | x |
-| 2. Prévoir la panne | mis en place | détection hebdomadaire de nouvelle livraison, vérification à chaque fusion de l'intégrité du projet |
-| 3. Concevoir pour passer à l'échelle | ne s’applique pas ici, parce qu'il n'est pas prévu d'intégrer plus de données (uniquement mutations du département 76) | - |
-| 4. L'architecture est du leadership | mis en place | projet mené seul et en partant d'une architecture neuve : je suis l'ingénieur mais aussi l'architecte dans ce cas-là |
-| 5. Toujours architecturer | mis en place | actions/décisions réversibles |
-| 6. Des systèmes faiblement couplés | ne s’applique pas ici, parce que toute l'architecture (base de données, serveur de calcul) repose dans un seul et même ordinateur | - |
-| 7. Des décisions réversibles | mis en place | `docs/incremental.md` : full refresh toujours possible |
-| 8. La sécurité d'abord | mis en place | aucune donnée personnelle n'est ici utilisé, il n'est pas possible de tracer une personne avec les données utilisées |
-| 9. Adopter le FinOps | ne s’applique pas ici, parce qu'aucun coût financier n'a été utilise pour la mise en place de ce projet (si ce n'est à minima un PC...) | -|
+| 1. Choisir les composants communs avec soin | Un moteur pour toutes les couches (DuckDB), un outil pour transformer, tester et documenter (dbt Core) ; trois dépendances directes, le téléchargement se contente de la bibliothèque standard | `pyproject.toml` ; dépendances figées le 01/10 ; dbt-utils écarté (« Renonce ») |
+| 2. Prévoir la panne | Chaque étape échoue tôt et dit pourquoi ; une livraison ou un schéma qui change arrête la chaîne au lieu de passer | téléchargement atomique (01/09) ; empreintes SHA-256 (05/10) ; `on_schema_change: fail` (17/10) ; passage planifié chaque lundi, contrôle qualité à chaque PR |
+| 3. Concevoir pour passer à l'échelle | Ne s'applique pas ici, parce que le périmètre est fixé à un département : l'extension est écartée, le volume ne prouverait rien de plus | « Renonce, etat au 23/10/2026 » ; médiane glissante en 0,08 s |
+| 4. L'architecture est du leadership | Ne s'applique pas ici, parce que le projet est mené seul : aucune équipe à guider. Ce qui en tient lieu : chaque décision écrite et datée pour un relecteur | cette page ; les constats datés de `JOURNAL.md` |
+| 5. Toujours architecturer | L'architecture se révise quand le projet change, et chaque section dit à quelle date elle est vraie | frontière décidée le 08/09, bascule vers dbt le 21/09 ; péremption du 23/10 (PR n°87) ; `docs/robustesse.md` daté le 26/10 |
+| 6. Des systèmes faiblement couplés | Python et dbt ne communiquent que par les tables brutes de l'entrepôt : la frontière ci-dessus | bascule du 21/09 : transformation Python retirée au profit de dbt, ingestion conservée, signature du mart identique avant et après |
+| 7. Des décisions réversibles | L'incrémental garde son chemin de retour : un full refresh reconstruit tout | `docs/incremental.md` : incrémental identique au full refresh, 13/13 relations (19/10) ; procédure du README (23/10) |
+| 8. La sécurité d'abord | DVF contient des données à caractère personnel : aucune donnée versionnée ni publiée, rien du client | règles 4 et 7, section 5 d'`etat_depot` ; catalogue publié vérifié sans valeur ni chemin (15/09, 03/10) ; CI en `contents: read`, seul le déploiement du catalogue écrit sur Pages |
+| 9. Adopter le FinOps | Ne s'applique pas ici, parce que le projet n'a aucun coût variable : base locale, CI d'un dépôt public | entrepôt cloud écarté (« Renonce ») |
 
 ## Historique — la transition, 08/09 → 21/09
     reseau                  disque                      entrepot DuckDB
