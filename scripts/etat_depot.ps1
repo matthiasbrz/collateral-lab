@@ -3,9 +3,9 @@
     Verifie l'etat du depot collateral-lab. Ne modifie rien sans -Nettoyer.
 
 .DESCRIPTION
-    Huit familles de controles : environnement, configuration, arborescence,
+    Neuf familles de controles : environnement, configuration, arborescence,
     fichiers parasites, gouvernance des donnees, qualite du code,
-    chaine de production, etat Git.
+    chaine de production, graphe dbt, etat Git.
 
     Code retour 0 si tout passe, 1 sinon.
 
@@ -177,6 +177,47 @@ if (-not $debut -or -not $fin -or $fin -le $debut) {
         Detail ($ecarts | ForEach-Object { "$($_.SideIndicator) $($_.InputObject)" })
     }
 }
+
+# Gabarits non remplis : un <...> oublie dans un document actuel, ou dans une
+# ligne ajoutee au journal depuis main. Constat du 24/10 : la phrase-gabarit du
+# README et la ligne du J3 publiees avec leurs chevrons. Le 25/10, git diff
+# --staged affichait encore celle du README, et la relecture ne l'a pas vue
+# (regle 12 : une commande, pas l'oeil).
+# Le code entre accents graves est ignore : `git branch -d <nom>` reste permis.
+$motifGabarit = '<(?!https?://)[\p{L}\d][^<>]*>'
+$sansCode = '`[^`]*`'
+$gabarits = @()
+$encodageConsole = [Console]::OutputEncoding
+[Console]::OutputEncoding = [Text.Encoding]::UTF8   # git ecrit en UTF-8
+try {
+    $chemins = @('README.md', 'docs/*.md', 'transform/*.md', 'transform/*.yml')
+    $documents = @(& git -c core.quotepath=off ls-files --cached --others --exclude-standard -- $chemins |
+        Where-Object { Test-Path -LiteralPath $_ })
+    foreach ($document in $documents) {
+        $numero = 0
+        foreach ($ligne in @(Get-Content -LiteralPath $document -Encoding UTF8)) {
+            $numero++
+            foreach ($trouve in [regex]::Matches(($ligne -replace $sansCode, ''), $motifGabarit)) {
+                $gabarits += "${document}:$numero : $($trouve.Value)"
+            }
+        }
+    }
+    # Le journal est historique : seules les lignes ajoutees depuis main sont lues.
+    & git show-ref --verify --quiet "refs/remotes/origin/main"
+    if ($LASTEXITCODE -eq 0) {
+        $ajouts = @(& git diff --no-color origin/main -- JOURNAL.md 2>$null |
+            Where-Object { $_ -match '^\+(?!\+\+)' })
+        foreach ($ligne in $ajouts) {
+            foreach ($trouve in [regex]::Matches(($ligne -replace $sansCode, ''), $motifGabarit)) {
+                $gabarits += "JOURNAL.md, ligne ajoutee depuis main : $($trouve.Value)"
+            }
+        }
+    }
+} finally {
+    [Console]::OutputEncoding = $encodageConsole
+}
+if ($gabarits) { Echec "$($gabarits.Count) gabarit(s) non rempli(s)" ; Detail $gabarits }
+else { Ok "aucun gabarit non rempli : README, docs\, transform\, lignes ajoutees au journal" }
 
 # ============================================================================
 Section "4. Fichiers parasites"
