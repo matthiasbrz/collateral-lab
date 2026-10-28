@@ -35,6 +35,17 @@ C'est un choix à cette échelle, pas une limite (« Renonce, etat au 23/10/2026
 | 8. La sécurité d'abord | DVF contient des données à caractère personnel : aucune donnée versionnée ni publiée, rien du client | règles 4 et 7, section 5 d'`etat_depot` ; catalogue publié vérifié sans valeur ni chemin (15/09, 03/10) ; CI en `contents: read`, seul le déploiement du catalogue écrit sur Pages |
 | 9. Adopter le FinOps | Ne s'applique pas ici, parce que le projet n'a aucun coût variable : base locale, CI d'un dépôt public | entrepôt cloud écarté (« Renonce ») |
 
+## Choix technologiques, état au 28/10/2026
+
+Trois choix du projet relus avec les critères de Reis & Housley (ch. 4) : celui qui les
+justifie, et celui qui les fragilise.
+
+| Choix | Critère qui le justifie | Critère qui le fragilise |
+|---|---|---|
+| DuckDB en local plutôt qu'un entrepôt cloud | Projet on-premise, pas de coût financiers dans ce projet sauf un pc physique| les données sont toutes sur un seul et même poste personnel physique  |
+| dbt Core plutôt qu'un outil propriétaire | Se base sur des technologies immuables (SQL), projet ne nécessitant aucun investissement financier, n'a pas vocation d'apporter un retour sur investissement | un OSS nécessite une communauté le faisant vivre |
+| Python et dbt plutôt qu'un seul outil | modulaire dans le code, monolithique dans l’environnement | tout s'exécute au même endroit, une dépendance manquante fait échouer tout le projet |
+
 ## Historique — la transition, 08/09 → 21/09
     reseau                  disque                      entrepot DuckDB
     ------                  ------                      ---------------
