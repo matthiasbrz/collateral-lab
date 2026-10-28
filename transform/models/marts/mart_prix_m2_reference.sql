@@ -6,10 +6,10 @@
 --  nb_mutations_12m >= 5 : gouvernance ET fiabilite. Sous ce volume, un
 --                          agregat redevient une transaction identifiable,
 --                          et une mediane sur trois ventes n'est pas un prix
---                          de reference. Voir la section Gouvernance du README.
+--                          de reference. Voir docs/gouvernance.md.
 --
--- Le seuil 5 est en dur : dette inventoriee le 17/09, correction par
--- var() en semaine 7. Porte tel quel - regle 9.
+-- Le seuil est la variable dbt seuil_publication (5, dbt_project.yml) depuis
+-- le 28/09 ; il etait en dur jusque-la (dette inventoriee le 17/09).
 --
 
 SELECT 

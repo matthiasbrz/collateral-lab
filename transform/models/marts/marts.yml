@@ -36,6 +36,45 @@ models:
       - name: prix_m2_median
         data_tests: [not_null]
 
+  - name: agg_prix_m2_glissant
+    description: >
+      Grain : une ligne = commune x type de bien x mois de reference.
+      Fenetre : 12 mois glissants, mois courant inclus.
+
+      La mediane est calculee au grain transaction, jamais a partir de medianes mensuelles : quantil_cont n'est pas decomposable. Verifie le 19/08.
+      Intermediaire assume : 468 775 lignes, soit 10,05 mois de reference par transaction en moyenne.
+    columns:
+      - name: mois
+        description: >
+          mois de reference : dernier mois de la fenetre de douze
+      - name: nb_mutations_12m
+        description: >
+          volume de la fenetre, zero possible : le squelette garde les mois sans vente
+      - name: prix_m2_median_12m
+        description: >
+          comment la mediane est calculee, et pourquoi jamais a partir des medianes mensuelles
+      - name: fenetre_complete
+        description: >
+          quand elle est vraie, et quel modele la filtre
+
+  - name: agg_prix_m2_evolution
+    description: >
+      Grain : commune x type de bien x mois de reference.
+      Ajoute les indicateurs derives : dispersion et evolution sur douze mois.
+    columns:
+      - name: prix_m2_median_12m_n1
+        description: >
+          a quoi la mediane est comparee : la meme cellule douze mois plus tot
+      - name: evolution_pct
+        description: >
+          le calcul, et les deux cas ou elle est nulle
+      - name: ecart_interquartile
+        description: >
+          q3 moins q1, en euros par m2
+      - name: dispersion_relative
+        description: >
+          ecart interquartile rapporte a la mediane : ce qu'il dit de la cellule
+
   - name: mart_prix_m2_reference
     description: >
       Prix de reference au m2 par commune, type de bien et mois, sur douze
