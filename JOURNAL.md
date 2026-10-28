@@ -467,3 +467,26 @@ constat : Section des principes fusionnée avec deux gabarits et un principe en 
 
 ## 2026-10-27 - S11-J5 : Choisir une technologie
 fait : corrections du J4 : PR n°98 (28/10), 7min (contrôle des gabarits en échec sur `docs/architecture.md:18`, puis vert ; principes et journal corrigés) ; construction de la PR : verte, empreintes conformes ; Reis & Housley ch. 4, jusqu'à *Serverless Versus Servers* : lu ; critères du chapitre relevés au brouillon, les trois choix restent à relire un par un ; 1h30.
+
+## 2026-10-28 - S11-J6 : Le catalogue, et le contrôle S11
+fait : corrections du J5 : PR n°100, 15min ; Reis & Housley ch. 4, de *Serverless Versus Servers* à la fin : lu ; PR n°99, `docs/architecture.md` : choix technologiques ; PR n°101, glissant et évolution au catalogue, commentaire du mart corrigé, rituel complet vert (graphe `13 1 60`, signature `11383 104679694271579681982287`), catalogue publié vérifié (`generated_at` 2026-10-28T20:43:50.594868Z) ; point de contrôle et bilan horaire S11 ; 1h30.
+Point de contrôle S11 :
+Critère | Etat | Date
+Dette d'ouverture soldée avant tout ajout | tenu | 23/10. PR n°83 le 22/10 ; trois raisons d'étapes encore des définitions, remplacées le 23/10 avant les six courants (PR n°86).
+Un tiers distingue les deux scripts à leur nom | tenu | 22/10. PR n°84 : `etat_depot` et `reproduction_clone_neuf`, anciens noms seulement au journal.
+`docs/cycle-de-vie.md` couvre les six courants, avec des raisons | tenu | 23/10. PR n°86, corrections en PR n°89.
+Plus aucun document actuel ne décrit un état passé | tenu, avec réserve | 28/10. PR n°87 le 23/10 ; manqués puis corrigés : `docs/robustesse.md` daté comme historique (PR n°95), l'aide d'`etat_depot` (PR n°98), le commentaire du mart (PR n°102). Réserve : `docs/robustesse.md` n'est plus faux, mais historique, et toujours lié sous « Fiabilité ».
+Tolérance commitée avant la comparaison aux notaires, résultat publié tel quel | tenu | 24/10 et 25/10. Commit de 16:41, PR n°90 ; PR n°93 : 2 sur 2 cellules comparables dans ±10 % (Rouen, appartements -0,0 % ; Le Havre, appartements +1,8 %), Le Havre maisons non publié par la source. Phrase-gabarit restée au README du 24/10 au 26/10 (PR n°94).
+Glissant et évolution documentés au catalogue | tenu | 28/10. PR n°102, catalogue publié vérifié par `generated_at`.
+Reis & Housley ch. 2 à 4 lus | tenu | 28/10. Ch. 2 les 22 et 23/10, ch. 3 les 24 et 26/10, ch. 4 les 27 et 28/10 : environ 100 pages.
+Constats en fin de S11 :
+Constat | Date | Statut | Suite
+Constats reportés de la S10 : environnement existant, péremption, noms des scripts | 05/10 à 20/10 | soldés les 22 et 23/10 (PR n°84 et 87) | —
+Gabarits non remplis publiés | 24/10 | soldé le 28/10 (PR n°98) | `etat_depot` échoue sur tout chevron restant ; les blocs portent des gardes.
+Commentaire du mart : seuil dit « en dur » | 24/10 | soldé le 28/10 (PR n°102) | —
+`int_mutations_perimetre` et `ref_seuils_dispersion` sans entrée au catalogue | 28/10 | reporté | Même famille que le glissant.
+`docs/robustesse.md`, réécriture | 26/10 | reporté après l'EAEC | Avec un tableau qui s'affiche (ligne de séparation).
+Simulation d'incrémental en CI | 21/10 | glissée | À placer par la S12 ; la CI ne parcourt toujours pas la branche `is_incremental()`.
+Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté (`docs/incremental.md`).
+Livraison DVF d'octobre | 12/08 | en attente | Absente le 28/10 (construction de la PR n°98 verte, empreintes conformes) ; data.gouv annonce une mise à jour du jeu le 26/10, sans effet sur les fichiers du 76.
+Constats acceptés : signature non comparée en CI, `Etape` et erreurs PowerShell, versions de `reproduction_clone_neuf`, `dim_commune` lit `source()` depuis `marts/`, rejouer le passage 2024, `dim_type_bien` lue par quatre tests | S8 à S10 | acceptés | Inchangés.
