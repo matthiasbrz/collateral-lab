@@ -41,21 +41,21 @@ models:
       Grain : une ligne = commune x type de bien x mois de reference.
       Fenetre : 12 mois glissants, mois courant inclus.
 
-      La mediane est calculee au grain transaction, jamais a partir de medianes mensuelles : quantil_cont n'est pas decomposable. Verifie le 19/08.
+      La mediane est calculee au grain transaction, jamais a partir de medianes mensuelles : quantile_cont n'est pas decomposable. Verifie le 19/08.
       Intermediaire assume : 468 775 lignes, soit 10,05 mois de reference par transaction en moyenne.
     columns:
       - name: mois
         description: >
-          mois de reference : dernier mois de la fenetre de douze
+          Mois de reference : dernier mois de la fenetre de douze.
       - name: nb_mutations_12m
         description: >
-          volume de la fenetre, zero possible : le squelette garde les mois sans vente
+          Nombre de ventes de la fenetre. Zero possible : le squelette garde les mois sans vente, et les quantiles y sont NULL.
       - name: prix_m2_median_12m
         description: >
-          comment la mediane est calculee, et pourquoi jamais a partir des medianes mensuelles
+          Mediane du prix au m2 des ventes de la fenetre, arrondie a l'euro, calculee au grain transaction : jamais a partir des medianes mensuelles.
       - name: fenetre_complete
         description: >
-          quand elle est vraie, et quel modele la filtre
+          Vraie a partir du douzieme mois du calendrier, quand les douze mois de la fenetre existent. mart_prix_m2_reference ne publie que ces lignes.
 
   - name: agg_prix_m2_evolution
     description: >
@@ -64,16 +64,16 @@ models:
     columns:
       - name: prix_m2_median_12m_n1
         description: >
-          a quoi la mediane est comparee : la meme cellule douze mois plus tot
+          Mediane glissante de la meme cellule douze mois plus tot, sans condition sur sa fenetre : complete ou non, au-dessus du seuil ou non (constat du 28/10).
       - name: evolution_pct
         description: >
-          le calcul, et les deux cas ou elle est nulle
+          Evolution de la mediane glissante sur un an, en pourcentage arrondi au dixieme. NULL quand une des deux medianes manque. Calculee aujourd'hui meme sur une fenetre N-1 incomplete ou sous le seuil (constat du 28/10).
       - name: ecart_interquartile
         description: >
-          q3 moins q1, en euros par m2
+          Q3 moins Q1 de la fenetre, en euros par m2.
       - name: dispersion_relative
         description: >
-          ecart interquartile rapporte a la mediane : ce qu'il dit de la cellule
+          Ecart interquartile rapporte a la mediane, arrondi au millieme : plus il est haut, moins la mediane resume la cellule.
 
   - name: mart_prix_m2_reference
     description: >

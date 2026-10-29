@@ -2,7 +2,7 @@
 -- Fenetre : 12 mois glissants, mois courant inclus.
 --
 -- La mediane est calculee au grain transaction, jamais a partir de medianes
--- mensuelles : quantil_cont n'est pas decomposable. Verifie le 19/08.
+-- mensuelles : quantile_cont n'est pas decomposable. Verifie le 19/08.
 -- Intermediaire assume : 468 775 lignes, soit 10,05 mois de reference par
 -- transaction en moyenne.
 
