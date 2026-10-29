@@ -121,7 +121,7 @@ Ce qu'il ne remplace pas - la liste honnête :
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
-## Bilan Horaire à Semaine 10
+## Bilan Horaire à Semaine 11
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -134,6 +134,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S8 | ~6 h | pause | ~6 h | 10 h |
 | S9 | ~7 h 30 | pause | ~7 h 30 | 10 h |
 | S10 | ~9 h 20 | arrêté | ~9 h 20 | 10 h |
+| S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -455,7 +456,7 @@ fait : Reis & Housley ch. 2 lu en entier ; PR n°86, `docs/cycle-de-vie.md` : de
 
 ## 2026-10-24 - S11-J3 : Une source qu'on ne contrôle pas
 fait : PR n°90, protocole de validation externe : tolérance ±10 %, trois cellules et fenêtre déclarées, commit de 16:41 poussé avant toute lecture des notaires (PR fusionnée à 16:54) ; PR n°93 (25/10), comparaison au dossier de presse 2025 des notaires (base Perval, ventes du 01/07/2024 au 30/06/2025, fenêtre du projet à fin juin 2025) : 2 sur 2 cellules comparables dans la tolérance (Rouen, appartements -0,0 % ; Le Havre, appartements +1,8 %), Le Havre maisons non publié par la source ; corrections du J2 : PR n°89, 12 min ; Reis & Housley ch. 3, *What Is Data Architecture?* et *Principles of Good Data Architecture* : lus le 24/10 ; 1h23.
-constat : Le commentaire de `mart_prix_m2_reference.sql` (l. 11-12) dit le seuil de publication « en dur », alors qu'il est en `var('seuil_publication')` depuis le 28/09 | 24/10 | reporté au 28/10 | À corriger avec le catalogue, même famille : la documentation des marts.
+constat : Le commentaire de `mart_prix_m2_reference.sql` (l. 11-12) dit le seuil de publication « en dur », alors qu'il est en `var('seuil_publication')` depuis le 28/09 | 24/10 | soldé le 28/10 (PR n°102) | À corriger avec le catalogue, même famille : la documentation des marts.
 constat : Une comparaison vide fusionnée sous le nom « comparaison et résultat » (PR n°91) | 24/10 | soldé le 25/10 (PR n°93) | Tableaux sans ligne, README inchangé. Un commit se relit avant d'être nommé : `git diff --staged` avant chaque `git commit`.
 constat : Les deux gabarits du J3 publiés avec leurs chevrons par le commit du journal (PR n°92), la phrase au README et la ligne « fait » au journal | 24/10 | soldé le 28/10 | Journal corrigé le 25/10, README non : `git diff --staged` affichait la ligne, la relecture ne l'a pas vue. `etat_depot` échoue désormais sur un gabarit non rempli (règle 12).
 
@@ -469,7 +470,7 @@ constat : Section des principes fusionnée avec deux gabarits et un principe en 
 fait : corrections du J4 : PR n°98 (28/10), 7min (contrôle des gabarits en échec sur `docs/architecture.md:18`, puis vert ; principes et journal corrigés) ; construction de la PR : verte, empreintes conformes ; Reis & Housley ch. 4, jusqu'à *Serverless Versus Servers* : lu ; critères du chapitre relevés au brouillon, les trois choix restent à relire un par un ; 1h30.
 
 ## 2026-10-28 - S11-J6 : Le catalogue, et le contrôle S11
-fait : corrections du J5 : PR n°100, 15min ; Reis & Housley ch. 4, de *Serverless Versus Servers* à la fin : lu ; PR n°99, `docs/architecture.md` : choix technologiques ; PR n°101, glissant et évolution au catalogue, commentaire du mart corrigé, rituel complet vert (graphe `13 1 60`, signature `11383 104679694271579681982287`), catalogue publié vérifié (`generated_at` 2026-10-28T20:43:50.594868Z) ; point de contrôle et bilan horaire S11 ; 1h30.
+fait : corrections du J5 : PR n°100, 15min ; Reis & Housley ch. 4, de *Serverless Versus Servers* à la fin : lu ; PR n°101, `docs/architecture.md` : choix technologiques ; PR n°102, glissant et évolution au catalogue, commentaire du mart corrigé, rituel complet vert (graphe `13 1 60`, signature `11383 104679694271579681982287`), catalogue publié vérifié (`generated_at` 2026-10-28T20:43:50.594868Z) — corrigé le 29/10 : ce `generated_at` précède la fusion de la PR n°102 (20:58 UTC), la vérification ne prouvait rien ; point de contrôle et bilan horaire S11 ; 1h30.
 Point de contrôle S11 :
 Critère | Etat | Date
 Dette d'ouverture soldée avant tout ajout | tenu | 23/10. PR n°83 le 22/10 ; trois raisons d'étapes encore des définitions, remplacées le 23/10 avant les six courants (PR n°86).
@@ -477,7 +478,7 @@ Un tiers distingue les deux scripts à leur nom | tenu | 22/10. PR n°84 : `etat
 `docs/cycle-de-vie.md` couvre les six courants, avec des raisons | tenu | 23/10. PR n°86, corrections en PR n°89.
 Plus aucun document actuel ne décrit un état passé | tenu, avec réserve | 28/10. PR n°87 le 23/10 ; manqués puis corrigés : `docs/robustesse.md` daté comme historique (PR n°95), l'aide d'`etat_depot` (PR n°98), le commentaire du mart (PR n°102). Réserve : `docs/robustesse.md` n'est plus faux, mais historique, et toujours lié sous « Fiabilité ».
 Tolérance commitée avant la comparaison aux notaires, résultat publié tel quel | tenu | 24/10 et 25/10. Commit de 16:41, PR n°90 ; PR n°93 : 2 sur 2 cellules comparables dans ±10 % (Rouen, appartements -0,0 % ; Le Havre, appartements +1,8 %), Le Havre maisons non publié par la source. Phrase-gabarit restée au README du 24/10 au 26/10 (PR n°94).
-Glissant et évolution documentés au catalogue | tenu | 28/10. PR n°102, catalogue publié vérifié par `generated_at`.
+Glissant et évolution documentés au catalogue | partiel (« tenu » le 28/10) | 28/10. PR n°102, catalogue publié vérifié par `generated_at`. Corrigé le 29/10 : cinq descriptions de colonnes étaient des consignes recopiées, et ce `generated_at` précédait la fusion ; repris au S12-J1.
 Reis & Housley ch. 2 à 4 lus | tenu | 28/10. Ch. 2 les 22 et 23/10, ch. 3 les 24 et 26/10, ch. 4 les 27 et 28/10 : environ 100 pages.
 Constats en fin de S11 :
 Constat | Date | Statut | Suite
