@@ -103,3 +103,24 @@ models:
       - name: nb_mutations_12m
         data_tests: [not_null]
       # evolution_pct volontairement absente : nullable par construction.
+
+  - name: ref_seuils_dispersion
+    description: >
+      Bornes de la dispersion relative par type de bien, aux terciles des cellules publiees.
+
+      Feuille assumee depuis le 19/09 : aucun modele ne la lit. Ses deux bornes
+      decoupent la dispersion en trois classes de meme effectif ; aucun modele
+      ne les applique.
+    columns:
+      - name: type_local
+        description: >
+          Maison ou Appartement : une ligne par type de bien.
+      - name: borne_basse
+        description: >
+          Premier tercile de la dispersion relative des cellules publiees, arrondi au millieme.
+      - name: borne_haute
+        description: >
+          Deuxieme tercile de la dispersion relative, arrondi au millieme.
+      - name: mediane
+        description: >
+          Mediane de la dispersion relative, arrondie au millieme.

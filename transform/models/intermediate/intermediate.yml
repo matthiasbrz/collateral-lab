@@ -49,7 +49,7 @@ models:
       Bornes d'ecretage du prix au m2, une seule ligne.
 
       Calculees sur int_mutations_perimetre, jamais sur la table brute.
-      Recalculees a chaque execution : voir la limite n 7 du README.
+      Recalculees a chaque execution : voir la limite n 7 de docs/limites.md.
     columns:
       - name: seuil_bas
         data_tests: [not_null]
@@ -57,3 +57,19 @@ models:
         data_tests: [not_null]
       - name: mutations_perimetre
         data_tests: [not_null]
+
+  - name: int_mutations_perimetre
+    description: >
+      Une mutation du perimetre metier, avant l'ecretage des prix extremes.
+
+      Regles 1 a 5 de docs/regles_filtrage.md ; la regle 6, l'ecretage aux
+      centiles 1 et 99, s'applique ensuite dans int_mutations_filtrees.
+      ref_seuils_prix_m2 calcule ses bornes sur ce modele.
+    columns:
+      - name: id_mutation
+        description: >
+          Identifiant de la mutation : une ligne par mutation du perimetre.
+      - name: prix_m2
+        description: >
+          Valeur fonciere divisee par la surface batie, arrondie au centime,
+          avant ecretage.
