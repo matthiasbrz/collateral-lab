@@ -57,12 +57,12 @@ if (-not $Publie) {
 
 $tFusion = [datetimeoffset]::Parse($fusion, $culture)
 $tPublie = [datetimeoffset]::Parse($Publie, $culture)
-Write-Host (" fusion de la PR n.{0} : {1} UTC" -f $PR, $tFusion.UtcDateTime.ToString('yyyy-MM-dd HH:mm:ss'))
-Write-Host (" catalogue publie : {0} UTC" -f $tPublie.UtcDateTime.ToString('yyyy-MM-dd HH:mm:ss'))
+Write-Host ('{0}{1,-21} : {2} UTC' -f (' ' * 2), "fusion de la PR n.$PR", $tFusion.UtcDateTime.ToString('yyyy-MM-dd HH:mm:ss'))
+Write-Host ('{0}{1,-21} : {2} UTC' -f (' ' * 2), 'catalogue publie', $tPublie.UtcDateTime.ToString('yyyy-MM-dd HH:mm:ss'))
 
 if ($tPublie -lt $tFusion) {
     Write-Host "[ECHEC ] le catalogue publie precede la fusion : ce n'est pas encore le bon" -ForegroundColor Red
     exit 1
 }
-Write-Host "[OK ] le catalogue publie suit la fusion de la PR n.$PR" -ForegroundColor Green
+Write-Host ('[{0,-6}] le catalogue publie suit la fusion de la PR n.{1}' -f 'OK', $PR) -ForegroundColor Green
 exit 0
