@@ -15,8 +15,9 @@ Le calcul fait exactement ce qui est spécifié, et le refait à l'identique.
 
 - **Reproductible** — un clone neuf rejoue toute la chaine et vérifie le resultat
   en une commande : [`scripts/reproduction_clone_neuf.ps1`](scripts/reproduction_clone_neuf.ps1).
-- **Non-regressif** — la signature du mart est fixée depuis le 28/08/2026 et a
-  traversé un changement complet d'outil : [`docs/signature_attendue.txt`](docs/signature_attendue.txt).
+- **Non-regressif** — la signature du mart est fixée depuis le 31/10/2026, date de la
+  correction d'`evolution_pct` ; la précédente, du 28/08 au 31/10, avait traversé un
+  changement complet d'outil : [`docs/signature_attendue.txt`](docs/signature_attendue.txt).
 - **Teste** — 60 tests de données au 23/10/2026, dont un qui rend exécutable la règle de
   publication : [`transform/`](transform/).
 - **Documente** — catalogue et graphe de lignee publiés :
