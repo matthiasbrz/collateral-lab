@@ -501,7 +501,7 @@ constat : Les espaces multiples à l'intérieur d'une ligne n'ont pas survécu a
 fait : corrections du J1 : PR n°107, 10min ; Reis & Housley ch.5, *Source System Practical Details* : lu (p. 282 à 307) ; page officielle de l'examen relue le 30/10 à 11h10 : aucun écart avec le 28/10 ; sept domaines confrontés au projet, au brouillon : 5 pratiqués mais dans un état partiel, 2 jamais pratiqués ; 1h09
 
 ## 2026-10-31 - S12-J3 : Trancher, puis refermer une fuite
-fait : corrections du J2 : heure de consultation (11:10) ; Reis & Housley ch. 5, de *Whom You'll Work With* à la fin : lu (p. 307 à 320) ; PR n°109, ligne Génération relue avec le chapitre ; PR n°110, `evolution_pct` seulement sur une fenêtre N-1 complète et au-dessus du seuil : test singulier en échec sur 5508 cellules, zéro après la correction, évolutions publiées de 10393 à 4885, 11 383 cellules avant comme après, nouvel étalon `104651625292808720823545`, graphe `13 1 61` ; 52minutes.
+fait : corrections du J1 et du J2 : heure de publication du J1 non relevée, heure de consultation du J2 (11:10) : heure de consultation (11:10) ; Reis & Housley ch. 5, de *Whom You'll Work With* à la fin : lu (p. 307 à 320) ; PR n°109, ligne Génération relue avec le chapitre ; PR n°110, `evolution_pct` seulement sur une fenêtre N-1 complète et au-dessus du seuil : test singulier en échec sur 5508 cellules, zéro après la correction, évolutions publiées de 10393 à 4885, 11 383 cellules avant comme après, nouvel étalon `104651625292808720823545`, graphe `13 1 61` ; 52minutes.
 Décision sur la certification, 31/10 à 13:00 :
 Critère | Constat | Pèse vers
 Ce que l'examen prouverait que le dépôt public ne prouve pas | maitriser le développement et la gestion d'un projet dbt de bout en bout (identification des sources, ingestion des données, définitions de modèles et tests, gouvernance de la donnée, débogage) | go
@@ -509,4 +509,4 @@ Couverture des sept domaines | 5 partiels, 2 jamais pratiqués (gouvernance, ét
 Coût | 200 $ ; 5h de préparation sous le plafond de 10 h ; une place dans la file des cours (règle 1) | go
 Calendrier | six mois de dbt le 03/03/2027 ; examen en 1.11, projet en 1.12.4, dbt Core 2.0 annoncé ; titre valable deux ans | go
 Décision : go, pour 03/2027.
-Ce qui la ferait changer : refus de la part des supérieurs de passer cette certification.
+Ce qui la ferait changer : un programme qui change avant la date visée (version, domaines), ou une préparation qui ne tient pas sous le plafond de 10 h ; le financement ne change que qui paie.f
