@@ -64,10 +64,10 @@ models:
     columns:
       - name: prix_m2_median_12m_n1
         description: >
-          Mediane glissante de la meme cellule douze mois plus tot, sans condition sur sa fenetre : complete ou non, au-dessus du seuil ou non (constat du 28/10).
+          Mediane glissante de la meme cellule douze mois plus tot, retenue seulement si sa fenetre etait complete et au-dessus du seuil de publication ; NULL sinon.
       - name: evolution_pct
         description: >
-          Evolution de la mediane glissante sur un an, en pourcentage arrondi au dixieme. NULL quand une des deux medianes manque. Calculee aujourd'hui meme sur une fenetre N-1 incomplete ou sous le seuil (constat du 28/10).
+          Evolution de la mediane glissante sur un an, en pourcentage arrondi au dixieme. NULL quand une des deux medianes manque, donc aussi quand la fenetre N-1 est incomplete ou sous le seuil : publiee a cote de la mediane, elle rendrait la mediane N-1 lisible.
       - name: ecart_interquartile
         description: >
           Q3 moins Q1 de la fenetre, en euros par m2.
