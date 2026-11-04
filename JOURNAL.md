@@ -121,7 +121,7 @@ Ce qu'il ne remplace pas - la liste honnête :
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
-## Bilan Horaire à Semaine 11
+## Bilan Horaire à Semaine 12
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -135,6 +135,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S9 | ~7 h 30 | pause | ~7 h 30 | 10 h |
 | S10 | ~9 h 20 | arrêté | ~9 h 20 | 10 h |
 | S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
+| S12 | ~5 h 50 | arrêté | ~5 h 50| 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -501,7 +502,7 @@ constat : Les espaces multiples à l'intérieur d'une ligne n'ont pas survécu a
 fait : corrections du J1 : PR n°107, 10min ; Reis & Housley ch.5, *Source System Practical Details* : lu (p. 282 à 307) ; page officielle de l'examen relue le 30/10 à 11h10 : aucun écart avec le 28/10 ; sept domaines confrontés au projet, au brouillon : 5 pratiqués mais dans un état partiel, 2 jamais pratiqués ; 1h09
 
 ## 2026-10-31 - S12-J3 : Trancher, puis refermer une fuite
-fait : corrections du J1 et du J2 : heure de publication du J1 non relevée, heure de consultation du J2 (11:10) : heure de consultation (11:10) ; Reis & Housley ch. 5, de *Whom You'll Work With* à la fin : lu (p. 307 à 320) ; PR n°109, ligne Génération relue avec le chapitre ; PR n°110, `evolution_pct` seulement sur une fenêtre N-1 complète et au-dessus du seuil : test singulier en échec sur 5508 cellules, zéro après la correction, évolutions publiées de 10393 à 4885, 11 383 cellules avant comme après, nouvel étalon `104651625292808720823545`, graphe `13 1 61` ; 52minutes.
+fait : corrections du J1 et du J2 : heure de publication du J1 non relevée, heure de consultation du J2 (11:10) ; Reis & Housley ch. 5, de *Whom You'll Work With* à la fin : lu (p. 307 à 320) ; PR n°109, ligne Génération relue avec le chapitre ; PR n°110, `evolution_pct` seulement sur une fenêtre N-1 complète et au-dessus du seuil : test singulier en échec sur 5508 cellules, zéro après la correction, évolutions publiées de 10393 à 4885, 11 383 cellules avant comme après, nouvel étalon `104651625292808720823545`, graphe `13 1 61` ; 52minutes.
 Décision sur la certification, 31/10 à 13:00 :
 Critère | Constat | Pèse vers
 Ce que l'examen prouverait que le dépôt public ne prouve pas | maitriser le développement et la gestion d'un projet dbt de bout en bout (identification des sources, ingestion des données, définitions de modèles et tests, gouvernance de la donnée, débogage) | go
@@ -509,4 +510,45 @@ Couverture des sept domaines | 5 partiels, 2 jamais pratiqués (gouvernance, ét
 Coût | 200 $ ; 5h de préparation sous le plafond de 10 h ; une place dans la file des cours (règle 1) | go
 Calendrier | six mois de dbt le 03/03/2027 ; examen en 1.11, projet en 1.12.4, dbt Core 2.0 annoncé ; titre valable deux ans | go
 Décision : go, pour 03/2027.
-Ce qui la ferait changer : un programme qui change avant la date visée (version, domaines), ou une préparation qui ne tient pas sous le plafond de 10 h ; le financement ne change que qui paie.f
+Ce qui la ferait changer : un programme qui change avant la date visée (version, domaines), ou une préparation qui ne tient pas sous le plafond de 10 h ; le financement ne change que qui paie.
+
+## 2026-11-02 - S12-J4 : Hors dépôt
+fait : hors dépôt, 30 min.
+
+## 2026-11-03 - S12-J5 : Hors dépôt
+fait : hors dépôt, 25 min.
+
+## 2026-11-04 - S12-J6 : L'oral, puis clore le palier 1
+fait : corrections du J3 : PR n°112, 17min, et deux fautes de l'entrée du J3 corrigées ici ; oral du critère du 12/08, chronométré : résultat au bilan du palier 1 ; passage planifié du 02/11 relu dans l'historique ; point de contrôle et bilan horaire S12 ; bilan du palier 1 ; S13 écrite ; xmin.
+Point de contrôle S12 :
+Critère | Etat | Date
+Dette d'ouverture soldée avant tout ajout | tenu | 29/10. PR n°104, fusionnée avant le catalogue (PR n°105).
+Publication vérifiée par une garde vue en rouge sur le cas du 28/10 | tenu | 29/10. Code 1 avant d'être crue (PR n°104) ; heures du J1 mal relevées, annotées le 30/10 (PR n°107).
+13 modèles sur 13 au catalogue | tenu | 29/10. PR n°105, comptés par une commande (11 sur 13 avant).
+Ch. 5 lu en entier, ligne Génération relue avec lui | tenu | 31/10. P. 266 à 320 en trois séances ; PR n°109, une phrase corrigée le jour même (PR n°112).
+Décision go / no-go datée, ses critères avec elle, rien d'extérieur au projet | tenu après correction | 31/10. PR n°111 ; une phrase hors projet retirée le jour même (PR n°112).
+Défaut d'`evolution_pct` compté en rouge, signature déplacée pour lui seul | tenu | 31/10. PR n°110 : 5 508 cellules en échec, puis 0 ; évolutions publiées de 10 393 à 4 885 ; 11 383 cellules avant comme après.
+Deux séances hors dépôt | faites | 02/11 et 03/11. 30 et 25 min, jugées hors dépôt (règle 7).
+Moitié orale du critère du 12/08, chronométrée | tenu | 04/11. Détail au bilan du palier 1.
+Bilan du palier 1, S13 écrite | bilan fait, S13 écrite | 04/11.
+Annotation du 04/11, la décision du 31/10 n'est pas réécrite : critère 1, l'examen prouverait surtout ce que le dépôt ne montre pas (gouvernance, état, tests unitaires dbt) ; critère 2, deux domaines jamais pratiqués allongent la préparation, ils ne pèsent pas vers le go ; critère 3, 5 h est sans doute court, à recalibrer en S13. Le go pour 03/2027 tient.
+Constats en fin de S12 :
+Constat | Date | Statut | Suite
+Catalogue incomplet, fenêtre N-1 de l'évolution, espaces perdus au collage | 28/10 et 29/10 | soldés du 29 au 31/10 | PR n°105, 110 et 107.
+Passage planifié du 02/11, vu absent à 14:38 | 02/11 | soldé le 04/11, sans changement | Arrivé le 02/11 à 17:04 ; retards de 7 à 9 h les 12, 19 et 26/10. Un abandon ne se conclut qu'après la fin du lundi (constat du 19/10).
+`ref_seuils_dispersion.sql` renvoie au README, qui ne parle plus de dispersion depuis le 26/09 | 29/10 | ouvert | Garder ou retirer le modèle, en S13.
+Trois documents de conception sans lien depuis le README (modelisation, incremental, cycle-de-vie) ; 60 tests annoncés, 61 depuis le 31/10 | 04/11 | ouvert | Une PR en S13.
+Simulation d'incrémental en CI | 21/10 | glissée deux fois | S13, avec l'orchestration.
+`docs/robustesse.md`, réécriture | 26/10 | reporté après l'EAEC | 11/11 ou S14.
+Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté.
+Livraison DVF d'octobre | 12/08 | en attente | Absente le 02/11 à 14:38 (passage manuel vert, empreintes conformes).
+Constats acceptés de la S11 | S8 à S10 | acceptés | Inchangés.
+Bilan du palier 1, du 13/08 au 04/11 :
+Critère du 12/08 : « En partant d'un dépôt vide, je livre un modèle en étoile testé, documenté et déployé par CI, et je justifie chaque arbitrage de modélisation à l'oral en 10 minutes. »
+Moitié | Etat | Pièces
+Première | tenue, avec réserve | Dépôt vide le 13/08 ; étoile les 10 et 12/10, snapshot le 13/10 ; 61 tests de données, 38 tests unitaires, signature du mart ; catalogue publié, 13 modèles sur 13 depuis le 29/10 ; construction et publication à chaque fusion depuis le 03/10, qualité à chaque PR depuis le 08/10 ; reproduction depuis un clone neuf. Réserve : `docs/modelisation.md` sans lien depuis le README.
+Seconde | tenue | 04/11 : 8min45s, 10 arbitrages sur 10, manqués : aucun. Le 14/10, seules les dimensions avaient été défendues (1 min, puis 1 min 40).
+Heures : environ 100 h de roadmap en douze semaines (bilan horaire) ; plafond dépassé de S1 à S3, tenu depuis S4.
+Livrables : S1 à S3, SQL sur DuckDB, tests à la main, Python en modules et pytest ; S4 à S6, la chaîne portée dans dbt et réconciliée ; S7 et S8, README, versions épinglées, CI de publication, démonstration ; S9 et S10, CI qualité, étoile, snapshot, incrémental par millésime, Reis & Housley ch. 1 ; S11 et S12, ch. 2 à 5, validation externe, architecture, catalogue complet, défaut de l'évolution corrigé.
+Glissé : la simulation d'incrémental en CI, deux fois ; la réécriture de `docs/robustesse.md` ; les seuils p1/p99 par millésime, faute de livraison ; le catalogue du glissant et de l'évolution, du 12/10 au 29/10.
+Renoncé : entrepôt cloud, `dbt-utils`, autres départements, optimisation du glissant, `--warn-error-options` ; publication externe, le 08/10.
