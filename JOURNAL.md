@@ -135,7 +135,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S9 | ~7 h 30 | pause | ~7 h 30 | 10 h |
 | S10 | ~9 h 20 | arrêté | ~9 h 20 | 10 h |
 | S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
-| S12 | ~5 h 50 | arrêté | ~5 h 50| 10 h |
+| S12 | ~5 h 18 | arrêté | ~5 h 18 | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -519,7 +519,7 @@ fait : hors dépôt, 30 min.
 fait : hors dépôt, 25 min.
 
 ## 2026-11-04 - S12-J6 : L'oral, puis clore le palier 1
-fait : corrections du J3 : PR n°112, 17min, et deux fautes de l'entrée du J3 corrigées ici ; oral du critère du 12/08, chronométré : résultat au bilan du palier 1 ; passage planifié du 02/11 relu dans l'historique ; point de contrôle et bilan horaire S12 ; bilan du palier 1 ; S13 écrite ; xmin.
+fait : corrections du J3 : PR n°112, 17min, et deux fautes de l'entrée du J3 corrigées ici ; oral du critère du 12/08, chronométré : résultat au bilan du palier 1 ; passage planifié du 02/11 relu dans l'historique ; point de contrôle et bilan horaire S12 ; bilan du palier 1 ; S13 écrite ; 40min.
 Point de contrôle S12 :
 Critère | Etat | Date
 Dette d'ouverture soldée avant tout ajout | tenu | 29/10. PR n°104, fusionnée avant le catalogue (PR n°105).
@@ -547,7 +547,7 @@ Bilan du palier 1, du 13/08 au 04/11 :
 Critère du 12/08 : « En partant d'un dépôt vide, je livre un modèle en étoile testé, documenté et déployé par CI, et je justifie chaque arbitrage de modélisation à l'oral en 10 minutes. »
 Moitié | Etat | Pièces
 Première | tenue, avec réserve | Dépôt vide le 13/08 ; étoile les 10 et 12/10, snapshot le 13/10 ; 61 tests de données, 38 tests unitaires, signature du mart ; catalogue publié, 13 modèles sur 13 depuis le 29/10 ; construction et publication à chaque fusion depuis le 03/10, qualité à chaque PR depuis le 08/10 ; reproduction depuis un clone neuf. Réserve : `docs/modelisation.md` sans lien depuis le README.
-Seconde | tenue | 04/11 : 8min45s, 10 arbitrages sur 10, manqués : aucun. Le 14/10, seules les dimensions avaient été défendues (1 min, puis 1 min 40).
+Seconde | tenue | 04/11 : 8min45s, 10 arbitrages sur 10, manqués : aucun. Le 14/10, seules les dimensions avaient été défendues (1 min, puis 1 min 40) (annoté le 05/11 : 10 sur 10 au compte ; trois raisons inexactes sur la liste, le grain, le seuil et la fenêtre N-1, delete+insert contre merge, reprises à voix haute le 05/11).
 Heures : environ 100 h de roadmap en douze semaines (bilan horaire) ; plafond dépassé de S1 à S3, tenu depuis S4.
 Livrables : S1 à S3, SQL sur DuckDB, tests à la main, Python en modules et pytest ; S4 à S6, la chaîne portée dans dbt et réconciliée ; S7 et S8, README, versions épinglées, CI de publication, démonstration ; S9 et S10, CI qualité, étoile, snapshot, incrémental par millésime, Reis & Housley ch. 1 ; S11 et S12, ch. 2 à 5, validation externe, architecture, catalogue complet, défaut de l'évolution corrigé.
 Glissé : la simulation d'incrémental en CI, deux fois ; la réécriture de `docs/robustesse.md` ; les seuils p1/p99 par millésime, faute de livraison ; le catalogue du glissant et de l'évolution, du 12/10 au 29/10.
