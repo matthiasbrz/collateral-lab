@@ -162,6 +162,7 @@ Statut au 23/10/2026 : jointure vers `dim_commune` absente du modele actuel (le 
 `INTERVAL` et sous-requete scalaire toujours presents, renonces avec l'optimisation du glissant ; seuil de publication en
 `var('seuil_publication')` depuis le 28/09 ; `current_date` retire en portage (aucune fonction instable : controle par le rituel) ;
 `ref_seuils_dispersion` gardee comme feuille assumee, decision du 19/09.
+Statut au 05/11/2026 : `ref_seuils_dispersion` retiree. Sa raison du 19/09, les seuils cites par le README, avait disparu le 26/09 ; aucun modele ni test ne la lisait, signature du mart inchangee.
 
 ## Scripts sans equivalent modele
 sql/00_raw_*.sql reste Python - ingestion, par la frontiere du 8 septembre.
