@@ -572,3 +572,4 @@ Le projet | DuckDB en local suffit à cette échelle : médiane glissante en 0,0
 Décision : renoncé, jusqu'à son déclencheur.
 Déclencheur : un entrepôt cloud nommé, avec une date de besoin ; ce jour-là, le ch. 6 (*Storage*) s'ouvre avec lui.
 Phrase retirée en PR n°112, relue dans la PR n°111 (commit f550cd8) : elle ne nomme ni personne ni aucune organisation ; anodine, le retrait suffit.
+fait : dette S12 soldée en tête, PR n°114 : trois liens au README, 61 tests au README et dans `docs/cycle-de-vie.md`, somme horaire S12 à 5 h 18, durée du J6 ; deux décisions et la phrase de la PR n°111 ci-dessous ; Reis & Housley ch. 7 : p. 392 à 450 au total, lu jusqu'à p. 409 ; `ref_seuils_dispersion` retirée, PR n°115 : aucun lecteur, graphe 12 1 61, signature inchangée ; 1h06.
