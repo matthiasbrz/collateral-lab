@@ -18,7 +18,7 @@ Le calcul fait exactement ce qui est spécifié, et le refait à l'identique.
 - **Non-regressif** — la signature du mart est fixée depuis le 31/10/2026, date de la
   correction d'`evolution_pct` ; la précédente, du 28/08 au 31/10, avait traversé un
   changement complet d'outil : [`docs/signature_attendue.txt`](docs/signature_attendue.txt).
-- **Teste** — 60 tests de données au 23/10/2026, dont un qui rend exécutable la règle de
+- **Teste** — 61 tests de données au 31/10/2026, dont deux qui rendent exécutable la règle de
   publication : [`transform/`](transform/).
 - **Documente** — catalogue et graphe de lignee publiés :
   [matthiasbrz.github.io/collateral-lab](https://matthiasbrz.github.io/collateral-lab/).
@@ -89,6 +89,9 @@ puis les commandes de « Lancer ». Appliqué le 22/10/2026 sur un poste dont la
 
 **Conception**
 - [Architecture et frontière Python / dbt](docs/architecture.md)
+- [Modélisation dimensionnelle : l'étoile et ses arbitrages](docs/modelisation.md)
+- [Incrémental par millésime : la conception](docs/incremental.md)
+- [Le projet dans le cycle de vie du data engineering](docs/cycle-de-vie.md)
 - [Règles de filtrage et volumes écartés](docs/regles_filtrage.md)
 - [Référentiel des communes](docs/dimension_commune.md)
 - [Validation externe : les prix des notaires](docs/validation.md)
