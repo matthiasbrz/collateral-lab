@@ -552,3 +552,23 @@ Heures : environ 100 h de roadmap en douze semaines (bilan horaire) ; plafond d�
 Livrables : S1 à S3, SQL sur DuckDB, tests à la main, Python en modules et pytest ; S4 à S6, la chaîne portée dans dbt et réconciliée ; S7 et S8, README, versions épinglées, CI de publication, démonstration ; S9 et S10, CI qualité, étoile, snapshot, incrémental par millésime, Reis & Housley ch. 1 ; S11 et S12, ch. 2 à 5, validation externe, architecture, catalogue complet, défaut de l'évolution corrigé.
 Glissé : la simulation d'incrémental en CI, deux fois ; la réécriture de `docs/robustesse.md` ; les seuils p1/p99 par millésime, faute de livraison ; le catalogue du glissant et de l'évolution, du 12/10 au 29/10.
 Renoncé : entrepôt cloud, `dbt-utils`, autres départements, optimisation du glissant, `--warn-error-options` ; publication externe, le 08/10.
+
+## 2026-11-05 - S13-J1 : Solder la S12, puis trancher
+Décision sur l'ordre des cours, 05/11 :
+Critère | Constat | Pèse vers
+Règle 1, un cours à la fois | Reis & Housley ouvert depuis le 14/10 ; la préparation dbt serait un second cours | l'un après l'autre
+Ce que le palier 2 pratique | l'ingestion maintenant (ch. 7), la modélisation et la transformation ensuite (ch. 8) | Reis & Housley d'abord
+Calendrier | examen visé en 03/2027 ; préparation chiffrée demain depuis le guide 1.11 | dbt en janvier et février
+Règle 2, un tiers de théorie | à environ 2 min/page, les ch. 7 et 8 pèsent quelques heures sur huit semaines | à trancher
+Décision : Reis & Housley ch. 7 et 8 jusqu'en décembre, la préparation dbt en janvier et février, l'examen en mars ; la documentation de l'orchestrateur sert de référence au projet, ce n'est pas un cours.
+Frontière : la documentation appliquée à collateral-lab est une référence ; un tutoriel suivi sur son propre exemple est un cours.
+Règle 2 : réécrite, la lecture ouvre chaque séance mixte au rythme mesuré ; plus de ratio hebdomadaire.
+Ce qui la ferait changer : une préparation dbt, chiffrée demain, qui ne tient pas en janvier et février sous le plafond ; l'entrepôt cloud rouvert par son déclencheur.
+Décision sur l'entrepôt cloud, 05/11 :
+Critère | Constat | Pèse vers
+Règle 1 | un entrepôt cloud ouvrirait un second cours pendant Reis & Housley | attendre
+Besoin | aucun entrepôt nommé, aucune date | attendre
+Le projet | DuckDB en local suffit à cette échelle : médiane glissante en 0,08 s (`docs/architecture.md`, 29/10) | attendre
+Décision : renoncé, jusqu'à son déclencheur.
+Déclencheur : un entrepôt cloud nommé, avec une date de besoin ; ce jour-là, le ch. 6 (*Storage*) s'ouvre avec lui.
+Phrase retirée en PR n°112, relue dans la PR n°111 (commit f550cd8) : elle ne nomme ni personne ni aucune organisation ; anodine, le retrait suffit.
