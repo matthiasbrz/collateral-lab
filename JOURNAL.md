@@ -554,6 +554,7 @@ Glissé : la simulation d'incrémental en CI, deux fois ; la réécriture de `do
 Renoncé : entrepôt cloud, `dbt-utils`, autres départements, optimisation du glissant, `--warn-error-options` ; publication externe, le 08/10.
 
 ## 2026-11-05 - S13-J1 : Solder la S12, puis trancher
+fait : dette S12 soldée en tête, PR n°114 : trois liens au README, 61 tests au README et dans `docs/cycle-de-vie.md`, somme horaire S12 à 5 h 18, durée du J6 ; deux décisions et la phrase de la PR n°111 ci-dessous ; Reis & Housley ch. 7 : p. 392 à 449 au total, lu jusqu'à p. 409 ; `ref_seuils_dispersion` retirée, PR n°115 : aucun lecteur, graphe 12 1 61, signature inchangée ; 1h06.
 Décision sur l'ordre des cours, 05/11 :
 Critère | Constat | Pèse vers
 Règle 1, un cours à la fois | Reis & Housley ouvert depuis le 14/10 ; la préparation dbt serait un second cours | l'un après l'autre
@@ -572,4 +573,25 @@ Le projet | DuckDB en local suffit à cette échelle : médiane glissante en 0,0
 Décision : renoncé, jusqu'à son déclencheur.
 Déclencheur : un entrepôt cloud nommé, avec une date de besoin ; ce jour-là, le ch. 6 (*Storage*) s'ouvre avec lui.
 Phrase retirée en PR n°112, relue dans la PR n°111 (commit f550cd8) : elle ne nomme ni personne ni aucune organisation ; anodine, le retrait suffit.
-fait : dette S12 soldée en tête, PR n°114 : trois liens au README, 61 tests au README et dans `docs/cycle-de-vie.md`, somme horaire S12 à 5 h 18, durée du J6 ; deux décisions et la phrase de la PR n°111 ci-dessous ; Reis & Housley ch. 7 : p. 392 à 450 au total, lu jusqu'à p. 409 ; `ref_seuils_dispersion` retirée, PR n°115 : aucun lecteur, graphe 12 1 61, signature inchangée ; 1h06.
+
+## 2026-11-06 - S13-J2 : Chiffrer la préparation, poser les critères
+fait : corrections du J1 : ligne fait remontée sous son titre, ch. 7 p. 392 à 449 ; Reis & Housley ch. 7, *Batch* et *Message and Stream Ingestion Considerations* lus, puis *Ways to Ingest Data* jusqu'à p. 437 ; préparation dbt chiffrée par domaine et critères de l'orchestrateur, ci-dessous ; 52min.
+Préparation dbt, chiffrée le 06/11 depuis le guide 1.11, 31 points : 15 min par point déjà prouvé dans le dépôt, 30 min par point partiel, 1 h par point jamais pratiqué.
+Domaine | Prouvé, partiel, jamais | Heures
+Développer et optimiser les modèles | 4, 4, 6 | 9 h
+Gouvernance des modèles | 0, 0, 3 | 3 h
+Débogage | 2, 2, 1 | 2 h 30
+Pipelines | 0, 1, 1 | 1 h 30
+Tests | 2, 0, 1 | 1 h 30
+Dépendances externes | 1, 0, 1 | 1 h 15
+État | 0, 0, 2 | 2 h
+Entraînement : questions d'exemple refaites, puis un examen blanc chronométré | | 2 h
+Total : 22 h 45, contre 5 h le 31/10 ; sur les huit semaines du 07/01 au 03/03, environ 2 h 50 par semaine, sous le plafond de 10 h : l'ordre du 05/11 tient.
+Exercices dans le dépôt : contrat et contraintes sur le mart, puis une version 2 (gouvernance) ; un test unitaire de la fenêtre N-1 d'`evolution_pct` (tests) ; `state:modified+` en CI contre le manifeste publié, puis `dbt retry` (état).
+Critères du choix de l'orchestrateur, 06/11, sans conclusion (elle vient samedi) :
+Critère | Fait du projet | Pèse vers
+Interopérabilité | dbt gère déjà son DAG (12 modèles, 1 snapshot, 61 tests) : Dagster lit le manifeste et en fait des actifs (`dagster-dbt`) ; Airflow passe par un paquet tiers, Cosmos, ou par une commande `dbt build` | Dagster
+Coût | un poste Windows : Airflow n'y tourne pas nativement, WSL2 ou conteneur (sa documentation) ; Dagster s'y installe, avec une réserve de sa documentation sur certaines intégrations | Neutre
+Monolithe ou modulaire | un seul environnement épinglé, 65 paquets dans `constraints.txt` : Dagster s'y ajoute (+55 paquets, résolution pip du 06/11 sous Linux) ; Airflow et Cosmos aussi (+104), mais Airflow recommande son propre fichier de contraintes (694 épinglages) et, sous Windows, un second environnement | Neutre
+Aujourd'hui contre demain | Airflow est le plus répandu des deux (3.3.2, 17/09/2026) ; Dagster, plus récent (1.13), part des actifs plutôt que des tâches | Airflow
+Construire ou acheter | les deux sont libres ; Dagster et Cosmos sont portés par des éditeurs, comme dbt Core (29/10) ; Airflow par la fondation Apache ; construire, c'est garder `lancer.txt` sans outil | Neutre
