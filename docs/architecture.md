@@ -133,17 +133,16 @@ Consequence pratique : collateral.load (ex-build.py, renomme le 28/09) recharge 
 le controle sera vert en permanence.
 Il ne se declenchera que dans un seul cas - quelqu'un qui reprend le depot six mois plus tard sans savoir a quoi s'attendre.
 
-## Renonce, etat au 23/10/2026
+## Renonce, etat au 07/11/2026
 
 - Entrepot cloud. Motif d'origine : ne rentre pas avant l'echeance ; la volumetrie tient dans une base locale.
-- Orchestration : revient au palier 2 de la roadmap, apres la S12.
 - dbt-utils. Un paquet externe le mois de l'entretien est une variable en trop.
 - Extension a d'autres departements. Le volume ne prouverait rien de plus.
 - Optimisation du glissant (defauts 2 et 3 ci-dessous) et `--warn-error-options`.
 
 Historique : section ouverte sous le titre "Ecarte d'ici le 10 octobre" ; les snapshots
 en sont sortis le 13/10 (`snap_cog_communes`). `dim_commune` ne lit pas encore 
-cet historique ; voir `docs/modelisation.md`, "Ecart".
+cet historique ; voir `docs/modelisation.md`, "Ecart". L'orchestration en est sortie le 07/11 : Dagster, voir "Choix technologiques".
 
 ## Defauts connus des modeles a porter - releves le 17/09/2026
 
@@ -183,6 +182,6 @@ depuis ce matin.
 ## Figer les dependances directes et transitives
 Versions exactes de toutes les dependances, directes et transitives.
 Pourquoi pas uniquement les directes ? Risque qu'une version tierce casse dbt en CI, un jour, sans changement. Ce qui n'est pas declare derive.
-Genere le 01/10/2026 par : python -m pip freeze --exclude-editable
+Genere par : python -m pip freeze --exclude-editable (premiere generation le 01/10/2026, date de la derniere en tete du fichier)
 Usage : pip install -e ".[dev]" -c constraints.txt
 A regenerer dans le meme commit que tout changement dans pyproject.toml.
