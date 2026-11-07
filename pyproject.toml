@@ -17,6 +17,10 @@ dev = [
     "pytest==9.1.1", 
     "ruff==0.16.6",
 ]
+orchestration = [
+    "dagster==1.13.29",
+    "dagster-webserver==1.13.29",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

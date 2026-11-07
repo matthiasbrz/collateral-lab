@@ -40,3 +40,6 @@ logs/
 **/logs/
 transform/.user.yml
 docs/plans/*.json
+
+# Dagster : dossier temporaire de dagster dev (07/11)
+.tmp_dagster_home_*/
