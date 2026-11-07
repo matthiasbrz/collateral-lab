@@ -85,6 +85,17 @@ Poste resté longtemps sans construire, ou au moindre doute : base neuve. Elle n
 
 puis les commandes de « Lancer ». Appliqué le 22/10/2026 sur un poste dont la base datait du 17/10 : `Binder Error`, aucune relation orpheline, base neuve, signature retrouvée.
 
+### Lancer avec Dagster
+
+La même chaîne, lancée par Dagster, avec la signature du mart vérifiée à la fin (07/11/2026). Comme les commandes de « Lancer », elle suppose une base neuve : le pipeline refuse une base existante.
+
+```
+python -m pip install -e ".[dev,orchestration]" -c constraints.txt
+dagster job execute -m collateral.orchestration -j chaine
+```
+
+`dagster dev -m collateral.orchestration` ouvre l'interface sur `http://127.0.0.1:3000` ; la CI lance toujours `scripts/lancer.txt`.
+
 ## En savoir plus
 
 **Conception**
