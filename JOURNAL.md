@@ -595,3 +595,4 @@ Coût | un poste Windows : Airflow n'y tourne pas nativement, WSL2 ou conteneur 
 Monolithe ou modulaire | un seul environnement épinglé, 65 paquets dans `constraints.txt` : Dagster s'y ajoute (+55 paquets, résolution pip du 06/11 sous Linux) ; Airflow et Cosmos aussi (+104), mais Airflow recommande son propre fichier de contraintes (694 épinglages) et, sous Windows, un second environnement | Neutre
 Aujourd'hui contre demain | Airflow est le plus répandu des deux (3.3.2, 17/09/2026) ; Dagster, plus récent (1.13), part des actifs plutôt que des tâches | Airflow
 Construire ou acheter | les deux sont libres ; Dagster et Cosmos sont portés par des éditeurs, comme dbt Core (29/10) ; Airflow par la fondation Apache ; construire, c'est garder `lancer.txt` sans outil | Neutre
+Annotation du 07/11 : la ligne Coût pèse vers Dagster, son propre fait le dit (WSL2 ou conteneur pour Airflow sous Windows) ; "Neutre" ne tenait pas.
