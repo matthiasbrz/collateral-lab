@@ -596,3 +596,7 @@ Monolithe ou modulaire | un seul environnement épinglé, 65 paquets dans `const
 Aujourd'hui contre demain | Airflow est le plus répandu des deux (3.3.2, 17/09/2026) ; Dagster, plus récent (1.13), part des actifs plutôt que des tâches | Airflow
 Construire ou acheter | les deux sont libres ; Dagster et Cosmos sont portés par des éditeurs, comme dbt Core (29/10) ; Airflow par la fondation Apache ; construire, c'est garder `lancer.txt` sans outil | Neutre
 Annotation du 07/11 : la ligne Coût pèse vers Dagster, son propre fait le dit (WSL2 ou conteneur pour Airflow sous Windows) ; "Neutre" ne tenait pas.
+
+## 2026-11-07 - S13-J3 : Le pipeline, lancé par l'orchestrateur
+fait : Reis & Housley ch. 7 lu en entier, p. 437 à 449 aujourd'hui ; PR n°118 : ligne Ingestion relue avec le chapitre, instantané et non différentiel ; PR n°119 : Dagster choisi contre les critères du 06/11, ligne Coût annotée, installé et épinglé (extra `orchestration`, 5 lignes ajoutées à `constraints.txt`), puis la chaîne de `lancer.txt` lancée par Dagster : garde de base neuve vue en rouge, puis sur base neuve, signature 11383 104651625292808720823545 ; 46min.
+constat : Dagster envoie par défaut des statistiques d'usage anonymes, signalé à chaque exécution | 07/11 | ouvert | Les couper par un `dagster.yaml` dans un `DAGSTER_HOME` hors du dépôt, ou l'accepter, en S14.
