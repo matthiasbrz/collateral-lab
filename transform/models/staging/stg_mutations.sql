@@ -9,8 +9,8 @@
 
 {{ config(
     materialized='incremental',
-    incremental_strategy='delete+insert',
-    unique_key='millesime',
+    incremental_strategy='merge',
+    unique_key='id_mutation',
     on_schema_change='fail'
 ) }}
 
