@@ -136,6 +136,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S10 | ~9 h 20 | arrêté | ~9 h 20 | 10 h |
 | S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
 | S12 | ~5 h 18 | arrêté | ~5 h 18 | 10 h |
+| S13 | 4 h 34  | arrêté | 4 h 34  | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -601,3 +602,37 @@ Annotation du 07/11 : la ligne Coût pèse vers Dagster, son propre fait le dit 
 fait : Reis & Housley ch. 7 lu en entier, p. 437 à 449 aujourd'hui ; PR n°118 : ligne Ingestion relue avec le chapitre, instantané et non différentiel ; PR n°119 : Dagster choisi contre les critères du 06/11, ligne Coût annotée, installé et épinglé (extra `orchestration`, 47 épinglages ajoutés à `constraints.txt`, aucun existant modifié ; les +55 du 06/11 comptaient aussi `dagster-dbt`), puis la chaîne de `lancer.txt` lancée par Dagster : garde de base neuve vue en rouge, puis sur base neuve, signature 11383 104651625292808720823545 ; 46min.
 constat : Dagster envoie par défaut des statistiques d'usage anonymes ; l'avis ne s'est affiché qu'à la première exécution (08:59:24), la collecte continue sans message | 07/11 | ouvert | Les couper par un `dagster.yaml` dans un `DAGSTER_HOME` hors du dépôt, ou l'accepter, en S14.
 constat : `dagster job execute`, la commande du README, est marqué remplacé par `dg launch --job` (SupersessionWarning à chaque exécution) ; `dg` n'est pas installé | 07/11 | ouvert | Garder la commande, ou passer à `dg` avec son paquet épinglé, en S14.
+
+## 2026-11-09 - S13-J4 : Hors dépôt
+fait : hors dépôt, 50 min.
+
+## 2026-11-10 - S13-J5 : Hors dépôt
+fait : hors dépôt, 15 min.
+
+## 2026-11-11 - S13-J6 : La CI parcourt l'incrémental, puis clore
+fait : corrections du J3 : PR n°121, 15min ; simulation de livraison en CI, PR n°122 : vue en rouge sur la stratégie naïve, 3/12, code 1, puis verte, 12/12, code 0 ; `docs/robustesse.md` réécrit, PR n°123, tableau vérifié sur le rendu de GitHub ; décision et point de contrôle ci-dessous ; 30min.
+Décision du 11/11 : l'examen dbt du 31/10 est maintenu, mars 2027. Critères : préparation chiffrée, tenue en janvier-février (06/11) ; les certifications cloud envisagées recommandent 6 mois à 1 an de pratique sur leur plateforme, pas encore acquis ; dbt tourne sur les principaux entrepôts cloud. Le reste des critères est hors dépôt.
+Point de contrôle S13 :
+Critère | Etat | Date
+Dette S12 soldée avant tout ajout | tenu | 05/11. PR n°114 : liens du README, 61 tests, bilan S12 à 5 h 18.
+Ordre des cours et entrepôt cloud tranchés, datés, sans rien du client | tenu | 05/11. PR n°116 : Reis & Housley jusqu'en décembre, préparation dbt en janvier-février, examen en mars ; règle 2 réécrite ; entrepôt cloud renoncé jusqu'à un déclencheur.
+Préparation dbt chiffrée domaine par domaine | tenu | 06/11. PR n°117 : 31 points du guide 1.11, 22 h 45, ~2 h 50 par semaine du 07/01 au 03/03.
+`ref_seuils_dispersion` gardé avec sa raison, ou retiré | retiré, signature à l'appui | 05/11. PR n°115 : aucun lecteur, graphe 12 1 61, signature inchangée ; constat soldé (PR n°121).
+Ch. 7 lu en entier, ligne Ingestion relue avec lui | tenu | 07/11. P. 392 à 449 en trois séances ; PR n°118.
+Orchestrateur choisi contre des critères écrits la veille | tenu | 07/11. Critères le 06/11 (PR n°117) ; Dagster le 07/11 (PR n°119), ligne Coût annotée.
+Le pipeline orchestré rend la signature | tenu | 07/11. 11383 104651625292808720823545, code 0 ; garde de base neuve vue en rouge deux fois (PR n°119) ; journal corrigé (PR n°121).
+Simulation d'incrémental en CI, vue rouge une fois | tenu | 11/11. PR n°122 : 3/12, code 1, sur la stratégie naïve, puis 12/12, code 0.
+Dossier relu la veille de l'EAEC, compte rendu le jour même | faits, hors dépôt | 09/11 et 10/11. 50 et 15 min (règle 7).
+`docs/robustesse.md` réécrit | tenu | 11/11. PR n°123, tableau vérifié sur le rendu de GitHub.
+S14 écrite | message envoyé | 11/11.
+Constats en fin de S13 :
+Constat | Date | Statut | Suite
+Liens du README et 61 tests ; `ref_seuils_dispersion` | 04/11 et 29/10 | soldés le 05/11 | PR n°114 et 115.
+Simulation d'incrémental en CI | 21/10 | soldé le 11/11 | PR n°122.
+`docs/robustesse.md`, réécriture | 26/10 | soldé le 11/11 | PR n°123.
+Télémétrie de Dagster ; `dagster job execute` remplacé par `dg launch --job` | 07/11 | ouverts | S14.
+Passage planifié du lundi | 12, 19 et 26/10 | ouvert | 09/11 : 17h22 et vert.
+Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté.
+Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 09/11.
+Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
+Constats acceptés | S8 à S11 | acceptés | Inchangés.
