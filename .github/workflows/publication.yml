@@ -2,6 +2,7 @@
 # republie le catalogue dbt. Les commandes sont celles du README, executees
 # telles quelles depuis scripts/lancer.txt.
 # Detection d'une nouvelle livraison chaque lundi.
+# Livraison simulee apres la construction : l'incremental contre le full refresh (11/11).
 name: construction-et-publication
 
 on:
@@ -31,6 +32,11 @@ jobs:
 
       - name: Commandes du README, telles quelles
         run: bash -ex scripts/lancer.txt
+
+      # docs/incremental.md : le moindre ecart rend le code 1 et fait echouer
+      # le job (regle 15), avant toute publication.
+      - name: Simulation d'une livraison
+        run: python -m collateral.simulation        
 
       - name: Generation du catalogue
         working-directory: transform

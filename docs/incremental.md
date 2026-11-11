@@ -45,7 +45,7 @@ Conséquences :
 2. Au J4, sur une livraison simulée par le même chemin qu'une vraie (une vente retirée, une valeur modifiée, une vente ajoutée dans un millésime passé) : l'incrémental est identique au full refresh, par `comparer()` puis par la signature du mart.
 3. Calibrage : sur la même entrée, `merge` sur `id_mutation` doit rendre « non identique », à cause de la vente retirée.
 
-La CI part toujours d'une base neuve : elle ne parcourt jamais la branche incrémentale, et son badge vert ne prouve rien sur elle.
+La CI part toujours d'une base neuve : sa construction ne parcourt jamais la branche incrémentale. Depuis le 11/11, la simulation d'une livraison, lancée juste après, la parcourt à chaque construction.
 
 ## Les seuils
 Décision : bornes p1/p99 par millésime, calculées sur les seules ventes du millésime. Un millésime ne bouge donc que si son propre fichier change. La limite n° 7 deviendra : « une valeur historique ne change que si une livraison modifie son millésime ». Un clone neuf recalcule les mêmes bornes à partir des mêmes fichiers : la reproductibilité tient.
@@ -76,4 +76,7 @@ Au 19/10, sur une livraison simulée (`python -m collateral.simulation`) :
  - l'incrémental (schéma `dbt`) est identique au full refresh (schéma `plein`) : 13/13 relations, code retour 0 ;
  - calibrage : `merge` sur `id_mutation` rend 4/13 relations identiques, code retour 1 ; `stg_mutations` en écart de volumétrie : les ventes retirées survivent.
 
-Pas encore prouvé : la vraie livraison d'octobre. Combien de fichiers changent, l'hypothèse de l'en-tête gzip, le déplacement des seuils et de la signature du mart. La CI, qui part d'une base neuve, ne parcourt jamais la branche incrémentale.
+Au 11/11, en CI, à chaque construction (PR n°122) :
+ - 12/12 relations identiques, code retour 0 : 13 au 19/10, `ref_seuils_dispersion` retiré le 05/11 ;
+ - vue en rouge une fois, sur `merge` par `id_mutation` : 3/12, code retour 1.
+Pas encore prouvé : la vraie livraison d'octobre. Combien de fichiers changent, l'hypothèse de l'en-tête gzip, le déplacement des seuils et de la signature du mart. La CI ne parcourt la branche incrémentale que sur la livraison simulée, depuis le 11/11.
