@@ -1,0 +1,3 @@
+# Telemetrie coupe (12/11/2026) : seul ce fichier est versionne.
+telemetry:
+  enabled: false
