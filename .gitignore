@@ -43,3 +43,7 @@ docs/plans/*.json
 
 # Dagster : dossier temporaire de dagster dev (07/11)
 .tmp_dagster_home_*/
+
+# Dagster : DAGSTER_HOME du projet, seul dagster.yaml est versionne (12/11)
+dagster_home/*
+!dagster_home/dagster.yaml

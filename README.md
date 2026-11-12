@@ -91,8 +91,11 @@ La même chaîne, lancée par Dagster, avec la signature du mart vérifiée à l
 
 ```
 python -m pip install -e ".[dev,orchestration]" -c constraints.txt
+$env:DAGSTER_HOME = "$PWD\dagster_home"
 dagster job execute -m collateral.orchestration -j chaine
 ```
+
+`DAGSTER_HOME` désigne `dagster_home/`, à la racine, par un chemin absolu (sous bash : `export DAGSTER_HOME="$PWD/dagster_home"`) : sa `dagster.yaml` coupe la télémétrie, et l'historique des exécutions y reste, non versionné (12/11/2026).
 
 `dagster dev -m collateral.orchestration` ouvre l'interface sur `http://127.0.0.1:3000` ; la CI lance toujours `scripts/lancer.txt`.
 

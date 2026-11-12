@@ -114,7 +114,7 @@ $attendus = @(
     'pyproject.toml', 'README.md', 'JOURNAL.md', '.gitignore',
     'src\collateral\__init__.py', 'src\collateral\config.py', 'src\collateral\journal.py',
     'src\collateral\db.py', 'src\collateral\sql.py', 'src\collateral\controle.py',
-    'src\collateral\download.py', 'src\collateral\load.py'
+    'src\collateral\download.py', 'src\collateral\load.py', 'dagster_home\dagster.yaml'
 )
 $absents = @($attendus | Where-Object { -not (Test-Path (Join-Path $racine $_)) })
 if ($absents) {
@@ -130,7 +130,7 @@ if ($absents) {
 $racineAutorisee = @(
     '.gitignore', '.vscode', 'JOURNAL.md', 'LICENSE', 'README.md',
     'pyproject.toml', 'constraints.txt', '.github'
-    'data', 'docs', 'scripts', 'sql', 'src', 'tests', 'transform'
+    'dagster_home', 'data', 'docs', 'scripts', 'sql', 'src', 'tests', 'transform'
 )
 $racineSuivie = @(& git ls-files | ForEach-Object { ($_ -split '/')[0] } | Sort-Object -Unique)
 $inconnus = @($racineSuivie | Where-Object { $_ -notin $racineAutorisee })
