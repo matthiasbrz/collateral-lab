@@ -136,7 +136,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S10 | ~9 h 20 | arrêté | ~9 h 20 | 10 h |
 | S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
 | S12 | ~5 h 18 | arrêté | ~5 h 18 | 10 h |
-| S13 | 4 h 34  | arrêté | 4 h 34  | 10 h |
+| S13 | ~4 h 31 | arrêté | ~4 h 31 | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -610,7 +610,7 @@ fait : hors dépôt, 50 min.
 fait : hors dépôt, 15 min.
 
 ## 2026-11-11 - S13-J6 : La CI parcourt l'incrémental, puis clore
-fait : corrections du J3 : PR n°121, 15min ; simulation de livraison en CI, PR n°122 : vue en rouge sur la stratégie naïve, 3/12, code 1, puis verte, 12/12, code 0 ; `docs/robustesse.md` réécrit, PR n°123, tableau vérifié sur le rendu de GitHub ; décision et point de contrôle ci-dessous ; 30min.
+fait : corrections du J3 : PR n°121, 15min ; simulation de livraison en CI, PR n°122 : vue en rouge sur la stratégie naïve, 3/12, code 1, puis verte, 12/12, code 0 ; `docs/robustesse.md` réécrit, PR n°123, tableau vérifié sur le rendu de GitHub ; décision et point de contrôle ci-dessous ; 27min.
 Décision du 11/11 : l'examen dbt du 31/10 est maintenu, mars 2027. Critères : préparation chiffrée, tenue en janvier-février (06/11) ; les certifications cloud envisagées recommandent 6 mois à 1 an de pratique sur leur plateforme, pas encore acquis ; dbt tourne sur les principaux entrepôts cloud. Le reste des critères est hors dépôt.
 Point de contrôle S13 :
 Critère | Etat | Date

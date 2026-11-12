@@ -79,4 +79,5 @@ Au 19/10, sur une livraison simulée (`python -m collateral.simulation`) :
 Au 11/11, en CI, à chaque construction (PR n°122) :
  - 12/12 relations identiques, code retour 0 : 13 au 19/10, `ref_seuils_dispersion` retiré le 05/11 ;
  - vue en rouge une fois, sur `merge` par `id_mutation` : 3/12, code retour 1.
+ 
 Pas encore prouvé : la vraie livraison d'octobre. Combien de fichiers changent, l'hypothèse de l'en-tête gzip, le déplacement des seuils et de la signature du mart. La CI ne parcourt la branche incrémentale que sur la livraison simulée, depuis le 11/11.
