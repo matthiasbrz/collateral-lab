@@ -600,8 +600,8 @@ Annotation du 07/11 : la ligne Coût pèse vers Dagster, son propre fait le dit 
 
 ## 2026-11-07 - S13-J3 : Le pipeline, lancé par l'orchestrateur
 fait : Reis & Housley ch. 7 lu en entier, p. 437 à 449 aujourd'hui ; PR n°118 : ligne Ingestion relue avec le chapitre, instantané et non différentiel ; PR n°119 : Dagster choisi contre les critères du 06/11, ligne Coût annotée, installé et épinglé (extra `orchestration`, 47 épinglages ajoutés à `constraints.txt`, aucun existant modifié ; les +55 du 06/11 comptaient aussi `dagster-dbt`), puis la chaîne de `lancer.txt` lancée par Dagster : garde de base neuve vue en rouge, puis sur base neuve, signature 11383 104651625292808720823545 ; 46min.
-constat : Dagster envoie par défaut des statistiques d'usage anonymes ; l'avis ne s'est affiché qu'à la première exécution (08:59:24), la collecte continue sans message | 07/11 | ouvert | Les couper par un `dagster.yaml` dans un `DAGSTER_HOME` hors du dépôt, ou l'accepter, en S14.
-constat : `dagster job execute`, la commande du README, est marqué remplacé par `dg launch --job` (SupersessionWarning à chaque exécution) ; `dg` n'est pas installé | 07/11 | ouvert | Garder la commande, ou passer à `dg` avec son paquet épinglé, en S14.
+constat : Dagster envoie par défaut des statistiques d'usage anonymes ; l'avis ne s'est affiché qu'à la première exécution (08:59:24), la collecte continue sans message | 07/11 | soldé le 12/11 | Les couper par un `dagster.yaml` dans un `DAGSTER_HOME` hors du dépôt, ou l'accepter, en S14. Coupée le 12/11 par `dagster_home/dagster.yaml`, seul fichier versionné du dossier, dans le dépôt plutôt qu'hors de lui (PR n°126).
+constat : `dagster job execute`, la commande du README, est marqué remplacé par `dg launch --job` (SupersessionWarning à chaque exécution) ; `dg` n'est pas installé | 07/11 | soldé le 12/11 | Garder la commande, ou passer à `dg` avec son paquet épinglé, en S14. Gardée le 12/11 : décision ci-dessous.
 
 ## 2026-11-09 - S13-J4 : Hors dépôt
 fait : hors dépôt, 50 min.
@@ -636,3 +636,7 @@ Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Prop
 Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 09/11.
 Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
+
+## 2026-11-12 - S14-J1 : Solder, puis donner un domicile à Dagster
+fait : dette S13, PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub, J6 de la S13 à 27min ; Reis & Housley ch. 8 : p. 450 à 464, le ch. 9 commence p. 560 ; `DAGSTER_HOME` dans `dagster_home/`, seul `dagster.yaml` versionné, PR n°126 : avis de télémétrie présent sur le témoin, absent sur le dossier neuf, signature 11383 104651625292808720823545 ; 56min.
+Décision du 12/11 : `dagster job execute` est gardé, Dagster épinglé en 1.13.29 ; `dg launch --job` existe, mais `dg` s'installe à part, chez un éditeur qui passe chez Prefect. Rouverte à la prochaine montée de version de Dagster.
