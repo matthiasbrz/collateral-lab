@@ -638,5 +638,5 @@ Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrep�
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
 
 ## 2026-11-12 - S14-J1 : Solder, puis donner un domicile à Dagster
-fait : dette S13, PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub, J6 de la S13 à 27min ; Reis & Housley ch. 8 : p. 450 à 464, le ch. 9 commence p. 560 ; `DAGSTER_HOME` dans `dagster_home/`, seul `dagster.yaml` versionné, PR n°126 : avis de télémétrie présent sur le témoin, absent sur le dossier neuf, signature 11383 104651625292808720823545 ; 56min.
+fait : dette S13, PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub, J6 de la S13 à 27min ; Reis & Housley ch. 8 : p. 450 à 464, le ch. 9 commence p. 560 ; `DAGSTER_HOME` dans `dagster_home/`, seul `dagster.yaml` versionné, PR n°126 : avis de télémétrie présent sur le témoin, puis à 19:48 sur le dossier du projet, `dagster.yaml` tapé dans `.dagster_home/` et déplacé après l'échec du rituel ; absent sur le dossier vidé à 19h59, signature 11383 104651625292808720823545 ; 56min.
 Décision du 12/11 : `dagster job execute` est gardé, Dagster épinglé en 1.13.29 ; `dg launch --job` existe, mais `dg` s'installe à part, chez un éditeur qui passe chez Prefect. Rouverte à la prochaine montée de version de Dagster.
