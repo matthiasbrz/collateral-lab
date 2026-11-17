@@ -642,4 +642,10 @@ fait : dette S13, PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifi
 Décision du 12/11 : `dagster job execute` est gardé, Dagster épinglé en 1.13.29 ; `dg launch --job` existe, mais `dg` s'installe à part, chez un éditeur qui passe chez Prefect. Rouverte à la prochaine montée de version de Dagster.
 
 ## 2026-11-13 - S14-J2 : Expliquer chaque ligne, puis la première panne
-fait : corrections du J1 : PR n°128 et heure de la preuve, 1min ; Reis & Housley ch. 8 : p. 465 à 479 ; module d'orchestration expliqué ligne à ligne en 5 min, 0 ligne(s) sans explication ; première panne, le contrôle face à un étalon faux, sur une branche jetable supprimée : en rouge, étape fautive controle, code 1, cause lue dans le journal : « RuntimeError: signature modifiee : attendue 11383 104651625292808720823546, obtenue 11383 104651625292808720823545 » ; 36min.
+fait : corrections du J1 : PR n°128 et heure de la preuve, ~21min ; Reis & Housley ch. 8 : p. 465 à 479 ; module d'orchestration expliqué ligne à ligne en 5 min, 0 ligne(s) sans explication ; première panne, le contrôle face à un étalon faux, sur une branche jetable supprimée : en rouge, étape fautive `controler`, code 1, cause lue dans le journal : « RuntimeError: signature modifiee : attendue 11383 104651625292808720823546, obtenue 11383 104651625292808720823545 » ; 36min.
+
+## 2026-11-17 - S14-J4 : Hors dépôt
+fait : hors dépôt, 30 min.
+
+## 2026-11-17 - S14-J5 : Relire à froid
+fait : J3 et J4 non faits le 16/11 : les pannes 2 et 3 et `docs/orchestration.md` glissent en S15, les objectifs passent avant ; Reis & Housley ch. 8 : p. 479 à 499 ; journaux de la panne n°1 relus à froid, quatre jours après, sans rien relancer : cause retrouvée en 5 min, par  .\dagster_home\storage\6a7e217c-5a97-4f6f-a9ae-ec574a3de8ff\compute_logs ; 40 min.
