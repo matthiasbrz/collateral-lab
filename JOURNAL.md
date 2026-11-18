@@ -121,7 +121,7 @@ Ce qu'il ne remplace pas - la liste honnête :
     - le tracé de la frontière lui-même, qui est une décision et le restera.
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
-## Bilan Horaire à Semaine 12
+## Bilan Horaire à Semaine 14
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -137,6 +137,7 @@ La frontière écrite avant le portage a fait apparaître un découpage que le p
 | S11 | ~8 h 35 | arrêté | ~8 h 35 | 10 h |
 | S12 | ~5 h 18 | arrêté | ~5 h 18 | 10 h |
 | S13 | ~4 h 31 | arrêté | ~4 h 31 | 10 h |
+| S14 | ~3 h 27 | arrêté | ~3 h 27 | 10 h |
 
 ## 2026-09-14 - S5-J4 : La fraîcheur des sources
 Notes : 
@@ -649,3 +650,29 @@ fait : hors dépôt, 30 min.
 
 ## 2026-11-17 - S14-J5 : Relire à froid
 fait : J3 et J4 non faits le 16/11 : les pannes 2 et 3 et `docs/orchestration.md` glissent en S15, les objectifs passent avant ; Reis & Housley ch. 8 : p. 479 à 499 ; journaux de la panne n°1 relus à froid, quatre jours après, sans rien relancer : cause retrouvée en 5 min, par  .\dagster_home\storage\6a7e217c-5a97-4f6f-a9ae-ec574a3de8ff\compute_logs ; 40 min.
+
+## 2026-11-18 - S14-J6 : Dix arbitrages contre un chapitre, puis clore
+fait : Reis & Housley ch. 8 : p. 499 à 519 ; dix arbitrages de l'oral du 04/11 face au chapitre, au brouillon : 10 confortés, 0 nuancés, 0 contredits, 0 pas traités ; point de contrôle et bilan horaire S14 ci-dessous ; S15 écrite ; 27min.
+Point de contrôle S14 :
+Critère | Etat | Date
+Dette S13 soldée avant tout ajout | tenu | 12/11. PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub ; J6 de la S13 à 27 min.
+Télémétrie réglée par un fichier versionné, ou acceptée | tenu après correction | 12/11. PR n°126 : `dagster_home/dagster.yaml`, seul fichier versionné du dossier ; d'abord tapé dans `.dagster_home/`, vu par le rituel ; avis absent sur le dossier vidé à 20:13 (PR n°128 et 129).
+`dagster job execute` gardé ou remplacé, avec ce qui rouvrirait la question | tenu, gardé | 12/11. Rouverte à la prochaine montée de version de Dagster (PR n°127) ; le passage de l'éditeur chez Prefect, dans `docs/architecture.md` (PR n°126).
+Module d'orchestration expliqué ligne à ligne, chronométré | tenu, une explication inexacte | 13/11. 5 min, aucune ligne sans explication ; `defs` donné pour l'appel du job.
+Trois pannes provoquées, une par étage, lues dans le journal | 1 sur 3 | 13/11. Panne n°1, l'étalon faux : échec, étape `controler`, code 1, cause lue dans le journal. Pannes n°2 et 3 glissées en S15, J3 non fait.
+Cause retrouvée à froid, dans les journaux seuls | panne n°1 en 5 min | 17/11. Repère d'une minute dépassé : constat ci-dessous.
+`docs/orchestration.md` lié depuis le README | glissé | S15, avec les pannes n°2 et 3.
+Ch. 8 lu 2 h 40, de la p. 450 à ~529 | 2 h, p. 450 à 519 | 18/11. 110 p., le ch. 9 commence p. 560 ; les 40 min du J3 non lues.
+Séance hors dépôt | faite | 17/11. 30 min (règle 7) ; le reste se suit hors dépôt.
+S15 écrite | message envoyé | 18/11.
+Constats en fin de S14 :
+Constat | Date | Statut | Suite
+Télémétrie ; `dagster job execute` remplacé par `dg launch --job` | 07/11 | soldés le 12/11 | PR n°126 et 127.
+Pannes n°2 et 3 ; `docs/orchestration.md` et son lien depuis le README | 14/11 | glissés | S15.
+Panne n°1 relue en 5 min : le « où » se lit d'emblée, le « pourquoi » seulement au message complet, après le traceback de Dagster, deux fois (`STEP_FAILURE`, `RUN_FAILURE`) | 17/11 | ouvert | S15 : reproduit par la panne n°1 (règle 14), puis sa propre PR.
+Passage planifié du lundi | 12, 19 et 26/10 | ouvert | 16/11 : 16h55 et vert.
+Seuils p1/p99 par millésime | 16/10 | en attente de la livraison réelle | Propre PR, nouvel étalon daté.
+Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 16/11.
+`constraints.txt` figé sous Windows : sous Linux, l'extra `orchestration` installerait `uvloop` sans version épinglée | S13 | accepté, avec déclencheur | Se rouvre le jour où la CI lance Dagster.
+Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
+Constats acceptés | S8 à S11 | acceptés | Inchangés.
