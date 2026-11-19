@@ -678,3 +678,7 @@ Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 16/11.
 `constraints.txt` figé sous Windows : sous Linux, l'extra `orchestration` installerait `uvloop` sans version épinglée | S13 | accepté, avec déclencheur | Se rouvre le jour où la CI lance Dagster.
 Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
+
+## 2026-11-19 - S15-J1 : Le one-to-one, puis la panne du milieu
+fait : hors dépôt, 9 min ; Reis & Housley ch. 8 : p. 519 à 532 ; bilan horaire : ce que compte une durée, en tête, S14 à ~3h27, J6 de la S14 à 24min ; panne n°2, un test dbt en échec, sur une branche jetable supprimée : KO, étape fautive `controler`, étapes en aval non lancées, code 1 ; cause écrite depuis le journal seul en 1 min 30 s : « [ERROR]: in test accepted_values_dim_type_bien_type_local__Maison (models\marts\etoile.yml)
+07:52:40    Got 1 result, configured to fail if != 0 », trouvée dans CLI ; dbt : OK ; sur main, base neuve : signature 11383 104651625292808720823545 ; 41min (hors 10 min de ce soir).
