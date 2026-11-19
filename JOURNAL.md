@@ -122,6 +122,8 @@ Ce qu'il ne remplace pas - la liste honnête :
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
 ## Bilan Horaire à Semaine 14
+Les durées du journal comptent toute la séance, lecture comprise (règle du 19/11). Avant, la lecture n'y était pas toujours : la ligne S14 l'ajoute, les précédentes restent telles quelles.
+
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
 | S1 | ~12 h | - | 12 h | 11 h |
@@ -652,7 +654,7 @@ fait : hors dépôt, 30 min.
 fait : J3 et J4 non faits le 16/11 : les pannes 2 et 3 et `docs/orchestration.md` glissent en S15, les objectifs passent avant ; Reis & Housley ch. 8 : p. 479 à 499 ; journaux de la panne n°1 relus à froid, quatre jours après, sans rien relancer : cause retrouvée en 5 min, par  .\dagster_home\storage\6a7e217c-5a97-4f6f-a9ae-ec574a3de8ff\compute_logs ; 40 min.
 
 ## 2026-11-18 - S14-J6 : Dix arbitrages contre un chapitre, puis clore
-fait : Reis & Housley ch. 8 : p. 499 à 519 ; dix arbitrages de l'oral du 04/11 face au chapitre, au brouillon : 10 confortés, 0 nuancés, 0 contredits, 0 pas traités ; point de contrôle et bilan horaire S14 ci-dessous ; S15 écrite ; 27min.
+fait : Reis & Housley ch. 8 : p. 499 à 519 ; dix arbitrages de l'oral du 04/11 face au chapitre, au brouillon : 10 confortés, 0 nuancés, 0 contredits, 0 pas traités ; point de contrôle et bilan horaire S14 ci-dessous ; S15 écrite ; 24min.
 Point de contrôle S14 :
 Critère | Etat | Date
 Dette S13 soldée avant tout ajout | tenu | 12/11. PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub ; J6 de la S13 à 27 min.
@@ -676,3 +678,7 @@ Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 16/11.
 `constraints.txt` figé sous Windows : sous Linux, l'extra `orchestration` installerait `uvloop` sans version épinglée | S13 | accepté, avec déclencheur | Se rouvre le jour où la CI lance Dagster.
 Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
+
+## 2026-11-19 - S15-J1 : Le one-to-one, puis la panne du milieu
+fait : hors dépôt, 9 min ; Reis & Housley ch. 8 : p. 519 à 532 ; bilan horaire : ce que compte une durée, en tête, S14 à ~3h27, J6 de la S14 à 24min ; panne n°2, un test dbt en échec, sur une branche jetable supprimée : KO, étape fautive `controler`, étapes en aval non lancées, code 1 ; cause écrite depuis le journal seul en 1 min 30 s : « [ERROR]: in test accepted_values_dim_type_bien_type_local__Maison (models\marts\etoile.yml)
+07:52:40    Got 1 result, configured to fail if != 0 », trouvée dans CLI ; dbt : OK ; sur main, base neuve : signature 11383 104651625292808720823545 ; 41min (hors 10 min de ce soir).
