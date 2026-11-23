@@ -122,7 +122,7 @@ Ce qu'il ne remplace pas - la liste honnête :
 La frontière écrite avant le portage a fait apparaître un découpage que le portage seul n'aurait pas révélé - 01_dim_commune fait trois choses.
 
 ## Bilan Horaire à Semaine 14
-Les durées du journal comptent toute la séance, lecture comprise (règle du 19/11). Avant, la lecture n'y était pas toujours : la ligne S14 l'ajoute, les précédentes restent telles quelles.
+Les durées du journal comptent toute la séance, lecture comprise (règle du 19/11).
 
 | Semaine | Roadmap | POC | Total | Plafond |
 |---|---|---|---|---|
@@ -680,5 +680,7 @@ Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrep�
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
 
 ## 2026-11-19 - S15-J1 : Le one-to-one, puis la panne du milieu
-fait : hors dépôt, 9 min ; Reis & Housley ch. 8 : p. 519 à 532 ; bilan horaire : ce que compte une durée, en tête, S14 à ~3h27, J6 de la S14 à 24min ; panne n°2, un test dbt en échec, sur une branche jetable supprimée : KO, étape fautive `controler`, étapes en aval non lancées, code 1 ; cause écrite depuis le journal seul en 1 min 30 s : « [ERROR]: in test accepted_values_dim_type_bien_type_local__Maison (models\marts\etoile.yml)
-07:52:40    Got 1 result, configured to fail if != 0 », trouvée dans CLI ; dbt : OK ; sur main, base neuve : signature 11383 104651625292808720823545 ; 41min (hors 10 min de ce soir).
+fait : hors dépôt, 9 min ; Reis & Housley ch. 8 : p. 519 à 532 ; bilan horaire : ce que compte une durée, en tête, S14 à ~3h27, J6 de la S14 à 24min ; panne n°2, un test dbt en échec, sur une branche jetable supprimée : échec (`RUN_FAILURE`), étape fautive `construire`, `controler` non lancée, code 1 ; cause écrite depuis le journal seul en 1 min 30 s, à chaud, dans la sortie de dbt : « [ERROR]: in test accepted_values_dim_type_bien_type_local__Maison (models\marts\etoile.yml) Got 1 result, configured to fail if != 0 » ; le message de Dagster ne dit que `CalledProcessError` et le code de retour de dbt ; dbt : PASS=70 WARN=3 ERROR=1 SKIP=0, contre 71 PASS et 3 WARN le 13/11 ; sur main, base neuve : signature 11383 104651625292808720823545 ; 41min ; compte rendu du one-to-one reporté au 23/11.
+
+## 2026-11-23 - S15-J2 : La panne de tête, et six lignes de questionnaire
+fait : compte rendu du one-to-one du 19/11, hors dépôt, 15 min ; corrections du J1 : règle du bilan horaire, étape fautive, récapitulatif de dbt ; Reis & Housley ch. 8 : p. 532 à 546 ; panne n°3, le téléchargement coupé, sans branche ni code (un fichier DVF déplacé hors du dépôt, réseau coupé avant le lancement) : en rouge, étape fautive `telecharger`, étapes en aval non exécutée, code 1 ; cause écrite depuis le journal seul en 45 secondes : « urlopen error [Errno 11001] getaddrinfo failed », trouvée dans sortie étape ; après la chute : base inchangée, données non réécrites ; fichier remis avant le réseau, base neuve : empreintes conformes, signature 11383 104651625292808720823545 ; questionnaire : 3 lignes justes sur 6, 3 réponses de lecture sur 3 ; 1heure.
