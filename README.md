@@ -113,7 +113,8 @@ dagster job execute -m collateral.orchestration -j chaine
 **Fiabilité**
 - [Gouvernance des données](docs/gouvernance.md)
 - [Limites connues](docs/limites.md)
-- [Robustesse du téléchargement](docs/robustesse.md)
+- [Robustesse de la chaîne](docs/robustesse.md)
+- [Orchestration : comment la chaîne tombe](docs/orchestration.md)
 
 **Mesures**
 - [Profilage des sources](docs/profilage.md)
