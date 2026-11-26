@@ -656,6 +656,7 @@ fait : J3 et J4 non faits le 16/11 : les pannes 2 et 3 et `docs/orchestration.md
 
 ## 2026-11-18 - S14-J6 : Dix arbitrages contre un chapitre, puis clore
 fait : Reis & Housley ch. 8 : p. 499 à 519 ; dix arbitrages de l'oral du 04/11 face au chapitre, au brouillon : 10 confortés, 0 nuancés, 0 contredits, 0 pas traités ; point de contrôle et bilan horaire S14 ci-dessous ; S15 écrite ; 24min.
+Annotation du 25/11 : les dix arbitrages repris avec leur page : 9 confortés, 0 nuancés, 0 contredits, 1 hors du livre ; delete+insert contre merge jugé par *Update patterns* (p. 523-524).
 Point de contrôle S14 :
 Critère | Etat | Date
 Dette S13 soldée avant tout ajout | tenu | 12/11. PR n°125 : ligne vide de `docs/incremental.md`, rendu vérifié sur GitHub ; J6 de la S13 à 27 min.
@@ -679,7 +680,6 @@ Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 16/11.
 `constraints.txt` figé sous Windows : sous Linux, l'extra `orchestration` installerait `uvloop` sans version épinglée | S13 | accepté, avec déclencheur | Se rouvre le jour où la CI lance Dagster.
 Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
-Annotation du 25/11 : les dix arbitrages repris avec leur page : 9 confortés, 0 nuancés, 0 contredits, 1 hors du livre ; delete+insert contre merge jugé par *Update patterns* (p. 523-524).
 
 ## 2026-11-19 - S15-J1 : Le one-to-one, puis la panne du milieu
 fait : hors dépôt, 9 min ; Reis & Housley ch. 8 : p. 519 à 532 ; bilan horaire : ce que compte une durée, en tête, S14 à ~3h27, J6 de la S14 à 24min ; panne n°2, un test dbt en échec, sur une branche jetable supprimée : échec (`RUN_FAILURE`), étape fautive `construire`, `controler` non lancée, code 1 ; cause écrite depuis le journal seul en 1 min 30 s, à chaud, dans la sortie de dbt : « [ERROR]: in test accepted_values_dim_type_bien_type_local__Maison (models\marts\etoile.yml) Got 1 result, configured to fail if != 0 » ; le message de Dagster ne dit que `CalledProcessError` et le code de retour de dbt ; dbt : PASS=70 WARN=3 ERROR=1 SKIP=0, contre 71 PASS et 3 WARN le 13/11 ; sur main, base neuve : signature 11383 104651625292808720823545 ; 41min ; compte rendu du one-to-one reporté au 23/11.
@@ -693,7 +693,7 @@ fait : hors dépôt, 15 min ; corrections du J2 : deux erreurs de recopie, une a
 
 ## 2026-11-25 - S15-J5 : L'entretien, puis clore
 fait : hors dépôt, 10 min ; les dix arbitrages de l'oral repris avec leur page : 9 confortés, 0 nuancés, 0 contredits, 1 hors du livre ; ligne Transformation de `docs/cycle-de-vie.md` relue avec le ch. 8 (PR n°135) ; cours suivant tranché, ci-dessous ; point de contrôle et bilan horaire S15 ci-dessous ; S16 écrite ; 51 min.
-Décision du 25/11 : la préparation dbt avance au 26/11, au lieu de janvier : 22 h 45 chiffrées le 06/11, environ 1 h 40 par semaine jusqu'au 03/03 ; le ch. 9, p. 560 à 609, attend avec les ch. 10 et 11 ; critères : un seul cours à la fois (règle 1), le cours qui a une date passe d'abord ; ce qui la rouvrirait : une date de besoin GCP avant mars.
+Décision du 25/11 : la préparation dbt avance au 26/11, au lieu de janvier : 22 h 45 chiffrées le 06/11, environ 1 h 40 par semaine jusqu'au 03/03 ; le ch. 9, p. 560 à 608, attend avec les ch. 10 et 11 ; critères : un seul cours à la fois (règle 1), le cours qui a une date passe d'abord ; ce qui la rouvrirait : une date de besoin GCP avant mars.
 Point de contrôle S15 :
 Critère | Etat | Date
 Pannes n°2 et 3 provoquées, cause écrite depuis le journal seul, puis retrouvée à froid | tenu | 19/11 et 23/11 : à chaud en 1 min 30 et 45 s ; à froid le 24/11, 1 min chacune.
@@ -716,3 +716,6 @@ Livraison DVF d'octobre | 12/08 | en attente | absente au passage du 23/11.
 `constraints.txt` figé sous Windows, `uvloop` sans version sous Linux | S13 | accepté, avec déclencheur | Se rouvre le jour où la CI lance Dagster.
 Déclencheur de l'entrepôt cloud (05/11) | 09/11 | à moitié atteint | Entrepôt nommé, date de besoin à venir.
 Constats acceptés | S8 à S11 | acceptés | Inchangés.
+
+## 2026-11-26 - S16-J1 : La dette de mémoire
+fait : de mémoire, sans rien ouvrir : `In(Nothing)`, `@op`, `defs`, `check=True` : 4 justes sur 4, écarts notés ; formes normales, watermark, grain : 3 justes sur 3 ; arbitrages : snapshot du COG SCD type 1 (p. 496), médiane glissante fenêtre glissante (p.469) ; clés naturelles tranchées dans `docs/modelisation.md` ; grain en première ligne de `mart_prix_m2_reference` et de `fct_mutations` au catalogue ; bilan horaire : la ligne S15 à 3 h 39 est la somme des jours, l'« environ 4 h 30 » du message S16 était une estimation fausse ; rituel complet : signature 11383 104651625292808720823545 ; 48 min.
