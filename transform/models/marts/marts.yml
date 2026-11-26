@@ -77,10 +77,14 @@ models:
 
   - name: mart_prix_m2_reference
     description: >
-      Grain : une ligne par commune x type de bien x mois. (test unicite_grain_mart).
+      Grain : une ligne par commune x type de bien x mois (test unicite_grain_mart).
 
       Prix de reference au m2 par commune, type de bien et mois, sur douze
       mois glissants.
+
+      Couche de publication. 11 383, 79 % des communes couvertes.
+      Aucune cellule sous cinq transactions : seuil de gouvernance ET de
+      fiabilite. 47 % des cellules publiees reposent sur 5 a 9 transactions.
     columns:
       - name: code_commune
         data_tests:

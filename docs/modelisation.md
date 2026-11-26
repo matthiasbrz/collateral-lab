@@ -48,7 +48,7 @@
 ### Clés
  - Les clés naturelles (code INSEE, date, libellé DVF) sont stables et uniques aujourd'hui.
  - Leur limite : quand `dim_commune` gardera son historique (SCD2), le code INSEE ne suffira plus à désigner une version, il faudra une clé de substitution (PDF Kimball, page 7).
- - Décision du 26/11 : clés naturelles gardées ; raison : ce que `fct_mutations` référence aujourd'hui : un code.
+ - Décision du 26/11 : clés naturelles gardées ; raison : `fct_mutations` référence des codes, pas une version datée des dimensions ; ce qui la rouvrirait : l'historique de `dim_commune` (SCD2), ci-dessus.
 
 ### Graphe au 12/10
  - `int_mutations_filtrees` n'alimente plus que `fct_mutations`.

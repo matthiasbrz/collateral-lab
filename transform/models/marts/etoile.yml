@@ -1,4 +1,4 @@
-version: 2
+  version: 2
 
 models:
   - name: dim_commune
@@ -50,6 +50,8 @@ models:
       Grain : une ligne par id_mutation.
 
       Une mutation retenue apres les regles 1 a 6. Trois cles, six mesures, id_mutation en dimension degeneree.
+
+      Transfert de propriete d'un bien immobilier d'une personne (physique ou morale) a une autre.
     columns:
       - name: id_mutation
         data_tests: [unique, not_null]
