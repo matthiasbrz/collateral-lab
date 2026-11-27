@@ -719,3 +719,6 @@ Constats acceptés | S8 à S11 | acceptés | Inchangés.
 
 ## 2026-11-26 - S16-J1 : La dette de mémoire
 fait : de mémoire, sans rien ouvrir : `In(Nothing)`, `@op`, `defs`, `check=True` : 4 justes sur 4, écarts notés ; formes normales, watermark, grain : 3 justes sur 3 ; arbitrages : snapshot du COG, une dimension à évolution lente de type 2 (p. 496) : conforté ; médiane glissante, une fenêtre glissante (p. 469) : conforté ; compte final des dix : 9 confortés, 0 nuancés, 0 contredits, 1 hors du livre ; clés naturelles tranchées dans `docs/modelisation.md` ; grain en première ligne de `mart_prix_m2_reference` et de `fct_mutations` au catalogue ; bilan horaire : la ligne S15 à 3 h 39 est la somme des jours, l'« environ 4 h 30 » du message S16 était une estimation fausse ; rituel complet : signature 11383 104651625292808720823545 ; 48 min.
+
+## 2026-11-27 - S16-J2 : L'examen daté, la préparation ouverte, les critères
+fait : corrections du J1 : PR n°138 et n°139, 10 min ; hors dépôt, 15 min ; révision dbt n°1 reportée à lundi, en QCM chronométré des 14 sous-points du domaine 1 du guide 1.11 ; critères de « tourne seul » écrits au brouillon, chacun avec son fait et sa source, sans conclusion ; `telecharger` relu : un fichier déjà présent n'est pas retéléchargé (`src/collateral/download.py`, l. 43 à 45 pour DVF, l. 75 à 77 pour le COG) ; 50 min.
