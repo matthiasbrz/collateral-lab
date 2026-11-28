@@ -12,7 +12,7 @@ Environnement actif, depuis la racine du depot :
 import subprocess
 import sys
 
-from dagster import Definitions, In, Nothing, job, op
+from dagster import Definitions, Failure, In, Nothing, job, op
 
 from collateral.config import BASE_DUCKDB, RACINE
 
@@ -57,7 +57,10 @@ def controler(context) -> None:
     obtenue = sortie.stdout.strip()
     attendue = SIGNATURE_ATTENDUE.read_text(encoding="utf-8").strip()
     if obtenue != attendue:
-        raise RuntimeError(f"signature modifiee : attendue {attendue}, obtenue {obtenue}")
+        raise Failure(
+            description=f"signature modifiee : attendue {attendue}, obtenue {obtenue}",
+            metadata={"attendue": attendue, "obtenue": obtenue},
+        )
     context.log.info(f"signature inchangee : {obtenue}")
 
 
